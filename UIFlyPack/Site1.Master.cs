@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BLFlyPack;
+
+namespace UIFlyPack
+{
+    public partial class Site1 : System.Web.UI.MasterPage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            BLUser user = null;
+            int type=-1;
+            //try
+            //{
+                user = (BLUser)Session["user"];
+                if(user!=null)
+                {
+                    type = user.Type;
+                }
+                 
+            //}
+            //catch(Exception ex)
+            //{
+            //    type = -1;
+            //}
+          
+            if(type==1)
+            {
+                //sh
+                ShopMenager.Visible = true;
+            }
+            else if (type == 2)
+            {
+                //system
+                SystemMenager.Visible = true;
+            }
+            else if (type == 3)
+            {
+                //delivery
+                Delivery.Visible = true;
+            }
+            else if (type == 4)
+            {
+                //custumer
+                Customer.Visible = true;
+            }
+           if(type!=-1)
+            {
+                UnConected.Visible = false;
+            }
+           
+        }
+
+        protected void LogIn1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LogIn.aspx");
+        }
+
+        protected void LogOut1_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("HomePage.aspx");
+        }
+    }
+}

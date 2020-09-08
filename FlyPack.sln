@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalFlyPack", "FlyPack\DalFlyPack.csproj", "{30FD3CFD-02BC-419B-8C90-3E12AC3E0DDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLFlyPack", "BLFlyPack\BLFlyPack.csproj", "{734885ED-BEF6-498B-B4C6-11FF39D3A0B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIFlyPack", "UIFlyPack\UIFlyPack.csproj", "{BCD7DD24-BA38-4D61-80BE-8FC736DB337A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30FD3CFD-02BC-419B-8C90-3E12AC3E0DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30FD3CFD-02BC-419B-8C90-3E12AC3E0DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30FD3CFD-02BC-419B-8C90-3E12AC3E0DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30FD3CFD-02BC-419B-8C90-3E12AC3E0DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{734885ED-BEF6-498B-B4C6-11FF39D3A0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{734885ED-BEF6-498B-B4C6-11FF39D3A0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{734885ED-BEF6-498B-B4C6-11FF39D3A0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{734885ED-BEF6-498B-B4C6-11FF39D3A0B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD7DD24-BA38-4D61-80BE-8FC736DB337A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD7DD24-BA38-4D61-80BE-8FC736DB337A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD7DD24-BA38-4D61-80BE-8FC736DB337A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD7DD24-BA38-4D61-80BE-8FC736DB337A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61952FA1-906F-4F55-9553-C77B10FD6931}
+	EndGlobalSection
+EndGlobal

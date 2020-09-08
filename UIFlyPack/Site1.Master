@@ -1,0 +1,86 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="UIFlyPack.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+      <link rel="stylesheet" type="text/css" href="StyleSheet1.css">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+     <form id="form1" runat="server">
+    <div id="UnConected" runat="server" >
+        <ul class="inner_main_menu">
+            <li >
+                <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />
+            </li>
+             <li>
+                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
+            </li>
+             <li>
+                  <a href="Register.aspx">Register</a>
+            </li>
+        </ul>
+    </div>
+      <div id="Customer" runat="server" visible="false">
+        <ul>
+            <li>
+                <asp:Button runat="server" ID="logout1" OnClick="LogOut1_Click" Text="logOut"/>
+            </li>
+             <li>
+                 <a href="HomePage.aspx">Fly Pack</a>
+            </li>
+             <li>
+                  <a href="Register.aspx">Register</a>
+            </li>
+        </ul>
+    </div>
+     <div id="ShopMenager" runat="server" visible="false">
+        <ul>
+            <li>
+                <asp:Button runat="server" ID="logout2" OnClick="LogOut1_Click" Text="logOut"/>
+            </li>
+             <li>
+                 <a href="HomePage.aspx">Fly Pack</a>
+            </li>
+             <li>
+                  <a href="Register.aspx">Register</a>
+            </li>
+        </ul>
+    </div>
+     <div id="Delivery" runat="server" visible="false">
+        <ul>
+            <li>
+                <asp:Button runat="server" ID="logout3" OnClick="LogOut1_Click" Text="logOut"/>
+            </li>
+             <li>
+                 <a href="HomePage.aspx">Fly Pack</a>
+            </li>
+             <li>
+                  <a href="Register.aspx">Register</a>
+            </li>
+        </ul>
+    </div>
+     <div id="SystemMenager" runat="server" visible="false" >
+        <ul>
+            <li>
+                <asp:Button runat="server" ID="logout4" OnClick="LogOut1_Click" Text="logOut"/>
+            </li>
+             <li>
+                 <a href="HomePage.aspx">Fly Pack</a>
+            </li>
+             <li>
+                  <a href="Register.aspx">Register</a>
+            </li>
+        </ul>
+    </div>
+   
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
