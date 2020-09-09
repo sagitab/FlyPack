@@ -105,6 +105,33 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
 
         /// <summary>
+        /// NumOfFloor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NumOfFloor;
+
+        /// <summary>
+        /// RangeValidatorFloor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RangeValidatorFloor;
+
+        /// <summary>
+        /// Adress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Adress;
+
+        /// <summary>
         /// regB control.
         /// </summary>
         /// <remarks>

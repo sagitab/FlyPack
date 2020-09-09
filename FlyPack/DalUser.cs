@@ -12,7 +12,8 @@ namespace FlyPack
         public static DataTable IsExsist(string pass)
         {
             DBHelper helper = new DBHelper(Constants.PROVIDER,Constants.PATH);
-            string sql = $"SELECT * FROM Ussers WHERE [Password]={pass}";
+            helper.OpenConnection();
+            string sql = $"SELECT * FROM Users WHERE [Password]='{pass}'";
             DataTable t = null;
             try
             {
@@ -22,12 +23,14 @@ namespace FlyPack
             {
                 throw new Exception("sql ex");
             }
+            helper.CloseConnection();
             return t;
         }
         public static int AddUser(string email, string phone, string fname, string lname, string adress, string password, int type,int numOfFloor)
         {
             DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
-            string sql = $"INSERT INTO Users(Email,[Password],PhoneNum,FirstName,LastName,Adress,NumOfFloor,Type) VALUES ({email},{password},{phone},{fname},{lname},{adress},{numOfFloor},{type})";
+            helper.OpenConnection();
+            string sql = $"INSERT INTO Users([Email],[Password],[PhoneNumber],[FirstName],[LastName],[Adress],[NumOfFloor],[Type]) VALUES ('{email}','{password}','{phone}','{fname}','{lname}','{adress}',{numOfFloor},{type})";
             int id = -1;
             try
             {
@@ -37,6 +40,7 @@ namespace FlyPack
             {
                 throw new Exception("sql ex");
             }
+            helper.CloseConnection();
             return id;
         }
 

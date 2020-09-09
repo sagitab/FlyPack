@@ -35,6 +35,9 @@
              <li>
                   <a href="Register.aspx">Register</a>
             </li>
+                <li>
+                <a href="Register.aspx">Register</a>
+            </li>
         </ul>
     </div>
      <div id="ShopMenager" runat="server" visible="false">

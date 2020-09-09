@@ -26,16 +26,16 @@ namespace UIFlyPack
                 if (IsExsist)
                 {
                     Session["user"] = user;
-                   
+                    massage.Text = "seccses!!!";
                 }
                 else
                 {
-                    massage.Text = "שם משתמש או סיסמא לא נכונים";
+                    massage.Text = "User name or password uncorect";
                 }
             }
             else
             {
-                massage.Text = "שם משתמש או סיסמא לא נכונים";
+                massage.Text = "User name or password uncorect";
             }
         }
     }

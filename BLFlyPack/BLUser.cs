@@ -35,10 +35,10 @@ namespace BLFlyPack
             if(t!=null)
             {
                 DataRow row = t.Rows[0];
-                UserID = int.Parse(row["UserID"].ToString());
+                UserID = int.Parse(row["ID"].ToString());
                 Type = int.Parse(row["Type"].ToString());
                 Email = row["Email"].ToString();
-                Phone = row["PhoneNum"].ToString();
+                Phone = row["PhoneNumber"].ToString();
                 FirstName = row["FirstName"].ToString();
                 LastName = row["LastName"].ToString();
                 Adress = row["Adress"].ToString();

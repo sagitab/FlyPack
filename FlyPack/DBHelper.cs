@@ -160,16 +160,16 @@ namespace FlyPack
         public bool OpenConnection()
         {
             if (conn == null) conn = new OleDbConnection(BuildConnString());
-            //try
-            //{
+            try
+            {
                 conn.Open();
                 connOpen = true;
 
-            //}
-            //catch(Exception e) // basically, if the connection throws some kind of exception.
-            //{
-            //    return false;
-            //}
+            }
+            catch (Exception e) // basically, if the connection throws some kind of exception.
+            {
+                return false;
+            }
             // if it didn't return false, it probably went successful, do a true.
             return true;
         }

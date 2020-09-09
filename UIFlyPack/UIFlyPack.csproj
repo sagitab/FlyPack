@@ -72,6 +72,7 @@
     <Content Include="HomePage.aspx" />
     <Content Include="Img\BGimg.jpg" />
     <Content Include="LogIn.aspx" />
+    <Content Include="OrderNow.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="StyleSheet1.css" />
     <Content Include="Web.config" />
@@ -93,6 +94,13 @@
     </Compile>
     <Compile Include="LogIn.aspx.designer.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OrderNow.aspx.cs">
+      <DependentUpon>OrderNow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderNow.aspx.designer.cs">
+      <DependentUpon>OrderNow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">
