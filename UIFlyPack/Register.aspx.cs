@@ -27,6 +27,8 @@ namespace UIFlyPack
                 string adress = Adress.Text;
                 string email = Email.Text;
                 int numOFFloor = int.Parse(NumOfFloor.Text);
+                bool passCheck = BLUser.PasswordCheck(password);
+                //if()
                 BLUser user = new BLUser(email,phoneNum,name,lname,adress, password,4, numOFFloor);
                 MSG.Text = "Register complited";
             }

@@ -19,9 +19,9 @@ namespace FlyPack
             {
                  t = helper.GetDataTable(sql);
             }
-            catch
+            catch(Exception e)
             {
-                throw new Exception("sql ex");
+                Console.WriteLine(e.ToString());
             }
             helper.CloseConnection();
             return t;
