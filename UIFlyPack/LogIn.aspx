@@ -15,7 +15,7 @@
            <span class="Header">Password </span>
         </li>
          <li>
-             <asp:TextBox runat="server" ID="Pass" CssClass="TextBox"></asp:TextBox>
+              <input runat="server" type="password" id="Pass" CssClass="TextBox" style="  position: relative;    border-top: none;    border-left: none;    border-right: none;    height: 1.2em;    width: 150px;    font-size: 0.6em;    display: block;    border-bottom: solid 4px; border-bottom-color: darkblue; display: block; color: darkblue;background-color: white;"  />
              <asp:RegularExpressionValidator ID="passValidator" runat="server" ControlToValidate="Pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True" ValidationExpression="^.{8}$" ></asp:RegularExpressionValidator>
         </li>
          <li>

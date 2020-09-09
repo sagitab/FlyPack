@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLFlyPack;
+
 namespace UIFlyPack
 {
     public partial class LogIn : System.Web.UI.Page
@@ -18,7 +19,7 @@ namespace UIFlyPack
         {
             
             string name = Name.Text;
-            string pass = Pass.Text;
+            string pass = Pass.Value.ToString();
             if(name!=""&&pass!="")
             {
                 BLUser user = new BLUser(pass);
@@ -26,7 +27,7 @@ namespace UIFlyPack
                 if (IsExsist)
                 {
                     Session["user"] = user;
-                    massage.Text = "seccses!!!";
+                    Response.Redirect("HomePage.aspx");
                 }
                 else
                 {

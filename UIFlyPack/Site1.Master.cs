@@ -12,11 +12,11 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BLUser user = null;
+            
             int type=-1;
-            //try
-            //{
-                user = (BLUser)Session["user"];
+           
+           
+              BLUser  user = (BLUser)Session["user"];
                 if(user!=null)
                 {
                     type = user.Type;

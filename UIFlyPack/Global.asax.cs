@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Configuration;
+using BLFlyPack;
 
 namespace UIFlyPack
 {
@@ -15,7 +16,7 @@ namespace UIFlyPack
         {
             System.IO.Directory.SetCurrentDirectory(Server.MapPath("~/"));
             string connectionString = WebConfigurationManager.AppSettings["Path"];
-            //BLHelper.SetDBPath(connectionString); //to change
+            General.SetPath(connectionString); 
         }
 
         protected void Session_Start(object sender, EventArgs e)

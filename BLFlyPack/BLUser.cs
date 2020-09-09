@@ -50,7 +50,7 @@ namespace BLFlyPack
         public static bool PasswordCheck(string pass)
         {
             DataTable t = DalUser.IsExsist(pass);
-            if(t!=null)
+            if(t.Rows.Count>0)
             {
                 return false;
             }

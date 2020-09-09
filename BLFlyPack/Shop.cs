@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlyPack;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BLFlyPack
 {
    public class Shop
     {
-        public int OrderID { get; }
+        public int ID { get; }
         public int MaxOrders { get; set; }
         public int ShopManegerID { get; set; }
         public DateTime WorkingHourStart { get; set; }
@@ -19,7 +20,7 @@ namespace BLFlyPack
         public string WebLink { get; set; }
         public Shop(int maxOrders, int shopm,DateTime workstart, DateTime workend,string adress,string shopname,string weblink)
         {
-            OrderID = -1;//dal
+            ID = -1;//dal
             MaxOrders = maxOrders;
             ShopManegerID = shopm;
             WorkingHourStart = workstart;
@@ -28,10 +29,28 @@ namespace BLFlyPack
             ShopName = shopname;
             WebLink = weblink;
         }
-        public static DataTable GetShops()
+        public Shop(DataRow row)
         {
-            DataTable t = null;//dal
-            return t;
+            ID = int.Parse(row["ID"].ToString());
+            MaxOrders = int.Parse(row["MaxOrder"].ToString());
+            ShopManegerID = int.Parse(row["ShopManagerID"].ToString());
+            WorkingHourStart =DateTime.Parse( row["WorkingHourStart"].ToString());
+            WorkingHourEnd = DateTime.Parse(row["WorkingHourEnd"].ToString());
+            Adress = row["Adress"].ToString();
+            ShopName = row["ShopName"].ToString();
+            WebLink = row["WebLink"].ToString();
         }
+        public static List<Shop> GetShops()
+        {
+            DataTable shops= DalShop.GetShopTable();
+            List<Shop> shops1 = new List<Shop>();
+            foreach(DataRow row in shops.Rows)
+            {
+                shops1.Add(new Shop(row));
+            }
+            return shops1;
+        }
+        
+             
     }
 }

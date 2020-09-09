@@ -18,7 +18,7 @@ namespace UIFlyPack
         protected void regB_Click(object sender, EventArgs e)
         {
             bool validetors = NameValidator.IsValid && LNameValidator.IsValid && passValidator.IsValid && EmailValidator.IsValid &&PhoneValidator.IsValid;
-            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Value != "")
+            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Value != "" && Phone.Text != "" && Adress.Text != "")
             {
                 string name = Name.Text;
                 string lname = LName.Text;
@@ -27,12 +27,21 @@ namespace UIFlyPack
                 string adress = Adress.Text;
                 string email = Email.Text;
                 int numOFFloor = int.Parse(NumOfFloor.Text);
-                BLUser user = new BLUser(email,phoneNum,name,lname,adress, password,4, numOFFloor);
-                MSG.Text = "Register complited";
+                bool passCheck = BLUser.PasswordCheck(password);
+                if(passCheck)
+                {
+                    BLUser user = new BLUser(email, phoneNum, name, lname, adress, password, 4, numOFFloor);
+                    MSG.Text = "Register complited";
+                }
+                else
+                {
+                    MSG.Text = "Password caught please try again";
+                }
+              
             }
             else
             {
-                MSG.Text = "pleas type all the details";
+                MSG.Text = "please type all the details";
             }
         }
     }

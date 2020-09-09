@@ -44,7 +44,7 @@
         </li>
          <li>           
             <asp:TextBox ID="NumOfFloor" runat="server" Text="" CssClass="TextBox"></asp:TextBox>
-            <asp:RangeValidator ID="RangeValidatorFloor" runat="server" ErrorMessage="RangeValidator" Type="Integer" MaximumValue="163" MinimumValue="-10" ControlToValidate="NumOfFloor"></asp:RangeValidator>
+            <asp:RangeValidator ID="RangeValidatorFloor" runat="server" ErrorMessage="Unvalid floor" Type="Integer" MaximumValue="163" MinimumValue="-10" ControlToValidate="NumOfFloor"></asp:RangeValidator>
         </li>
         <li>
              <span class="Header" >Adress</span>

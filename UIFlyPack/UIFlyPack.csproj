@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DB\DataBaseFlyPack %282%29.accdb" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
     <Content Include="Img\BGimg.jpg" />

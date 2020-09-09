@@ -15,9 +15,18 @@ namespace BLFlyPack
         public DateTime AriveTime { get; set; }
         public DateTime Time { get; set; }
         public string Status { get; set; }
-        public BLOrder( int CustomerID, int DeliveryID, int ShopID, DateTime AriveTime, DateTime Time, string Status)
+        public BLOrder( int CustomerID, int DeliveryID, int ShopID, DateTime AriveTime,  string Status)
         {
-            this.OrderID = -1;//call dal
+            int id;
+            try
+            {
+                id= FlyPack.DalOrder.AddOrder(CustomerID, DeliveryID, ShopID, AriveTime, Status);
+            }
+            catch
+            {
+                throw new Exception("fail");
+            }
+            this.OrderID = id;
             this.CustomerID = CustomerID;
             this.DeliveryID = DeliveryID;
             this.ShopID = ShopID;
