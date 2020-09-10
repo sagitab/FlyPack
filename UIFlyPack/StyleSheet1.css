@@ -38,7 +38,7 @@
     height: 2em;
     background-color: dodgerblue;
     font-family: serif;
-    float:left;
+    float:right;
 }
 .addList {
     display: list-item;

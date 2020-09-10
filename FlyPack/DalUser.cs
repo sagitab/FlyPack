@@ -26,22 +26,22 @@ namespace FlyPack
             helper.CloseConnection();
             return t;
         }
-        public static int AddUser(string email, string phone, string fname, string lname, string adress, string password, int type,int numOfFloor)
+        public static void AddUser(string email, string phone, string fname, string lname,  string password, int type,string id)
         {
             DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
             helper.OpenConnection();
-            string sql = $"INSERT INTO Users([Email],[Password],[PhoneNumber],[FirstName],[LastName],[Adress],[NumOfFloor],[Type]) VALUES ('{email}','{password}','{phone}','{fname}','{lname}','{adress}',{numOfFloor},{type})";
-            int id = -1;
+            string sql = $"INSERT INTO Users([Email],[Password],[PhoneNumber],[FirstName],[LastName],[UserType],[ID]) VALUES ('{email}','{password}','{phone}','{fname}','{lname}','{type}',{id})";
+            
             try
             {
-                id = helper.WriteData(sql);
+                helper.WriteData(sql);
             }
             catch
             {
                 throw new Exception("sql ex");
             }
             helper.CloseConnection();
-            return id;
+            
         }
 
     }

@@ -35,6 +35,9 @@
              <li>
                   <a href="OrderNow.aspx">Order Now</a>
             </li>
+              <li>
+                  <a href="ViewOrders.aspx">View Orders</a>
+            </li>
                
         </ul>
     </div>

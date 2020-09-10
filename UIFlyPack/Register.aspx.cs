@@ -18,19 +18,18 @@ namespace UIFlyPack
         protected void regB_Click(object sender, EventArgs e)
         {
             bool validetors = NameValidator.IsValid && LNameValidator.IsValid && passValidator.IsValid && EmailValidator.IsValid &&PhoneValidator.IsValid;
-            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Value != "" && Phone.Text != "" && Adress.Text != "")
+            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Value != "" && Phone.Text != "" )
             {
+                string id = ID.Text;
                 string name = Name.Text;
                 string lname = LName.Text;
                 string password = pass.Value ;
                 string phoneNum = Phone.Text;
-                string adress = Adress.Text;
                 string email = Email.Text;
-                int numOFFloor = int.Parse(NumOfFloor.Text);
                 bool passCheck = BLUser.PasswordCheck(password);
                 if(passCheck)
                 {
-                    BLUser user = new BLUser(email, phoneNum, name, lname, adress, password, 4, numOFFloor);
+                    BLUser user = new BLUser(email, phoneNum, name, lname, password, 4,id);
                     MSG.Text = "Register complited";
                 }
                 else

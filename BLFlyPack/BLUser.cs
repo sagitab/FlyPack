@@ -15,17 +15,15 @@ namespace BLFlyPack
         public string Phone { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Adress { get; set; }
         public string Password { get; set; }
-        public BLUser(string email, string phone, string fname, string lname, string adress, string password,int type,int numOfFloor)
+        public BLUser(string email, string phone, string fname, string lname, string password,int type,string id)
         {
-            UserID = FlyPack.DalUser.AddUser(email, phone, fname, lname, adress, password, type,numOfFloor);
+            FlyPack.DalUser.AddUser(email, phone, fname, lname, password, type, id);
             Type = type;
             Email = email;
             Phone = phone;
             FirstName = fname;
             LastName = lname;
-            Adress = adress;
             Password = password;
             
         }
@@ -36,12 +34,11 @@ namespace BLFlyPack
             {
                 DataRow row = t.Rows[0];
                 UserID = int.Parse(row["ID"].ToString());
-                Type = int.Parse(row["Type"].ToString());
+                Type = int.Parse(row["UserType"].ToString());
                 Email = row["Email"].ToString();
                 Phone = row["PhoneNumber"].ToString();
                 FirstName = row["FirstName"].ToString();
                 LastName = row["LastName"].ToString();
-                Adress = row["Adress"].ToString();
                 Password = row["Password"].ToString();
             }
             

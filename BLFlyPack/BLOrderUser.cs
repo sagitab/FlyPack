@@ -13,10 +13,9 @@ namespace BLFlyPack
         {
             //Orders= call dal
         }
-        public List<BLOrder> GetOrders()
+        public List<BLOrder> GetOrders(int type)
         {
-            DataTable t = null;//call d
-            //datat>>>List
+            DataTable t = null;
             List<BLOrder> orders = null;
             return orders;
         }

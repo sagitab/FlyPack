@@ -4,6 +4,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul class="addList" style="margin:20px 35%">
         <li>
+             <span class="Header" >ID</span>
+        </li>
+        <li>           
+            <asp:TextBox ID="ID" runat="server" CssClass="TextBox"></asp:TextBox>
+           
+        </li>
+        <li>
              <span class="Header" >Name</span>
         </li>
         <li>           
@@ -37,21 +44,6 @@
         <li>           
             <asp:TextBox ID="Email" runat="server" Text="example@gmail.com" CssClass="TextBox"></asp:TextBox>
             <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="Email" ErrorMessage="Unvalid email" SetFocusOnError="True" ValidationExpression="^.{3,10}@gmail.com" ></asp:RegularExpressionValidator>
-        </li>
-         
-          <li>
-             <span class="Header" >Num of floor</span>
-        </li>
-         <li>           
-            <asp:TextBox ID="NumOfFloor" runat="server" Text="" CssClass="TextBox"></asp:TextBox>
-            <asp:RangeValidator ID="RangeValidatorFloor" runat="server" ErrorMessage="Unvalid floor" Type="Integer" MaximumValue="163" MinimumValue="-10" ControlToValidate="NumOfFloor"></asp:RangeValidator>
-        </li>
-        <li>
-             <span class="Header" >Adress</span>
-        </li>
-        <li>           
-            <asp:TextBox ID="Adress" runat="server" Text="" CssClass="TextBox"></asp:TextBox>
-            
         </li>
         <li style="margin-right:150px" >
 

@@ -18,8 +18,8 @@
  <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="False" CssClass="content-table">
         <Columns>
             
-            <asp:BoundField DataField="userName" HeaderText="Delivery name" />
-            <asp:BoundField DataField="phoneNum" HeaderText="Shop name" />
+            <asp:BoundField DataField="FirstName" HeaderText="Delivery name" />
+            <asp:BoundField DataField="ShopName" HeaderText="Shop name" />
             <asp:BoundField DataField="OrderStutus" HeaderText="Status" />
             <asp:BoundField DataField="Time" HeaderText="Arrival time" />
         </Columns>
