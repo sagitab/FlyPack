@@ -44,6 +44,16 @@ namespace BLFlyPack
             
            
         }
+        public BLUser(DataRow row)
+        {
+            UserID = int.Parse(row["ID"].ToString());
+            Type = int.Parse(row["UserType"].ToString());
+            Email = row["Email"].ToString();
+            Phone = row["PhoneNumber"].ToString();
+            FirstName = row["FirstName"].ToString();
+            LastName = row["LastName"].ToString();
+            Password = row["Password"].ToString();
+        }
         public static bool PasswordCheck(string pass)
         {
             DataTable t = DalUser.IsExsist(pass);

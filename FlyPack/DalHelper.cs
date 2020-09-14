@@ -229,5 +229,13 @@ namespace FlyPack
             helper.CloseConnection();
             return tb;
         }
+        public static bool DeleteRowById(int id,string table,string idColumName)
+        {
+            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+
+            if (!helper.OpenConnection()) throw new ConnectionException();
+            string sql = $"DELETE * FROM {table} WHERE {idColumName}={id}";
+           return  helper.WriteData(sql)==1;
+        }
     }
 }

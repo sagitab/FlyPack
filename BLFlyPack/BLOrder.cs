@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using FlyPack;
 namespace BLFlyPack
 {
     public class BLOrder
@@ -35,6 +36,20 @@ namespace BLFlyPack
             this.Status = Status;
 
         }
+        public static bool DeleteOrder(int id)
+        {
+            return DalOrder.DeleteOrder(id);
+        }
+        //public BLOrder(DataRow row)
+        //{
+        //    this.OrderID = id;
+        //    this.CustomerID = CustomerID;
+        //    this.DeliveryID = DeliveryID;
+        //    this.ShopID = ShopID;
+        //    this.AriveTime = AriveTime;
+        //    this.Time = Time;
+        //    this.Status = Status;
+        //}
         
     }
 }

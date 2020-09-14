@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using FlyPack;
 namespace BLFlyPack
 {
    public class BLOrderUser:BLUser
@@ -13,11 +14,20 @@ namespace BLFlyPack
         {
             //Orders= call dal
         }
-        public List<BLOrder> GetOrders(int type)
+        //public BLOrderUser(BLUser user)
+        //{
+
+        //}
+        public static DataTable GetOrders(int Type, int UserID)
         {
-            DataTable t = null;
-            List<BLOrder> orders = null;
-            return orders;
+            DataTable t = DalOrderUsers.GetOrders(Type, UserID);
+            //List<BLOrder> orders = new List<BLOrder>();
+            //foreach (DataRow row in t.Rows)
+            //{
+            //    orders.Add();
+            //}
+           
+            return t;
         }
     }
 }

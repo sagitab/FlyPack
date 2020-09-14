@@ -14,18 +14,29 @@
          <li>
  <asp:Button ID="SearchOrderB" runat="server" Text="search" />
         </li>--%>
-         <li>
- <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="False" CssClass="content-table">
+         <li style="">
+ <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="False" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting">
         <Columns>
             
-            <asp:BoundField DataField="FirstName" HeaderText="Delivery name" />
+            <asp:BoundField DataField="DeliveryName" HeaderText="Delivery name" />
             <asp:BoundField DataField="ShopName" HeaderText="Shop name" />
             <asp:BoundField DataField="OrderStutus" HeaderText="Status" />
-            <asp:BoundField DataField="Time" HeaderText="Arrival time" />
+            <asp:BoundField DataField="ArrivalTime" HeaderText="Arrival time" />
+            <%--<asp:ButtonField ButtonType="Button" Text="cencel" Visible="true"  />--%>
+            <asp:CommandField ButtonType="Button" Visible="true" DeleteText="cencel" ShowDeleteButton="true"  />
         </Columns>
     </asp:GridView>
         </li>
+        <li>
+            <asp:Label ID="ErMSG" runat="server" Text=""></asp:Label>
+        </li>
     </ul>
+ 
+   
+        
+   
+   
+    
  
    
         

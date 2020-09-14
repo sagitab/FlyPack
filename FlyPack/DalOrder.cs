@@ -12,5 +12,18 @@ namespace FlyPack
         {
             return DalHelper.Insert($"INSERT INTO Orders([CostomerID],[DeliverID],[ShopID],[ArrivalTime],[OrderStutus]) VALUES ({CustomerID},{DeliveryID},{ShopID},#{AriveTime}#,'{Status}')");
         }
+        public static bool DeleteOrder(int id)
+        {
+            bool secess = true;
+            try
+            {
+              secess=  DalHelper.DeleteRowById(id, "Orders","ID");
+            }
+            catch
+            {
+                secess = false;
+            }
+            return secess;
+        }
     }
 }

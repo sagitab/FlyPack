@@ -111,3 +111,18 @@ ul {
     font-family: fantasy;
     color: dodgerblue;
 }
+.content-table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: right;
+    width: 100%;
+    background-color:black;
+    color:dodgerblue;
+}
