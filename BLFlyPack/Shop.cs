@@ -24,7 +24,7 @@ namespace BLFlyPack
         public Shop(DataRow row)
         {
             ID = int.Parse(row["ID"].ToString());
-            Adress = row["Adress"].ToString();
+            Adress = row["Address"].ToString();
             ShopName = row["ShopName"].ToString();
         }
         public static List<Shop> GetShops()

@@ -18,9 +18,18 @@ namespace BLFlyPack
         //{
 
         //}
-        public static DataTable GetOrders(int Type, int UserID)
+        public static DataTable GetOrders(int Type,  string UserID,bool Isnew,string condition)
         {
-            DataTable t = DalOrderUsers.GetOrders(Type, UserID);
+            DataTable t = null;
+            if (Isnew)
+            {
+              t=DalOrderUsers.GetOrders(Type, UserID, "AND ([Orders].[OrderStutus]<5)"+condition);
+            }
+            else
+            {
+                t =DalOrderUsers.GetOrders(Type, UserID, "AND ([Orders].[OrderStutus]=5)" + condition);
+            }
+         
             //List<BLOrder> orders = new List<BLOrder>();
             //foreach (DataRow row in t.Rows)
             //{

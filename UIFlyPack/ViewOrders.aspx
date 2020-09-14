@@ -3,17 +3,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul>
-        <%--<li>
+        <li>
                <asp:TextBox ID="serchedValue" runat="server"></asp:TextBox>
         </li>
-         <li>
-<select id="SearchBy" name="D1">
-            <option value="" >status</option>
+         <li >
+<select  id="SearchBy" name="D1" style=""  runat="server" >
+            <option value="OrderStutus" >Status</option>
+            <option value="ArrivalTime" >Arrival time</option>
+            <option value="ShopName" >Shop name</option>
+            <option value="FirstName" >Delivery name</option>
         </select>
         </li>
          <li>
- <asp:Button ID="SearchOrderB" runat="server" Text="search" />
-        </li>--%>
+ <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" />
+        </li>
+         <li >
+<select  id="NewOrOld"  runat="server" style="" >
+            <option value="N" >New Orders</option>
+            <option value="O" >Old Orders</option>
+        </select>
+        </li>
          <li style="">
  <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="False" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting">
         <Columns>

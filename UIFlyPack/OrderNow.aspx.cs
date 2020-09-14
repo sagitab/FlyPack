@@ -38,8 +38,9 @@ namespace UIFlyPack
             int shopID = int.Parse(ShopDropDownList.SelectedValue);
             //int shopID = int.Parse(ShopDropDownList.Items[index].ToString());
             DateTime AriveDateTime = DateTime.Parse(ariveTime);
+            int numOfF = int.Parse(NumOfFloor.Text);
             BLUser user = (BLUser)Session["user"];
-            BLOrder order = new BLOrder(user.UserID,1,shopID,AriveDateTime,"");
+            BLOrder order = new BLOrder(user.UserID,"111111111",shopID,AriveDateTime,1, DateTime.Parse("01/01/1 1:11:11"),adress, numOfF);
             MSG.Text = "order secces!!";
         }
     }

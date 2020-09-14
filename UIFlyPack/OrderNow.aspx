@@ -26,10 +26,16 @@
            </select>
         </li>
         <li>
-             <span  class="Header">Change adress</span>
+             <span  class="Header">Adress</span>
         </li>
         <li>          
              <asp:TextBox ID="Adress" runat="server" CssClass="TextBox"></asp:TextBox>
+        </li>
+         <li>
+             <span  class="Header">Number of floor</span>
+        </li>
+        <li>          
+             <asp:TextBox ID="NumOfFloor" runat="server" CssClass="TextBox"></asp:TextBox>
         </li>
          <li>
              <asp:Button runat="server" ID="OrderB" OnClick="OrderB_Click" CssClass="BSearch" Text="Order" />

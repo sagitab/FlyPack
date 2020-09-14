@@ -15,7 +15,7 @@ namespace UIFlyPack
 
             BLUser user = (BLUser)Session["user"];
             int type = user.Type;
-            UpOrders(user);
+            UpOrders(user,"");
             if (!Page.IsPostBack)
             {
                 if(type==4)
@@ -26,13 +26,22 @@ namespace UIFlyPack
                     //cf.ShowDeleteButton = true;
                     //OrderTable.Columns.Add(cf);
                     OrderTable.Columns[4].AccessibleHeaderText = "c";
-                }
+                }       
             }
         }
-        public void UpOrders(BLUser user)
+        public void UpOrders(BLUser user,string condition)
         {
             int type = user.Type;
-            DataTable orders= BLOrderUser.GetOrders(type, user.UserID);
+            DataTable orders = null;
+            if (NewOrOld.Items[NewOrOld.SelectedIndex].Value=="N")
+            {
+                orders = BLOrderUser.GetOrders(type, user.UserID, true,condition);
+            }
+            else
+            {
+                orders = BLOrderUser.GetOrders(type, user.UserID, false,condition);
+            }
+          
             if(orders!=null&&orders.Rows.Count>0)
             {
                 OrderTable.DataSource = orders;
@@ -52,9 +61,17 @@ namespace UIFlyPack
             //int id = int.Parse(t);
             BLUser user = (BLUser)Session["user"];
             int type = user.Type;
-            DataTable table = BLOrderUser.GetOrders(type, user.UserID);
-           
-            int ID = (int)table.Rows[index]["ID"];
+            DataTable orders = (DataTable)OrderTable.DataSource;
+            //if (NewOrOld.Items[NewOrOld.SelectedIndex].Value == "N")
+            //{
+            //    orders = BLOrderUser.GetOrders(type, user.UserID, true,"");
+            //}
+            //else
+            //{
+            //    orders = BLOrderUser.GetOrders(type, user.UserID, false,"");
+            //}
+
+            int ID = (int)orders.Rows[index]["ID"];
            
 
             bool seccces = BLOrder.DeleteOrder(ID);
@@ -62,7 +79,7 @@ namespace UIFlyPack
             {
 
 
-                UpOrders(user);
+                UpOrders(user,"");
                 ErMSG.Text = "order cencel seccsessfuly";
 
             }
@@ -70,6 +87,33 @@ namespace UIFlyPack
             {
                 ErMSG.Text = "eror ";
             }
+        }
+
+        protected void SearchOrderB_Click(object sender, EventArgs e)
+        {
+            string SearchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
+            string condition = "";
+            string Value = serchedValue.Text;
+            if (SearchBys == "ArrivalTime")
+            {
+                condition = $"AND (Orders.{SearchBys}=#{Value})#";
+
+            }
+            else if ( SearchBys == "OrderStutus")
+            {
+                condition = $"AND (Orders.{SearchBys}={Value})";
+
+            }
+            else if (SearchBys == "FirstName")
+            {
+                condition = $"AND (Users.{SearchBys}='{Value}')";
+            }
+            else
+            {
+                condition = $"AND (Shops.{SearchBys}={Value})";
+            }
+            UpOrders((BLUser)Session["user"], condition);
+
         }
     }
 }

@@ -9,7 +9,7 @@ namespace BLFlyPack
 {
    public class BLUser
     {
-        public int UserID { get; }
+        public string UserID { get; }
         public int Type { get; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -33,7 +33,7 @@ namespace BLFlyPack
             if(t!=null)
             {
                 DataRow row = t.Rows[0];
-                UserID = int.Parse(row["ID"].ToString());
+                UserID = row["ID"].ToString();
                 Type = int.Parse(row["UserType"].ToString());
                 Email = row["Email"].ToString();
                 Phone = row["PhoneNumber"].ToString();
@@ -46,7 +46,7 @@ namespace BLFlyPack
         }
         public BLUser(DataRow row)
         {
-            UserID = int.Parse(row["ID"].ToString());
+            UserID = row["ID"].ToString();
             Type = int.Parse(row["UserType"].ToString());
             Email = row["Email"].ToString();
             Phone = row["PhoneNumber"].ToString();
