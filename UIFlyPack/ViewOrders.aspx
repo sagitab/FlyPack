@@ -4,10 +4,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul>
         <li>
-               <asp:TextBox ID="serchedValue" runat="server"></asp:TextBox>
+               <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
         </li>
          <li >
-<select  id="SearchBy" name="D1" style=""  runat="server" >
+<select  id="SearchBy" name="D1" style=""  runat="server" class="Select" >
             <option value="OrderStutus" >Status</option>
             <option value="ArrivalTime" >Arrival time</option>
             <option value="ShopName" >Shop name</option>
@@ -15,10 +15,10 @@
         </select>
         </li>
          <li>
- <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" />
+ <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" CssClass="BSearch"  />
         </li>
          <li >
-<select  id="NewOrOld"  runat="server" style="" >
+<select  id="NewOrOld" class="Select"  runat="server" onchange="NewOrOld_Click" >
             <option value="N" >New Orders</option>
             <option value="O" >Old Orders</option>
         </select>
@@ -38,6 +38,9 @@
         </li>
         <li>
             <asp:Label ID="ErMSG" runat="server" Text=""></asp:Label>
+        </li>
+          <li>
+            <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
         </li>
     </ul>
  
