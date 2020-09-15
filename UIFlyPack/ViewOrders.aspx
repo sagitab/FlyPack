@@ -18,10 +18,12 @@
  <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" CssClass="BSearch"  />
         </li>
          <li >
-<select  id="NewOrOld" class="Select"  runat="server" onchange="NewOrOld_Click" >
+             <asp:DropDownList ID="NewOrOld" CssClass="Select" >
+              </asp:DropDownList>
+<%--<select  id="NewOrOld" class="Select"  runat="server" onchange="NewOrOld_Click" >
             <option value="N" >New Orders</option>
             <option value="O" >Old Orders</option>
-        </select>
+        </select>--%>
         </li>
          <li style="">
  <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="False" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting">
@@ -41,6 +43,7 @@
         </li>
           <li>
             <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
+              
         </li>
     </ul>
  
