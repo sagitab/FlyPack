@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <ul>
+    <ul style="display:inline">
         <li>
                <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
         </li>
@@ -14,11 +14,11 @@
             <option value="FirstName" >Delivery name</option>
         </select>
         </li>
-         <li>
+         <li style="">
  <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" CssClass="BSearch"  />
         </li>
          <li >
-             <asp:DropDownList ID="NewOrOld" CssClass="Select" >
+             <asp:DropDownList ID="NewOrOld" CssClass="Select" runat="server" OnSelectedIndexChanged="NewOrOld_Click" AutoPostBack="true" >
               </asp:DropDownList>
 <%--<select  id="NewOrOld" class="Select"  runat="server" onchange="NewOrOld_Click" >
             <option value="N" >New Orders</option>

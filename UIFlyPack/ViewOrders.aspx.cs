@@ -12,11 +12,7 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            BLUser user = (BLUser)Session["user"];
-            int type = user.Type;
-            UpOrders(user,"");
-            if (!Page.IsPostBack)
+              if (!Page.IsPostBack)
             {
                 //if(type==4)
                 //{
@@ -26,14 +22,31 @@ namespace UIFlyPack
                 //    //cf.ShowDeleteButton = true;
                 //    //OrderTable.Columns.Add(cf);
                 //    OrderTable.Columns[4].AccessibleHeaderText = "c";
-                //}       
+                //}    
+                //set data source
+                Dictionary<string, string> d = new Dictionary<string, string> { {"New orders","N" },{ "Old orders", "O" } };
+                NewOrOld.DataSource =d ;
+                //NewOrOld.DataTextField = "ShopName";
+                //NewOrOld.DataValueField = ;
+                // Bind the data to the control.
+                NewOrOld.DataTextField = "Key";
+                NewOrOld.DataValueField = "Value" ;
+                NewOrOld.DataBind();
+
+                // Set the default selected item, if desired.
+                NewOrOld.SelectedIndex = 0;
             }
+            BLUser user = (BLUser)Session["user"];
+            int type = user.Type;
+            UpOrders(user,"");
+          
         }
         public void UpOrders(BLUser user,string condition)
         {
             int type = user.Type;
             DataTable orders = null;
-            if (NewOrOld.Items[NewOrOld.SelectedIndex].Value=="N")
+            int index = NewOrOld.SelectedIndex;
+            if (NewOrOld.Items[index].Value=="N")
             {
                 orders = BLOrderUser.GetOrders(type, user.UserID, true,condition);
             }
