@@ -18,15 +18,15 @@ namespace UIFlyPack
             UpOrders(user,"");
             if (!Page.IsPostBack)
             {
-                if(type==4)
-                {
-                    //CommandField cf = new CommandField();
-                    //cf.ButtonType = ButtonType.Button;
-                    //cf.DeleteText = "c";
-                    //cf.ShowDeleteButton = true;
-                    //OrderTable.Columns.Add(cf);
-                    OrderTable.Columns[4].AccessibleHeaderText = "c";
-                }       
+                //if(type==4)
+                //{
+                //    //CommandField cf = new CommandField();
+                //    //cf.ButtonType = ButtonType.Button;
+                //    //cf.DeleteText = "c";
+                //    //cf.ShowDeleteButton = true;
+                //    //OrderTable.Columns.Add(cf);
+                //    OrderTable.Columns[4].AccessibleHeaderText = "c";
+                //}       
             }
         }
         public void UpOrders(BLUser user,string condition)
@@ -46,9 +46,12 @@ namespace UIFlyPack
             {
                 OrderTable.DataSource = orders;
                 OrderTable.DataBind();
+                ErMSG.Text = "";
+                OrderTable.Visible = true;
             }
             else
             {
+                OrderTable.Visible = false;
                 ErMSG.Text = "there is no orders";
             }
           
@@ -77,15 +80,12 @@ namespace UIFlyPack
             bool seccces = BLOrder.DeleteOrder(ID);
             if (seccces)
             {
-
-
-                UpOrders(user,"");
-                ErMSG.Text = "order cencel seccsessfuly";
-
+                MSG.Text = "order cencel seccsessfuly";
+                UpOrders(user, "");
             }
             else
             {
-                ErMSG.Text = "eror ";
+                MSG.Text = "Fail to cencel order ";
             }
         }
 
@@ -96,7 +96,7 @@ namespace UIFlyPack
             string Value = serchedValue.Text;
             if (SearchBys == "ArrivalTime")
             {
-                condition = $"AND (Orders.{SearchBys}=#{Value})#";
+                condition = $"AND (Orders.{SearchBys}=#{Value}#)";
 
             }
             else if ( SearchBys == "OrderStutus")
@@ -106,13 +106,18 @@ namespace UIFlyPack
             }
             else if (SearchBys == "FirstName")
             {
-                condition = $"AND (Users.{SearchBys}='{Value}')";
+                condition = $"AND (Users_1.{SearchBys}='{Value}')";
             }
             else
             {
-                condition = $"AND (Shops.{SearchBys}={Value})";
+                condition = $"AND (Shops.{SearchBys}='{Value}')";
             }
             UpOrders((BLUser)Session["user"], condition);
+
+        }
+        protected void NewOrOld_Click(object sender, EventArgs e)
+        {
+            UpOrders((BLUser)Session["user"], "");
 
         }
     }

@@ -38,7 +38,7 @@
     height: 2em;
     background-color: dodgerblue;
     font-family: serif;
-    float:right;
+    float:left;
 }
 .addList {
     display: list-item;
@@ -67,6 +67,8 @@ span {
 ul {
     list-style-type: none;
     text-align: left;
+    padding-inline-start: 0%;
+    
 }
 
 .inner_main_menu {
@@ -121,8 +123,15 @@ ul {
     font-weight: 300;
     margin: 0 auto;
     margin-top: 10px;
-    text-align: right;
-    width: 100%;
+    text-align: left;
+    width: 70%;
     background-color:black;
     color:dodgerblue;
+}
+.Select {
+    color: black;
+    background-color: dodgerblue;
+    text-align: left;
+    border-radius: 5px 5px 0 0;
+    float:left;
 }
