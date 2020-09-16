@@ -11,7 +11,7 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["user"] = new BLUser("hoohoo12");//to del
+            Session["user"] = new BLUser("12345678");//to del
         }
     }
 }

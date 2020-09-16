@@ -52,6 +52,9 @@
              <li>
                   <a href="Register.aspx">Register</a>
             </li>
+              <li>
+                  <a href="ViewOrders.aspx">View orders</a>
+            </li>
         </ul>
     </div>
      <div id="Delivery" runat="server" visible="false">
@@ -65,6 +68,9 @@
              <li>
                   <a href="Register.aspx">Register</a>
             </li>
+              <li>
+                  <a href="ViewOrders.aspx">View orders</a>
+            </li>
         </ul>
     </div>
      <div id="SystemMenager" runat="server" visible="false" >
@@ -77,6 +83,9 @@
             </li>
              <li>
                   <a href="Register.aspx">Register</a>
+            </li>
+              <li>
+                  <a href="ViewOrders.aspx">View orders</a>
             </li>
         </ul>
     </div>

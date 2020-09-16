@@ -26,7 +26,7 @@
         </select>--%>
         </li>
          <li style="">
- <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="False" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting">
+ <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting">
         <Columns>
             
             <asp:BoundField DataField="DeliveryName" HeaderText="Delivery name" />

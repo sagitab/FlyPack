@@ -14,6 +14,11 @@ namespace UIFlyPack
         {
               if (!Page.IsPostBack)
             {
+                //to gneratte grid view dinamiclly*************
+
+                //BoundField b = new BoundField();
+                //b.DataField=
+
                 //if(type==4)
                 //{
                 //    //CommandField cf = new CommandField();
@@ -95,6 +100,7 @@ namespace UIFlyPack
             {
                 MSG.Text = "order cencel seccsessfuly";
                 UpOrders(user, "");
+                //Page_Load(sender, e);
             }
             else
             {
