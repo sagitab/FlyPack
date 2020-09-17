@@ -12,5 +12,9 @@ namespace FlyPack
         {
             return DalHelper.AllFromTable("Shops");
         }
+        public static int AddShop(string shopName,string adress,int shopM)
+        {
+            return DalHelper.Insert($"INSERT INTO Shops(ShopName,Address,ShopManagerID) VALUES('{shopName}','{adress}',{shopM})");
+        }
     }
 }

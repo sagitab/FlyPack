@@ -12,10 +12,40 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-              if (!Page.IsPostBack)
+            BLUser user = (BLUser)Session["user"];
+            if (!Page.IsPostBack)
             {
                 //to gneratte grid view dinamiclly*************
+                DataTable orders = BLOrderUser.GetOrders(user.Type, user.UserID, true, "");
+                DataColumnCollection colums = orders.Columns;
+               foreach( DataColumn column in colums)
+                {
+                    if(column.ColumnName!="ID")
+                    {
+                        //Declare the bound field and allocate memory for the bound field.
+                        BoundField bfield = new BoundField();
 
+                        //Initalize the DataField value.
+                        bfield.DataField = column.ColumnName;
+
+                        //Initialize the HeaderText field value.
+                        bfield.HeaderText = column.ColumnName;
+
+                        //Add the newly created bound field to the GridView.
+                        OrderTable.Columns.Add(bfield);
+                    }
+                    
+                }
+                int t = user.Type;
+               if(t == 4)
+                {
+                    CommandField cf = new CommandField();
+                    cf.ButtonType = ButtonType.Button;
+                    cf.DeleteText = "cencel";
+                    cf.ShowDeleteButton = true;
+                    
+                    OrderTable.Columns.Add(cf);
+                }
                 //BoundField b = new BoundField();
                 //b.DataField=
 
@@ -41,7 +71,7 @@ namespace UIFlyPack
                 // Set the default selected item, if desired.
                 NewOrOld.SelectedIndex = 0;
             }
-            BLUser user = (BLUser)Session["user"];
+           
             int type = user.Type;
             UpOrders(user,"");
           

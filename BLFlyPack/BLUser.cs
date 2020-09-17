@@ -63,5 +63,18 @@ namespace BLFlyPack
             }
             return true;
         }
+        public static DataTable ShopManegerTable()
+        {
+            DataTable t =null;
+            try
+            {
+                t = DalUser.ShopManegerTable();
+            }
+            catch
+            {
+                return null;
+            }
+            return t;
+        }
     }
 }

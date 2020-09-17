@@ -47,7 +47,7 @@
     <Compile Include="General.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLUser.cs" />
-    <Compile Include="Shop.cs" />
+    <Compile Include="BLShop.cs" />
     <Compile Include="ShopManeger.cs" />
   </ItemGroup>
   <ItemGroup>

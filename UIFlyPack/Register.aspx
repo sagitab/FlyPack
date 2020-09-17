@@ -2,13 +2,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <ul class="addList" style="margin:20px 35%">
+    <ul class="addList" style="margin:20px 50%">
         <li>
              <span class="Header" >ID</span>
         </li>
         <li>           
             <asp:TextBox ID="ID" runat="server" CssClass="TextBox"></asp:TextBox>
-           
+             <asp:RegularExpressionValidator ID="IDValidator" runat="server"  ControlToValidate="ID" ErrorMessage="ID need to be  9 tabs" SetFocusOnError="True" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" ></asp:RegularExpressionValidator>
         </li>
         <li>
              <span class="Header" >Name</span>

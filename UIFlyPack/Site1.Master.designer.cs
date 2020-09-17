@@ -69,6 +69,15 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.Button logout1;
 
         /// <summary>
+        /// UserString control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UserString;
+
+        /// <summary>
         /// ShopMenager control.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button logout2;
+
+        /// <summary>
+        /// UserString2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UserString2;
 
         /// <summary>
         /// Delivery control.
@@ -105,6 +123,15 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.Button logout3;
 
         /// <summary>
+        /// UserString3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UserString3;
+
+        /// <summary>
         /// SystemMenager control.
         /// </summary>
         /// <remarks>
@@ -121,6 +148,15 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button logout4;
+
+        /// <summary>
+        /// UserString4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UserString4;
 
         /// <summary>
         /// ContentPlaceHolder1 control.

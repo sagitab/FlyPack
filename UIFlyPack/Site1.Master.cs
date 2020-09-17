@@ -17,9 +17,11 @@ namespace UIFlyPack
            
            
               BLUser  user = (BLUser)Session["user"];
+            string des = "";
                 if(user!=null)
                 {
                     type = user.Type;
+                des = $"Helo {user.FirstName}";
                 }
                  
             //}
@@ -32,21 +34,25 @@ namespace UIFlyPack
             {
                 //sh
                 ShopMenager.Visible = true;
+                UserString2.Text = des;
             }
             else if (type == 2)
             {
                 //system
                 SystemMenager.Visible = true;
+                UserString3.Text = des;
             }
             else if (type == 3)
             {
                 //delivery
                 Delivery.Visible = true;
+                UserString4.Text = des;
             }
             else if (type == 4)
             {
                 //custumer
                 Customer.Visible = true;
+                UserString.Text = des;
             }
            if(type!=-1)
             {

@@ -29,12 +29,12 @@
  <asp:GridView ID="OrderTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting">
         <Columns>
             
-            <asp:BoundField DataField="DeliveryName" HeaderText="Delivery name" />
+           <%-- <asp:BoundField DataField="DeliveryName" HeaderText="Delivery name" />
             <asp:BoundField DataField="ShopName" HeaderText="Shop name" />
             <asp:BoundField DataField="OrderStutus" HeaderText="Status" />
             <asp:BoundField DataField="ArrivalTime" HeaderText="Arrival time" />
-            <%--<asp:ButtonField ButtonType="Button" Text="cencel" Visible="true"  />--%>
-            <asp:CommandField ButtonType="Button" Visible="true" DeleteText="cencel" ShowDeleteButton="true"  />
+            <%--<asp:ButtonField ButtonType="Button" Text="cencel" Visible="true"  />
+            <asp:CommandField ButtonType="Button" Visible="true" DeleteText="cencel" ShowDeleteButton="true"  />--%>
         </Columns>
     </asp:GridView>
         </li>

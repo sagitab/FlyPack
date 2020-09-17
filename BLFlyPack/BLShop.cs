@@ -8,32 +8,40 @@ using System.Threading.Tasks;
 
 namespace BLFlyPack
 {
-   public class Shop
+   public class BLShop
     {
         public int ID { get; }
         public int ShopManegerID { get; set; }
         public string Adress { get; set; }
         public string ShopName { get; set; }
-        public Shop( int shopm,string adress,string shopname)
+        public BLShop( int shopm,string adress,string shopname)
         {
-            ID = -1;//dal
+            
+            try
+            {
+                ID = DalShop.AddShop(shopname, adress, shopm);
+            }
+            catch
+            {
+                ID = -1;
+            }
             Adress = adress;
             ShopName = shopname;
             ShopManegerID = shopm;
         }
-        public Shop(DataRow row)
+        public BLShop(DataRow row)
         {
             ID = int.Parse(row["ID"].ToString());
             Adress = row["Address"].ToString();
             ShopName = row["ShopName"].ToString();
         }
-        public static List<Shop> GetShops()
+        public static List<BLShop> GetShops()
         {
             DataTable shops= DalShop.GetShopTable();
-            List<Shop> shops1 = new List<Shop>();
+            List<BLShop> shops1 = new List<BLShop>();
             foreach(DataRow row in shops.Rows)
             {
-                shops1.Add(new Shop(row));
+                shops1.Add(new BLShop(row));
             }
             return shops1;
         }

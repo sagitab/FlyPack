@@ -43,6 +43,9 @@ namespace FlyPack
             helper.CloseConnection();
             
         }
-
+        public static DataTable ShopManegerTable()
+        {
+            return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users WHERE(Users.UserType = 1)");
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace UIFlyPack
                 DateTime time = new DateTime(2020, 9, 9, 1, 30, 0);
                 times.Items[0].Value = time.ToString() ;
                 //set data source
-                ShopDropDownList.DataSource = BLFlyPack.Shop.GetShops();
+                ShopDropDownList.DataSource = BLFlyPack.BLShop.GetShops();
                 ShopDropDownList.DataTextField = "ShopName";
                 ShopDropDownList.DataValueField = "ID";
                 // Bind the data to the control.
