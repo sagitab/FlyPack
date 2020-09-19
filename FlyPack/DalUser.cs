@@ -47,5 +47,36 @@ namespace FlyPack
         {
             return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users WHERE(Users.UserType = 1)");
         }
+        public static DataTable DeliveriesTable()
+        {
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111'))");
+        }
+        public static DataTable DeliveriesTableByShop(int ShopID)
+        {
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {ShopID})  );");
+        }
+        
+        public static DataTable CustomersTable()
+        {
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4)");
+        }
+        public static DataTable CustomersTableByShop(int ShopID)
+        {
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID}));");
+        }
+        public static DataTable CustomersSearch(string conditon)
+        {
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{conditon})");
+        }
+        public static DataTable CustomersSearchByShop(int ShopID, string conditon)
+        {
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID})AND{conditon});");
+        }
+        public static int GetshopID(string ManegerID)
+        {
+            return int.Parse( DalHelper.Select($"SELECT Shops.ID FROM Shops WHERE(((Shops.ShopManagerID) = '{ManegerID}'));").Rows[0]["ID"].ToString());
+
+        }
+        
     }
 }

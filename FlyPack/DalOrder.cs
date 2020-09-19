@@ -25,5 +25,18 @@ namespace FlyPack
             }
             return secess;
         }
+        //public static int NumOfOrdersFromShop(int ShopID)
+        //{
+        //    return int.Parse( DalHelper.Select($"SELECT Count(Orders.ID) AS NumOfOrders FROM Orders WHERE(([Orders].[ShopID] = {ShopID})); ").Rows[0]["NumOfOrders"].ToString());
+        //}
+        public static int NumOfOrders(string condition)
+        {
+            return int.Parse(DalHelper.Select($"SELECT Count(Orders.ID) AS NumOfOrders FROM Orders {condition}").Rows[0]["NumOfOrders"].ToString());
+        }
+        public static string NumOfActiveCustomers(string condition)
+        {
+            return DalHelper.Select($"SELECT Count(Orders.CustomerID) AS NumOfActiveCustomers FROM Orders {condition}").Rows[0]["NumOfActiveCustomers"].ToString();
+        }
+       
     }
 }

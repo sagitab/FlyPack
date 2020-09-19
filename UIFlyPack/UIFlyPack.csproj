@@ -70,6 +70,7 @@
     <Content Include="HomePage.aspx" />
     <Content Include="Img\BGimg.jpg" />
     <Content Include="LogIn.aspx" />
+    <Content Include="ManegerInfo.aspx" />
     <Content Include="OrderNow.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="StyleSheet1.css" />
@@ -100,6 +101,13 @@
     </Compile>
     <Compile Include="LogIn.aspx.designer.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ManegerInfo.aspx.cs">
+      <DependentUpon>ManegerInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManegerInfo.aspx.designer.cs">
+      <DependentUpon>ManegerInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="OrderNow.aspx.cs">
       <DependentUpon>OrderNow.aspx</DependentUpon>

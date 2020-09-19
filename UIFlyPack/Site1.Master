@@ -57,6 +57,9 @@
               <li>
                   <a href="ViewOrders.aspx">View orders</a>
             </li>
+             <li>
+                  <a href="ManegerInfo.aspx">Informaton</a>
+            </li>
               <li>
                 <asp:Label ID="UserString2"  runat="server" Text=""></asp:Label>
             </li>
@@ -100,6 +103,9 @@
             </li>
              <li>
                   <a href="AddShop.aspx">Add Shop</a>
+            </li>
+            <li>
+                  <a href="ManegerInfo.aspx">Informaton</a>
             </li>
               <li>
                 <asp:Label ID="UserString4"  runat="server" Text=""></asp:Label>

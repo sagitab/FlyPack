@@ -15,7 +15,7 @@ namespace UIFlyPack
             if (!Page.IsPostBack)
             {
                 //set data source
-                ShopMSelect.DataSource = BLFlyPack.BLUser.ShopManegerTable();
+                ShopMSelect.DataSource = BLFlyPack.BLShopMenager.ShopManegerTable();
                 ShopMSelect.DataTextField = "FirstName";
                 ShopMSelect.DataValueField = "ID";
                 // Bind the data to the control.

@@ -63,12 +63,13 @@ namespace BLFlyPack
             }
             return true;
         }
-        public static DataTable ShopManegerTable()
+      
+        public virtual DataTable DeliveriesTable()
         {
-            DataTable t =null;
+            DataTable t = null;
             try
             {
-                t = DalUser.ShopManegerTable();
+                t = DalUser.DeliveriesTable();
             }
             catch
             {
@@ -76,5 +77,59 @@ namespace BLFlyPack
             }
             return t;
         }
+        public virtual DataTable CustomersTable()
+        {
+            DataTable t = null;
+            try
+            {
+                t = DalUser.CustomersTable();
+            }
+            catch
+            {
+                return null;
+            }
+            return t;
+        }
+        public virtual DataTable CustomersSerch(string condition)
+        {
+            DataTable t = null;
+            try
+            {
+                t = DalUser.CustomersSearch(condition);
+            }
+            catch
+            {
+                return null;
+            }
+            return t;
+        }
+        public int GetshopID()
+        {
+          
+            return DalUser.GetshopID(this.UserID);
+        }
+        public int GetNumOfOrders()
+        {
+            if(Type==1)
+            {
+                return DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {GetshopID()})");
+            }
+            else
+            {
+                return DalOrder.NumOfOrders("");
+            }
+        }
+        public virtual string GetNumOfActiveCustomers()
+        {
+            if (Type == 1)
+            {
+                return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetshopID()})");
+            }
+            else
+            {
+                return DalOrder.NumOfActiveCustomers("");
+            }
+        }
+
     }
 }

@@ -46,7 +46,7 @@ namespace BLFlyPack
             return DalOrder.DeleteOrder(id);
         }
         //public BLOrder(DataRow row)
-        //{
+        //{ret
         //    this.OrderID = id;
         //    this.CustomerID = CustomerID;
         //    this.DeliveryID = DeliveryID;
@@ -55,6 +55,9 @@ namespace BLFlyPack
         //    this.Time = Time;
         //    this.Status = Status;
         //}
-        
+        public static string NumOfOrdersFromShop(int ShopID)
+        {
+            return  DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {ShopID})").ToString();
+        }
     }
 }

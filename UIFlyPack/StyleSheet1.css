@@ -127,6 +127,7 @@ ul {
     width: 70%;
     background-color:black;
     color:dodgerblue;
+    margin:2% auto 2%;
 }
     .content-table tr td input {
         border-style: none;
@@ -151,5 +152,7 @@ ul {
     background-color: dodgerblue;
     text-align: left;
     border-radius: 5px 5px 0 0;
-    float:left;
+    float: left;
+    border-color: dodgerblue;
+    height: 1.2em;
 }
