@@ -27,7 +27,7 @@ namespace FlyPack
             }
             else
             {
-                return DalHelper.Select($"SELECT Orders.ID,Orders.ArrivalTime, Orders.OrderStutus, Shops.ShopName, Users.FirstName FROM Users AS Users_1 INNER JOIN(Shops INNER JOIN (Users INNER JOIN Orders ON Users.ID = Orders.[CustomerID]) ON Shops.ID = Orders.ShopID) ON Users_1.ID = Orders.DeliverID WHERE(([Users].[ID] =[Orders].[DeliverID]){newOrOld}) ORDER BY Orders.ArrivalTime;");
+                return DalHelper.Select($"SELECT Orders.ID,Orders.ArrivalTime, Orders.OrderStutus, Shops.ShopName, Users.FirstName FROM Users AS Users_1 INNER JOIN(Shops INNER JOIN (Users INNER JOIN Orders ON Users.ID = Orders.[CustomerID]) ON Shops.ID = Orders.ShopID) ON Users_1.ID = Orders.DeliverID WHERE(([Users_1].[ID] =[Orders].[DeliverID]){newOrOld}) ORDER BY Orders.ArrivalTime;");
             }
           
         }

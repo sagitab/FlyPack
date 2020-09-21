@@ -37,6 +37,25 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT Count(Orders.CustomerID) AS NumOfActiveCustomers FROM Orders {condition}").Rows[0]["NumOfActiveCustomers"].ToString();
         }
-       
+       public static bool UpdateArrivalTime(DateTime ArrivalTime,int OrderID)
+        {
+            string StringArrivalTime = $"#{ArrivalTime.ToString()}#";
+            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", StringArrivalTime, "ArrivalTime");
+        }
+        public static bool UpdateStatus(int status, int OrderID)
+        {
+            string StringStatus = (status.ToString());
+            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", StringStatus, "OrderStutus");
+        }
+
+        public static bool UpdateReadyTime(DateTime ReadyTime, int OrderID)
+        {
+            string StringReadyTime = $"#{ReadyTime.ToString()}#";
+            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", StringReadyTime, "ReadyTime");
+        }
+        public static int GetOrderStatus(int OrderID)
+        {
+            return int.Parse( DalHelper.Select($"SELECT OrderStutus FROM Orders WHERE ID={OrderID}").Rows[0]["OrderStutus"].ToString());
+        }
     }
 }

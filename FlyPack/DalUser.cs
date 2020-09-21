@@ -14,17 +14,17 @@ namespace FlyPack
             DBHelper helper = new DBHelper(Constants.PROVIDER,Constants.PATH);
             helper.OpenConnection();
             string sql = $"SELECT * FROM Users WHERE [Password]='{pass}'";
-            DataTable t = null;
+            DataTable table = null;
             try
             {
-                 t = helper.GetDataTable(sql);
+                 table = helper.GetDataTable(sql);
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
             helper.CloseConnection();
-            return t;
+            return table;
         }
         public static void AddUser(string email, string phone, string fname, string lname,  string password, int type,string id)
         {
@@ -53,7 +53,7 @@ namespace FlyPack
         }
         public static DataTable DeliveriesTableByShop(int ShopID)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {ShopID})  );");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {ShopID}) AND (Users.ID<>'111111111'));");
         }
         
         public static DataTable CustomersTable()

@@ -31,7 +31,10 @@
         </li>
         </li>
         <li style="margin: 0% 30% 2% 0%;">
-            <asp:Label ID="ErMSG" runat="server" Text=""></asp:Label>
+            <asp:Label ID="ErCustomer" runat="server" Text=""></asp:Label>
+        </li>
+        <li style="margin: 0% 30% 2% 0%;">
+            <asp:Label ID="ErDelivery" runat="server" Text=""></asp:Label>
         </li>
  <asp:GridView ID="CustomersTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" >
         <Columns>

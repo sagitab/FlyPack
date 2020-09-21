@@ -19,11 +19,19 @@ namespace UIFlyPack
                 DataTable Deliveries = user.DeliveriesTable();
                 if (!BindTable(Deliveries, DeliveriesTable))
                 {
-                    ErMSG.Text = "fail show deliveries table";
+                    ErDelivery.Text = "fail show deliveries table";
+                }
+                else
+                {
+                    ErDelivery.Text = "";
                 }
                 if (!BindTable(Customes, CustomersTable))
                 {
-                    ErMSG.Text = "fail show custimers table";
+                    ErCustomer.Text = "fail show customers table";
+                }
+                else
+                {
+                    ErCustomer.Text = "";
                 }
                 NumOfOrders.Text ="Number of orders- "+ user.GetNumOfOrders()+"Number of customers that order- "+user.GetNumOfActiveCustomers();
             }
@@ -39,7 +47,7 @@ namespace UIFlyPack
             bool isExsist= BindTable(Customes, CustomersTable);
             if(isExsist)
             {
-                ErMSG.Text = "Not valied search value";
+                ErCustomer.Text = "Not valied search value";
             }
         }
         public bool BindTable(DataTable table,GridView gridView)
@@ -49,7 +57,6 @@ namespace UIFlyPack
             {
                 gridView.DataSource = table;
                 gridView.DataBind();
-                ErMSG.Text = "";
                 return true;
             }
             return false;

@@ -237,5 +237,13 @@ namespace FlyPack
             string sql = $"DELETE * FROM {table} WHERE {idColumName}={id}";
            return  helper.WriteData(sql)==1;
         }
+        public static bool UpdateColumById(int id, string table, string idColumName,string ReplaceValue, string ReplacedColumName)
+        {
+            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+
+            if (!helper.OpenConnection()) throw new ConnectionException();
+            string sql = $"UPDATE {table} SET {ReplacedColumName}={ReplaceValue} WHERE {idColumName}={id}";
+            return helper.WriteData(sql) == 1;
+        }
     }
 }

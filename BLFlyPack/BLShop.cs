@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace BLFlyPack
 {
-   public class BLShop
+    public class BLShop
     {
         public int ID { get; }
         public int ShopManegerID { get; set; }
         public string Adress { get; set; }
         public string ShopName { get; set; }
-        public BLShop( int shopm,string adress,string shopname)
+        public BLShop(int shopm, string adress, string shopname)
         {
-            
+
             try
             {
                 ID = DalShop.AddShop(shopname, adress, shopm);
@@ -37,15 +37,15 @@ namespace BLFlyPack
         }
         public static List<BLShop> GetShops()
         {
-            DataTable shops= DalShop.GetShopTable();
+            DataTable shops = DalShop.GetShopTable();
             List<BLShop> shops1 = new List<BLShop>();
-            foreach(DataRow row in shops.Rows)
+            foreach (DataRow row in shops.Rows)
             {
                 shops1.Add(new BLShop(row));
             }
             return shops1;
         }
-        
-             
+
+
     }
 }

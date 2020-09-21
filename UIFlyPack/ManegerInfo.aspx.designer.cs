@@ -51,13 +51,22 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.Button SearchCustomerB;
 
         /// <summary>
-        /// ErMSG control.
+        /// ErCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErMSG;
+        protected global::System.Web.UI.WebControls.Label ErCustomer;
+
+        /// <summary>
+        /// ErDelivery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErDelivery;
 
         /// <summary>
         /// CustomersTable control.

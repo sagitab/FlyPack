@@ -59,5 +59,57 @@ namespace BLFlyPack
         {
             return  DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {ShopID})").ToString();
         }
+        public static bool UpdateArrivalTime(DateTime ArrivalTime,int OrderID)
+        {
+            bool seccsess = true;
+            try
+            {
+                seccsess = DalOrder.UpdateArrivalTime(ArrivalTime,OrderID);
+            }
+            catch
+            {
+                return false;
+            }
+            return seccsess;
+        }
+        public static bool UpdateReadyTime(DateTime ArrivalTime, int OrderID)
+        {
+            bool seccsess = true;
+            try
+            {
+                seccsess = DalOrder.UpdateReadyTime(ArrivalTime, OrderID);
+            }
+            catch
+            {
+                return false;
+            }
+            return seccsess;
+        }
+        public static bool UpdateStatus(int Status, int OrderID)
+        {
+            bool seccsess = true;
+            try
+            {
+                seccsess = DalOrder.UpdateStatus(Status, OrderID);
+            }
+            catch
+            {
+                return false;
+            }
+            return seccsess;
+        }
+        public static int GetOrderStatus(int OrderID)
+        {
+            int stastus = -1;
+            try
+            {
+                return DalOrder.GetOrderStatus(OrderID);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return stastus;
+        }
     }
 }

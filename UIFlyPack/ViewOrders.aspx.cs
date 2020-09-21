@@ -46,6 +46,23 @@ namespace UIFlyPack
                     
                     OrderTable.Columns.Add(cf);
                 }
+               else if(t==3)
+                {
+                    ButtonField b = new ButtonField();
+                    b.Text = "Start order";
+                    b.ButtonType = ButtonType.Button;
+                    b.CommandName = "updateArrivalTime";
+                    OrderTable.Columns.Add(b);
+                }
+                else if (t == 1)
+                {
+                    ButtonField b = new ButtonField();
+                    b.Text = "prodact ready to delivered";
+                    b.ButtonType = ButtonType.Button;
+                    b.CommandName = "updateReadyTime";
+                    OrderTable.Columns.Add(b);
+                }
+
                 //BoundField b = new BoundField();
                 //b.DataField=
 
@@ -74,7 +91,7 @@ namespace UIFlyPack
            
             int type = user.Type;
             UpOrders(user,"");
-          
+            
         }
         public void UpOrders(BLUser user,string condition)
         {
@@ -140,6 +157,7 @@ namespace UIFlyPack
 
         protected void SearchOrderB_Click(object sender, EventArgs e)
         {
+            BLUser user = (BLUser)Session["user"];
             string SearchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
             string condition = "";
             string Value = serchedValue.Text;
@@ -153,10 +171,14 @@ namespace UIFlyPack
                 condition = $"AND (Orders.{SearchBys}={Value})";
 
             }
-            else if (SearchBys == "FirstName")
+            else if (SearchBys == "FirstName"&&user.Type!=3)
             {
                 condition = $"AND (Users_1.{SearchBys}='{Value}')";
             }
+            //else if (SearchBys == "FirstName" && user.Type == 3)
+            //{
+            //    condition = $"AND (Users.{SearchBys}='{Value}')";
+            //}
             else
             {
                 condition = $"AND (Shops.{SearchBys}='{Value}')";
@@ -169,5 +191,101 @@ namespace UIFlyPack
             UpOrders((BLUser)Session["user"], "");
 
         }
+
+        protected void OrderTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int index = Convert.ToInt32(e.CommandArgument);
+            DataTable orders = (DataTable)OrderTable.DataSource;
+            int orderID = int.Parse(orders.Rows[index]["ID"].ToString());
+            int status = BLOrder.GetOrderStatus(orderID);
+            if(e.CommandName== "updateArrivalTime"/*&& status==3*/)
+            {
+               
+
+                DateTime ExitTime = DateTime.Now;
+                DateTime AraivelTime = ExitTime.AddMinutes(20);//need to cuculate how match time
+                bool seccsess = BLOrder.UpdateArrivalTime(AraivelTime, orderID) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;
+                if (!seccsess)
+                {
+                    ErMSG.Text = "fail to start order";
+                }
+                else
+                {
+                    Button myButton = null;
+                    GridViewRow row = OrderTable.Rows[index];
+                    myButton = (Button)row.Cells[0].Controls[0];
+                    myButton.Text = "Order started";
+                    myButton.CommandName = "started";
+                    UpOrders((BLUser)Session["user"], "");
+                }
+            }
+            else if(e.CommandName== "updateReadyTime" /*&& status == 2*/)
+            {
+               
+                DateTime ReadyTime = DateTime.Now;
+                bool seccsess = BLOrder.UpdateReadyTime(ReadyTime, orderID)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;
+                if (!seccsess)
+                {
+                    ErMSG.Text = "fail to update ready time";
+                }
+                else
+                {
+                    Button myButton = null;
+                    GridViewRow row = OrderTable.Rows[index];
+
+                    myButton = (Button)(row.Cells[4].Controls[0]);
+                    myButton.Text = "Prodact Ready";
+                    myButton.CommandName = "Ready";
+                    UpOrders((BLUser)Session["user"], "");
+                }
+            }
+
+        }
+
+        protected void OrderTable_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //GridViewRow row = e.Row;
+            //LinkButton myButton = row.FindControl("#ContentPlaceHolder1_OrderTable > tbody > tr:nth-child(2) > td:nth-child(5) > input[type=button]") as LinkButton;
+
+            //if (myButton != null)
+            //{
+            //    myButton.Text = "Order started";
+            //    myButton.CommandName = "started";
+            //}
+
+        }
+
+        //protected void OrderTable_RowEditing(object sender, GridViewEditEventArgs e)
+        //{
+        //    int index = e.NewEditIndex;
+        //    OrderTable.EditIndex = index;
+        //}
+
+        //protected void OrderTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        //{
+        //    int index = e.RowIndex;
+        //    DataTable orders = (DataTable)OrderTable.DataSource;
+        //    int orderID = int.Parse(orders.Rows[index]["ID"].ToString());
+
+        //    DateTime ExitTime = DateTime.Now;
+        //    DateTime AraivelTime = ExitTime.AddMinutes(20);//need to cuculate how match time
+        //    bool seccsess = BLOrder.UpdateArrivalTime(AraivelTime, orderID);
+        //    if (!seccsess)
+        //    {
+        //        ErMSG.Text = "fail to start order";
+        //    }
+        //    else
+        //    {
+        //        UpOrders((BLUser)Session["user"], "");
+        //    }
+        //}
+
+        //protected void OrderTable_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        //{
+        //    OrderTable.EditIndex = -1;
+        //    UpOrders((BLUser)Session["user"], "");
+        //}
+
+
     }
 }
