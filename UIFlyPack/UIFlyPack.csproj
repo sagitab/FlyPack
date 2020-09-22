@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddShop.aspx" />
+    <Content Include="DeliveryMap.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
     <Content Include="Img\BGimg.jpg" />
@@ -84,6 +85,13 @@
     </Compile>
     <Compile Include="AddShop.aspx.designer.cs">
       <DependentUpon>AddShop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryMap.aspx.cs">
+      <DependentUpon>DeliveryMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeliveryMap.aspx.designer.cs">
+      <DependentUpon>DeliveryMap.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

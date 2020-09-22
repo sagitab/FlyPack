@@ -9,6 +9,7 @@ namespace BLFlyPack
 {
    public class BLShopMenager:BLUser
     {
+        
         public int ShopID { get; set; }
         public BLShopMenager(string pass):base(pass)
         {

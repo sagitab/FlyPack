@@ -9,6 +9,7 @@ namespace BLFlyPack
 {
     public class BLUser
     {
+        
         public string UserID { get; }
         public int Type { get; }
         public string Email { get; set; }

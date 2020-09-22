@@ -41,6 +41,20 @@ namespace BLFlyPack
             this.NumOfFloor = Floor;
             this.ReadyTime = ReadyTime;
         }
+
+        public BLOrder(DataRow row)
+        {
+            this.OrderID =int.Parse(row["ID"].ToString()) ;
+            this.CustomerID = row["CustomerID"].ToString();
+            this.DeliveryID = row["DeliverID"].ToString();
+            this.ShopID = int.Parse(row["ShopID"].ToString());
+            this.AriveTime =DateTime.Parse(row["ArrivalTime"].ToString());
+            this.Time = DateTime.Parse(row["Time"].ToString()); ;//what to do?
+            this.Status = int.Parse(row["OrderStutus"].ToString());
+            this.Address = row["Address"].ToString();
+            this.NumOfFloor = int.Parse(row["NumOfFloor"].ToString());
+            this.ReadyTime = DateTime.Parse(row["ReadyTime"].ToString());
+        }
         public static bool DeleteOrder(int id)
         {
             return DalOrder.DeleteOrder(id);
@@ -110,6 +124,13 @@ namespace BLFlyPack
                 Console.WriteLine(e.Message);
             }
             return stastus;
+        }
+
+        public static List<BLOrder> GetOrdersListByTime(string deliveryId)
+        {
+            DataTable orderTable = DalOrder.GetOrdersListByTime(deliveryId);
+
+            return (from object row in orderTable.Rows select new BLOrder((DataRow) row)).ToList();
         }
     }
 }

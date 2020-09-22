@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,11 @@ namespace FlyPack
         public static int GetOrderStatus(int OrderID)
         {
             return int.Parse( DalHelper.Select($"SELECT OrderStutus FROM Orders WHERE ID={OrderID}").Rows[0]["OrderStutus"].ToString());
+        }
+
+        public static DataTable GetOrdersListByTime(string deliveryId)
+        {
+            return DalHelper.Select($"SELECT * FROM Orders WHERE DeliverID='{deliveryId}' AND OrderStutus=4 ORDER BY Time");
         }
     }
 }

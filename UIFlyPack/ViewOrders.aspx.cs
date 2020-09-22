@@ -15,24 +15,24 @@ namespace UIFlyPack
             BLUser user = (BLUser)Session["user"];
             if (!Page.IsPostBack)
             {
-                //to gneratte grid view dinamiclly*************
+                //to gneratte grid view dynamically*************
                 DataTable orders = BLOrderUser.GetOrders(user.Type, user.UserID, true, "");
-                DataColumnCollection colums = orders.Columns;
-               foreach( DataColumn column in colums)
+                DataColumnCollection columns = orders.Columns;
+               foreach( DataColumn column in columns)
                 {
                     if(column.ColumnName!="ID")
                     {
                         //Declare the bound field and allocate memory for the bound field.
-                        BoundField bfield = new BoundField();
+                        BoundField field = new BoundField();
 
                         //Initalize the DataField value.
-                        bfield.DataField = column.ColumnName;
+                        field.DataField = column.ColumnName;
 
                         //Initialize the HeaderText field value.
-                        bfield.HeaderText = column.ColumnName;
+                        field.HeaderText = column.ColumnName;
 
                         //Add the newly created bound field to the GridView.
-                        OrderTable.Columns.Add(bfield);
+                        OrderTable.Columns.Add(field);
                     }
                     
                 }
@@ -41,7 +41,7 @@ namespace UIFlyPack
                 {
                     CommandField cf = new CommandField();
                     cf.ButtonType = ButtonType.Button;
-                    cf.DeleteText = "cencel";
+                    cf.DeleteText = "cancel";
                     cf.ShowDeleteButton = true;
                     
                     OrderTable.Columns.Add(cf);
@@ -57,7 +57,7 @@ namespace UIFlyPack
                 else if (t == 1)
                 {
                     ButtonField b = new ButtonField();
-                    b.Text = "prodact ready to delivered";
+                    b.Text = "product ready to delivered";
                     b.ButtonType = ButtonType.Button;
                     b.CommandName = "updateReadyTime";
                     OrderTable.Columns.Add(b);
@@ -98,13 +98,14 @@ namespace UIFlyPack
             int type = user.Type;
             DataTable orders = null;
             int index = NewOrOld.SelectedIndex;
-            if (NewOrOld.Items[index].Value=="N")
+            switch (NewOrOld.Items[index].Value)
             {
-                orders = BLOrderUser.GetOrders(type, user.UserID, true,condition);
-            }
-            else
-            {
-                orders = BLOrderUser.GetOrders(type, user.UserID, false,condition);
+                case "N":
+                    orders = BLOrderUser.GetOrders(type, user.UserID, true,condition);
+                    break;
+                default:
+                    orders = BLOrderUser.GetOrders(type, user.UserID, false,condition);
+                    break;
             }
           
             if(orders!=null&&orders.Rows.Count>0)
@@ -142,16 +143,16 @@ namespace UIFlyPack
             int ID = (int)orders.Rows[index]["ID"];
            
 
-            bool seccces = BLOrder.DeleteOrder(ID);
-            if (seccces)
+            bool success = BLOrder.DeleteOrder(ID);
+            if (success)
             {
-                MSG.Text = "order cencel seccsessfuly";
+                MSG.Text = "order cancel successfully";
                 UpOrders(user, "");
                 //Page_Load(sender, e);
             }
             else
             {
-                MSG.Text = "Fail to cencel order ";
+                MSG.Text = "Fail to cancel order ";
             }
         }
 
@@ -166,7 +167,7 @@ namespace UIFlyPack
                 condition = $"AND (Orders.{SearchBys}=#{Value}#)";
 
             }
-            else if ( SearchBys == "OrderStutus")
+            else if ( SearchBys == "OrderStatus")
             {
                 condition = $"AND (Orders.{SearchBys}={Value})";
 
@@ -183,7 +184,7 @@ namespace UIFlyPack
             {
                 condition = $"AND (Shops.{SearchBys}='{Value}')";
             }
-            UpOrders((BLUser)Session["user"], condition);
+            UpOrders((BLUser)Session["user"],condition);
 
         }
         protected void NewOrOld_Click(object sender, EventArgs e)
@@ -204,10 +205,11 @@ namespace UIFlyPack
 
                 DateTime ExitTime = DateTime.Now;
                 DateTime AraivelTime = ExitTime.AddMinutes(20);//need to cuculate how match time
-                bool seccsess = BLOrder.UpdateArrivalTime(AraivelTime, orderID) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;
-                if (!seccsess)
+                bool succsess = BLOrder.UpdateArrivalTime(AraivelTime, orderID) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;
+                if (!succsess)
                 {
                     ErMSG.Text = "fail to start order";
+                    
                 }
                 else
                 {
@@ -234,7 +236,7 @@ namespace UIFlyPack
                     GridViewRow row = OrderTable.Rows[index];
 
                     myButton = (Button)(row.Cells[4].Controls[0]);
-                    myButton.Text = "Prodact Ready";
+                    myButton.Text = "Product Ready";
                     myButton.CommandName = "Ready";
                     UpOrders((BLUser)Session["user"], "");
                 }
