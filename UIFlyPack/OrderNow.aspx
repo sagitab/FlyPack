@@ -26,7 +26,7 @@
            </select>
         </li>
         <li>
-             <span  class="Header">Adress</span>
+             <span  class="Header">Address</span>
         </li>
         <li>          
              <asp:TextBox ID="Adress" runat="server" CssClass="TextBox"></asp:TextBox>

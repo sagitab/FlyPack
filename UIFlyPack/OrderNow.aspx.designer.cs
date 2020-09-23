@@ -51,7 +51,7 @@ namespace UIFlyPack
         protected global::System.Web.UI.HtmlControls.HtmlSelect times;
 
         /// <summary>
-        /// Adress control.
+        /// Address control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

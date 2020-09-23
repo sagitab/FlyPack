@@ -17,31 +17,34 @@ namespace BLFlyPack
         public DateTime Time { get; set; }
         public DateTime ReadyTime { get; set; }
         public int Status { get; set; }
-        public string Address { get; set; }
+        public double Lat { get; set; }
+        public double Lng { get; set; }
         public int NumOfFloor { get; set; }
-        public BLOrder(string CustomerID, string DeliveryID, int ShopID, DateTime AriveTime,  int Status, DateTime ReadyTime, string Address, int Floor)
+       
+
+        public BLOrder( string customerId, string deliveryId, int shopId, DateTime ariveTime, DateTime readyTime, int status, double lat, double lng, int numOfFloor)
         {
             int id;
             try
             {
-                id= FlyPack.DalOrder.AddOrder(CustomerID, DeliveryID, ShopID, AriveTime, Status,Address, Floor, ReadyTime);
+                id = FlyPack.DalOrder.AddOrder(CustomerID, DeliveryID, ShopID, AriveTime, Status,numOfFloor, ReadyTime,lat,lng);
             }
             catch
             {
                 throw new Exception("fail");
             }
-            this.OrderID = id;
-            this.CustomerID = CustomerID;
-            this.DeliveryID = DeliveryID;
-            this.ShopID = ShopID;
-            this.AriveTime = AriveTime;
-            //this.Time = Time;//what to do?
-            this.Status = Status;
-            this.Address = Address;
-            this.NumOfFloor = Floor;
-            this.ReadyTime = ReadyTime;
+            OrderID = id;
+            CustomerID = customerId;
+            DeliveryID = deliveryId;
+            ShopID = shopId;
+            AriveTime = ariveTime;
+            Time = DateTime.Now;
+            ReadyTime = readyTime;
+            Status = status;
+            Lat = lat;
+            Lng = lng;
+            NumOfFloor = numOfFloor;
         }
-
         public BLOrder(DataRow row)
         {
             this.OrderID =int.Parse(row["ID"].ToString()) ;
@@ -51,7 +54,8 @@ namespace BLFlyPack
             this.AriveTime =DateTime.Parse(row["ArrivalTime"].ToString());
             this.Time = DateTime.Parse(row["Time"].ToString()); ;//what to do?
             this.Status = int.Parse(row["OrderStutus"].ToString());
-            this.Address = row["Address"].ToString();
+            this.Lat =double.Parse(row["Lat"].ToString());
+            this.Lng = double.Parse(row["Lng"].ToString());
             this.NumOfFloor = int.Parse(row["NumOfFloor"].ToString());
             this.ReadyTime = DateTime.Parse(row["ReadyTime"].ToString());
         }
@@ -75,16 +79,16 @@ namespace BLFlyPack
         }
         public static bool UpdateArrivalTime(DateTime ArrivalTime,int OrderID)
         {
-            bool seccsess = true;
+            bool seccess = true;
             try
             {
-                seccsess = DalOrder.UpdateArrivalTime(ArrivalTime,OrderID);
+                seccess = DalOrder.UpdateArrivalTime(ArrivalTime,OrderID);
             }
             catch
             {
                 return false;
             }
-            return seccsess;
+            return seccess;
         }
         public static bool UpdateReadyTime(DateTime ArrivalTime, int OrderID)
         {

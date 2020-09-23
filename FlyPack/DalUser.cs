@@ -77,6 +77,11 @@ namespace FlyPack
             return int.Parse( DalHelper.Select($"SELECT Shops.ID FROM Shops WHERE(((Shops.ShopManagerID) = '{ManegerID}'));").Rows[0]["ID"].ToString());
 
         }
+
+        public static string GetName(string CustomerID)
+        {
+            return DalHelper.Select($"SELECT Users.FirstName FROM Users WHERE  Users.ID={CustomerID}").Rows[0]["FirstName"].ToString();
+        }
         
     }
 }

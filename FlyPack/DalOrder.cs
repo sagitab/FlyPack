@@ -9,9 +9,9 @@ namespace FlyPack
 {
     public class DalOrder
     {
-        public static int AddOrder(string CustomerID, string DeliveryID, int ShopID, DateTime AriveTime,  int Status,string Address,int NumOfFloor, DateTime ReadyTime)
+        public static int AddOrder(string CustomerID, string DeliveryID, int ShopID, DateTime AriveTime,  int Status,int NumOfFloor, DateTime ReadyTime,double Lat, double Lng)
         {
-            return DalHelper.Insert($"INSERT INTO Orders([CustomerID],[DeliverID],[ShopID],[ArrivalTime],[OrderStutus],ReadyTime,Address,NumOfFloor) VALUES ({CustomerID},{DeliveryID},{ShopID},#{AriveTime}#,'{Status}',#{ReadyTime}#,'{Address}',{NumOfFloor})");
+            return DalHelper.Insert($"INSERT INTO Orders([CustomerID],[DeliverID],[ShopID],[ArrivalTime],[OrderStutus],ReadyTime,,NumOfFloor,Lat,Lng) VALUES ({CustomerID},{DeliveryID},{ShopID},#{AriveTime}#,{Status},#{ReadyTime}#,{NumOfFloor},{Lat},{Lng})");
         }
         public static bool DeleteOrder(int id)
         {

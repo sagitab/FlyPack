@@ -14,6 +14,14 @@ namespace UIFlyPack
         {
             BLUser user = (BLUser) Session["user"];
             List<BLOrder> orders = BLOrder.GetOrdersListByTime(user.UserID);
+            List<BLShop> shops=new List<BLShop>();
+            List<BLCustomersAddress> customersAddresses=new List<BLCustomersAddress>();
+            foreach (BLOrder order in orders)
+            {
+                shops.Add( BLShop.GetShopById(order.ShopID));
+                customersAddresses.Add(new BLCustomersAddress(1,1,order.NumOfFloor,BLUser.GetName(order.CustomerID)));
+            }
+
         }
     }
 }

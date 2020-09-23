@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLCustomers.cs" />
+    <Compile Include="BLCustomersAddress.cs" />
     <Compile Include="BLOrder.cs" />
     <Compile Include="BLOrderUser.cs" />
     <Compile Include="General.cs" />

@@ -132,5 +132,9 @@ namespace BLFlyPack
             }
         }
 
+        public static string GetName(string CustomerID)
+        {
+            return DalUser.GetName(CustomerID);
+        }
     }
 }

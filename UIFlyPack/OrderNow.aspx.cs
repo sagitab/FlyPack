@@ -33,15 +33,15 @@ namespace UIFlyPack
         protected void OrderB_Click(object sender, EventArgs e)
         {
             int shopOrderID = int.Parse(ShopOrderID.Text);//ShopDropDownList
-            string adress = Adress.Text;
-            string ariveTime = times.Items[times.SelectedIndex].Value.ToString();
+            string address = Adress.Text;
+            string arriveTime = times.Items[times.SelectedIndex].Value.ToString();
             int shopID = int.Parse(ShopDropDownList.SelectedValue);
             //int shopID = int.Parse(ShopDropDownList.Items[index].ToString());
-            DateTime AriveDateTime = DateTime.Parse(ariveTime);
-            int numOfF = int.Parse(NumOfFloor.Text);
+            DateTime AriveDateTime = DateTime.Parse(arriveTime);
+            int numOfFloor = int.Parse(NumOfFloor.Text);
             BLUser user = (BLUser)Session["user"];
-            BLOrder order = new BLOrder(user.UserID,"111111111",shopID,AriveDateTime,1, DateTime.Parse("01/01/1 1:11:11"),adress, numOfF);
-            MSG.Text = "order secces!!";
+            BLOrder order = new BLOrder(user.UserID,"111111111",shopID,AriveDateTime, DateTime.Parse("01/01/1 1:11:11"),1, numOfFloor,1,1);
+            MSG.Text = "order successes!!";
         }
     }
 }
