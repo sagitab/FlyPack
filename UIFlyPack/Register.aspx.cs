@@ -30,8 +30,8 @@ namespace UIFlyPack
                 if(passCheck)
                 {
                     int type =int.Parse( Request.QueryString.Get("Type"));
-                    BLUser user = new BLUser(email, phoneNum, name, lname, password, type, id);
-                    MSG.Text = "Register complited";
+                    BLUser user = new BLUser(id, type, email, phoneNum, name, lname, password,1,1);
+                    MSG.Text = "Register completed";
                 }
                 else
                 {

@@ -45,6 +45,7 @@
     <Compile Include="BLOrder.cs" />
     <Compile Include="BLOrderUser.cs" />
     <Compile Include="General.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLUser.cs" />
     <Compile Include="BLShop.cs" />

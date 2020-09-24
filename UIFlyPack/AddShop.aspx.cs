@@ -32,8 +32,8 @@ namespace UIFlyPack
         {
             string shopName = ShopName.Text;
             string address = Address.Text;
-            int ShopManegerID = int.Parse(ShopMSelect.SelectedValue);
-            BLShop shop = new BLShop(ShopManegerID,1,1,shopName);
+            string ShopManegerID = ShopMSelect.SelectedValue;
+            BLShop shop = new BLShop(ShopManegerID,shopName);
             if(shop!=null||shop.ID==-1)
             {
                 MSG.Text = "fail to add shop";

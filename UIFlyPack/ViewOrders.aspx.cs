@@ -18,9 +18,9 @@ namespace UIFlyPack
                 //to gneratte grid view dynamically*************
                 DataTable orders = BLOrderUser.GetOrders(user.Type, user.UserID, true, "");
                 DataColumnCollection columns = orders.Columns;
-               foreach( DataColumn column in columns)
+                foreach (DataColumn column in columns)
                 {
-                    if(column.ColumnName!="ID")
+                    if (column.ColumnName != "ID")
                     {
                         //Declare the bound field and allocate memory for the bound field.
                         BoundField field = new BoundField();
@@ -34,19 +34,19 @@ namespace UIFlyPack
                         //Add the newly created bound field to the GridView.
                         OrderTable.Columns.Add(field);
                     }
-                    
+
                 }
                 int t = user.Type;
-               if(t == 4)
+                if (t == 4)
                 {
                     CommandField cf = new CommandField();
                     cf.ButtonType = ButtonType.Button;
                     cf.DeleteText = "cancel";
                     cf.ShowDeleteButton = true;
-                    
+
                     OrderTable.Columns.Add(cf);
                 }
-               else if(t==3)
+                else if (t == 3)
                 {
                     ButtonField b = new ButtonField();
                     b.Text = "Start order";
@@ -76,24 +76,24 @@ namespace UIFlyPack
                 //    OrderTable.Columns[4].AccessibleHeaderText = "c";
                 //}    
                 //set data source
-                Dictionary<string, string> d = new Dictionary<string, string> { {"New orders","N" },{ "Old orders", "O" } };
-                NewOrOld.DataSource =d ;
+                Dictionary<string, string> d = new Dictionary<string, string> { { "New orders", "N" }, { "Old orders", "O" } };
+                NewOrOld.DataSource = d;
                 //NewOrOld.DataTextField = "ShopName";
                 //NewOrOld.DataValueField = ;
                 // Bind the data to the control.
                 NewOrOld.DataTextField = "Key";
-                NewOrOld.DataValueField = "Value" ;
+                NewOrOld.DataValueField = "Value";
                 NewOrOld.DataBind();
 
                 // Set the default selected item, if desired.
                 NewOrOld.SelectedIndex = 0;
             }
-           
+
             int type = user.Type;
-            UpOrders(user,"");
-            
+            UpOrders(user, "");
+
         }
-        public void UpOrders(BLUser user,string condition)
+        public void UpOrders(BLUser user, string condition)
         {
             int type = user.Type;
             DataTable orders = null;
@@ -101,14 +101,14 @@ namespace UIFlyPack
             switch (NewOrOld.Items[index].Value)
             {
                 case "N":
-                    orders = BLOrderUser.GetOrders(type, user.UserID, true,condition);
+                    orders = BLOrderUser.GetOrders(type, user.UserID, true, condition);
                     break;
                 default:
-                    orders = BLOrderUser.GetOrders(type, user.UserID, false,condition);
+                    orders = BLOrderUser.GetOrders(type, user.UserID, false, condition);
                     break;
             }
-          
-            if(orders!=null&&orders.Rows.Count>0)
+
+            if (orders != null && orders.Rows.Count > 0)
             {
                 OrderTable.DataSource = orders;
                 OrderTable.DataBind();
@@ -120,7 +120,7 @@ namespace UIFlyPack
                 OrderTable.Visible = false;
                 ErMSG.Text = "there is no orders";
             }
-          
+
         }
         protected void OrderTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -141,7 +141,7 @@ namespace UIFlyPack
             //}
 
             int ID = (int)orders.Rows[index]["ID"];
-           
+
 
             bool success = BLOrder.DeleteOrder(ID);
             if (success)
@@ -167,12 +167,12 @@ namespace UIFlyPack
                 condition = $"AND (Orders.{SearchBys}=#{Value}#)";
 
             }
-            else if ( SearchBys == "OrderStatus")
+            else if (SearchBys == "OrderStatus")
             {
                 condition = $"AND (Orders.{SearchBys}={Value})";
 
             }
-            else if (SearchBys == "FirstName"&&user.Type!=3)
+            else if (SearchBys == "FirstName" && user.Type != 3)
             {
                 condition = $"AND (Users_1.{SearchBys}='{Value}')";
             }
@@ -184,7 +184,7 @@ namespace UIFlyPack
             {
                 condition = $"AND (Shops.{SearchBys}='{Value}')";
             }
-            UpOrders((BLUser)Session["user"],condition);
+            UpOrders((BLUser)Session["user"], condition);
 
         }
         protected void NewOrOld_Click(object sender, EventArgs e)
@@ -199,9 +199,9 @@ namespace UIFlyPack
             DataTable orders = (DataTable)OrderTable.DataSource;
             int orderID = int.Parse(orders.Rows[index]["ID"].ToString());
             int status = BLOrder.GetOrderStatus(orderID);
-            if(e.CommandName== "updateArrivalTime"/*&& status==3*/)
+            if (e.CommandName == "updateArrivalTime"/*&& status==3*/)
             {
-               
+
 
                 DateTime ExitTime = DateTime.Now;
                 DateTime AraivelTime = ExitTime.AddMinutes(20);//need to cuculate how match time
@@ -209,7 +209,7 @@ namespace UIFlyPack
                 if (!succsess)
                 {
                     ErMSG.Text = "fail to start order";
-                    
+
                 }
                 else
                 {
@@ -221,10 +221,16 @@ namespace UIFlyPack
                     UpOrders((BLUser)Session["user"], "");
                 }
             }
-            else if(e.CommandName== "updateReadyTime" /*&& status == 2*/)
+            else if (e.CommandName == "updateReadyTime" /*&& status == 2*/)
             {
-               
+
                 DateTime ReadyTime = DateTime.Now;
+                //get the order object 
+                BLOrder order =new BLOrder(orders.Rows[index]);
+                //get the shop object 
+                BLShop shop = BLShop.GetShopById(order.ShopID);
+                //get the Id of the closest and . delivery  
+                string MatchDeliveryID = BLUser.GetMatchesDeliveryID(shop.Possision);
                 bool seccsess = BLOrder.UpdateReadyTime(ReadyTime, orderID)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;
                 if (!seccsess)
                 {

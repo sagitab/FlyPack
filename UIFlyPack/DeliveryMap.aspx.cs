@@ -19,9 +19,11 @@ namespace UIFlyPack
             foreach (BLOrder order in orders)
             {
                 shops.Add( BLShop.GetShopById(order.ShopID));
-                customersAddresses.Add(new BLCustomersAddress(1,1,order.NumOfFloor,BLUser.GetName(order.CustomerID)));
+                Point CustomerAddress = null;
+                CustomerAddress = order.Possision != null ? new Point(order.Possision) : new Point(user.Possision);
+                customersAddresses.Add(new BLCustomersAddress(CustomerAddress, order.NumOfFloor,BLUser.GetName(order.CustomerID)));
             }
-
+            
         }
     }
 }

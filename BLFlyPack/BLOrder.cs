@@ -17,8 +17,7 @@ namespace BLFlyPack
         public DateTime Time { get; set; }
         public DateTime ReadyTime { get; set; }
         public int Status { get; set; }
-        public double Lat { get; set; }
-        public double Lng { get; set; }
+        public Point Possision { get; set; }
         public int NumOfFloor { get; set; }
        
 
@@ -41,8 +40,7 @@ namespace BLFlyPack
             Time = DateTime.Now;
             ReadyTime = readyTime;
             Status = status;
-            Lat = lat;
-            Lng = lng;
+            Possision=new Point(lat,lng);
             NumOfFloor = numOfFloor;
         }
         public BLOrder(DataRow row)
@@ -54,8 +52,7 @@ namespace BLFlyPack
             this.AriveTime =DateTime.Parse(row["ArrivalTime"].ToString());
             this.Time = DateTime.Parse(row["Time"].ToString()); ;//what to do?
             this.Status = int.Parse(row["OrderStutus"].ToString());
-            this.Lat =double.Parse(row["Lat"].ToString());
-            this.Lng = double.Parse(row["Lng"].ToString());
+            Possision = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
             this.NumOfFloor = int.Parse(row["NumOfFloor"].ToString());
             this.ReadyTime = DateTime.Parse(row["ReadyTime"].ToString());
         }
