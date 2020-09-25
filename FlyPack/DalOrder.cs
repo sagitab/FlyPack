@@ -63,5 +63,14 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT * FROM Orders WHERE DeliverID='{deliveryId}' AND OrderStutus=4 ORDER BY Time");
         }
+
+        public static bool UpdateDelivery(int OrderID,string DeliveryID)
+        {
+            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", DeliveryID, "DeliverID");
+        }
+        public static DataRow GetOrderByID(int OrderID)
+        {
+            return DalHelper.Select($"SELECT * FROM Orders WHERE ID={OrderID}").Rows[0];
+        }
     }
 }

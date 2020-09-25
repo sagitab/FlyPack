@@ -48,7 +48,18 @@ namespace BLFlyPack
 
         public static BLShop GetShopById(int ID)
         {
-            return new BLShop(DalShop.GetShop(ID));
+            DataRow row = null;
+            try
+            {
+                 row = DalShop.GetShop(ID);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                
+                return null;
+            }
+            return new BLShop(row);
         }
         public static Point GetPosission(int shopID)
         {

@@ -18,7 +18,7 @@ namespace BLFlyPack
         public string LastName { get; set; }
         public string Password { get; set; }
         public Point Possision { get; }
-
+        //user
         public BLUser(string userId, int type, string email, string phone, string firstName, string lastName, string password, double lat, double lng)
         {
             FlyPack.DalUser.AddUser(email, phone, firstName, lastName, password, type, userId, lat, lng);
@@ -74,20 +74,24 @@ namespace BLFlyPack
             }
             return true;
         }
-
-        public virtual DataTable DeliveriesTable()
+        //shop maneger
+        public int GetshopID()
         {
-            DataTable t = null;
-            try
-            {
-                t = DalUser.DeliveriesTable();
-            }
-            catch
-            {
-                return null;
-            }
-            return t;
+
+            return DalUser.GetshopID(this.UserID);
         }
+        public int GetNumOfOrders()
+        {
+            if (Type == 1)
+            {
+                return DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {GetshopID()})");
+            }
+            else
+            {
+                return DalOrder.NumOfOrders("");
+            }
+        }
+        //customer
         public virtual DataTable CustomersTable()
         {
             DataTable t = null;
@@ -114,22 +118,7 @@ namespace BLFlyPack
             }
             return t;
         }
-        public int GetshopID()
-        {
-
-            return DalUser.GetshopID(this.UserID);
-        }
-        public int GetNumOfOrders()
-        {
-            if (Type == 1)
-            {
-                return DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {GetshopID()})");
-            }
-            else
-            {
-                return DalOrder.NumOfOrders("");
-            }
-        }
+      
         public virtual string GetNumOfActiveCustomers()
         {
             if (Type == 1)
@@ -146,12 +135,25 @@ namespace BLFlyPack
         {
             return DalUser.GetName(CustomerID);
         }
-
+        //delivery
+        public virtual DataTable DeliveriesTable()
+        {
+            DataTable t = null;
+            try
+            {
+                t = DalUser.DeliveriesTable();
+            }
+            catch
+            {
+                return null;
+            }
+            return t;
+        }
         public static List<Point> GetDeliveryiesPossitions()
         {
             DataTable DeliveryiesPossitions = DalUser.GetDeliveryiesPossitions();
 
-            return (from DataRow row in DeliveryiesPossitions.Rows select new Point(double.Parse(row["Lat"].ToString()), double.Parse((string) row["Lng"]))).ToList();
+            return (from DataRow row in DeliveryiesPossitions.Rows select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
         }
 
         public static string GetDeliveryIDByPoint(Point point)
@@ -170,7 +172,7 @@ namespace BLFlyPack
         public static string GetMatchDeliveryIDByPoints(List<Point> points)
         {
             int index=0;
-            while (index+1<=points.Count&&GetNumOfDeliveryOrders(GetDeliveryIDByPoint(points[index]))>=6)
+            while (index+1<=points.Count&&GetNumOfDeliveryOrders(GetDeliveryIDByPoint(points[index]))>=6)//continue loop if delivery orders is full
             {
                 index++;
             }
@@ -193,7 +195,7 @@ namespace BLFlyPack
 
         public static int GetNumOfDeliveryOrders(string UserID)
         {
-            return DalOrder.NumOfOrders($"WHERE Orders.DeliverID ={UserID} AND Orders.OrderStutus = 4");
+            return DalOrder.NumOfOrders($"WHERE Orders.DeliverID ='{UserID}' AND Orders.OrderStutus =4");
         }
     }
 }

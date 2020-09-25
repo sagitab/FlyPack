@@ -56,6 +56,12 @@ namespace BLFlyPack
             this.NumOfFloor = int.Parse(row["NumOfFloor"].ToString());
             this.ReadyTime = DateTime.Parse(row["ReadyTime"].ToString());
         }
+
+        public static BLOrder GetBLOrderByID(int OrderID)
+        {
+            DataRow OrderRow = GetOrderByID(OrderID);
+            return new  BLOrder(OrderRow);
+        }
         public static bool DeleteOrder(int id)
         {
             return DalOrder.DeleteOrder(id);
@@ -132,6 +138,30 @@ namespace BLFlyPack
             DataTable orderTable = DalOrder.GetOrdersListByTime(deliveryId);
 
             return (from object row in orderTable.Rows select new BLOrder((DataRow) row)).ToList();
+        }
+
+        public static bool UpdateDelivery(int OrderID, string DeliveryID)
+        {
+           
+            try
+            {
+                return DalOrder.UpdateDelivery(OrderID, DeliveryID);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static DataRow GetOrderByID(int OrderID)
+        {
+            try
+            {
+                return DalOrder.GetOrderByID(OrderID);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

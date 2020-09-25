@@ -87,11 +87,11 @@ namespace FlyPack
         }
         public  static DataTable GetDeliveryiesPossitions()
         {
-            return DalHelper.Select("SELECT Users.Lat ,Users.Lng FROM Users WHERE Users.Type=3");
+            return DalHelper.Select("SELECT Users.Lat ,Users.Lng FROM Users WHERE Users.UserType=3 AND Users.ID<>'111111111'");
         }
         public static string GetDeliveryIDByPoint(double lat,double lng)
         {
-            return DalHelper.Select($"SELECT Users.ID FROM Users WHERE Users.Lat={lat} AND Users.Lng={lng}").Rows[0].ToString();
+            return DalHelper.Select($"SELECT Users.ID FROM Users WHERE Users.Lat={lat} AND Users.Lng={lng} AND Users.UserType=3").Rows[0]["ID"].ToString();
         }
 
         //public static int GetNumOfOrders(string DeliveryID)

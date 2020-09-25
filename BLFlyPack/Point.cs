@@ -38,7 +38,7 @@ namespace BLFlyPack
 
         public int MinimumDistance(List<Point> points,int startIndex)
         {
-            int MinIndex = 0;
+            int MinIndex = startIndex;
             for (var index = startIndex; index < points.Count; index++)
             {
                 var point = points[index];

@@ -19,6 +19,7 @@ namespace FlyPack
 
         public static DataRow GetShop(int Id)
         {
+            
             return DalHelper.AllWhere("Shops", "ID", Id).Rows[0];
         }
 

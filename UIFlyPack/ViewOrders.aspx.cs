@@ -225,13 +225,14 @@ namespace UIFlyPack
             {
 
                 DateTime ReadyTime = DateTime.Now;
+               
                 //get the order object 
-                BLOrder order =new BLOrder(orders.Rows[index]);
+                BLOrder order =BLOrder.GetBLOrderByID(orderID);
                 //get the shop object 
                 BLShop shop = BLShop.GetShopById(order.ShopID);
                 //get the Id of the closest and . delivery  
                 string MatchDeliveryID = BLUser.GetMatchesDeliveryID(shop.Possision);
-                bool seccsess = BLOrder.UpdateReadyTime(ReadyTime, orderID)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;
+                bool seccsess = BLOrder.UpdateReadyTime(ReadyTime, orderID)&&BLOrder.UpdateDelivery(orderID,MatchDeliveryID)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;
                 if (!seccsess)
                 {
                     ErMSG.Text = "fail to update ready time";
