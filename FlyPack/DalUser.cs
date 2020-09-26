@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 
 namespace FlyPack
@@ -44,6 +40,11 @@ namespace FlyPack
             helper.CloseConnection();
 
         }
+
+        public static DataRow GetUserByID(int UserID)
+        {
+            return DalHelper.GetRowById(UserID, "Users");
+        }
         //shop Maneger
         public static int GetshopID(string ManegerID)
         {
@@ -64,13 +65,13 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID}));");
         }
-        public static DataTable CustomersSearch(string conditon)
+        public static DataTable CustomersSearch(string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{conditon})");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{condition})");
         }
-        public static DataTable CustomersSearchByShop(int ShopID, string conditon)
+        public static DataTable CustomersSearchByShop(int ShopID, string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID})AND{conditon});");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID})AND{condition});");
         }
         public static string GetName(string CustomerID)
         {
@@ -85,11 +86,11 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {ShopID}) AND (Users.ID<>'111111111'));");
         }
-        public  static DataTable GetDeliveryiesPossitions()
+        public  static DataTable GetDeliverersLocations()
         {
             return DalHelper.Select("SELECT Users.Lat ,Users.Lng FROM Users WHERE Users.UserType=3 AND Users.ID<>'111111111'");
         }
-        public static string GetDeliveryIDByPoint(double lat,double lng)
+        public static string GetDeliveryIdByPoint(double lat,double lng)
         {
             return DalHelper.Select($"SELECT Users.ID FROM Users WHERE Users.Lat={lat} AND Users.Lng={lng} AND Users.UserType=3").Rows[0]["ID"].ToString();
         }

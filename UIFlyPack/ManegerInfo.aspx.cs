@@ -17,22 +17,8 @@ namespace UIFlyPack
             {
                 DataTable Customes = user.CustomersTable();
                 DataTable Deliveries = user.DeliveriesTable();
-                if (!BindTable(Deliveries, DeliveriesTable))
-                {
-                    ErDelivery.Text = "fail show deliveries table";
-                }
-                else
-                {
-                    ErDelivery.Text = "";
-                }
-                if (!BindTable(Customes, CustomersTable))
-                {
-                    ErCustomer.Text = "fail show customers table";
-                }
-                else
-                {
-                    ErCustomer.Text = "";
-                }
+                ErDelivery.Text = !BindTable(Deliveries, DeliveriesTable) ? "fail show deliveries table" : "";
+                ErCustomer.Text = !BindTable(Customes, CustomersTable) ? "fail show customers table" : "";
                 NumOfOrders.Text ="Number of orders- "+ user.GetNumOfOrders()+"Number of customers that order- "+user.GetNumOfActiveCustomers();
             }
         }
@@ -43,17 +29,17 @@ namespace UIFlyPack
             string SearchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
             
             string Value = serchedValue.Text;
-            DataTable Customes = user.CustomersSerch($"(Users.{SearchBys}='{Value}')");
+            DataTable Customes = user.CustomersSearch($"(Users.{SearchBys}='{Value}')");
             bool isExsist= BindTable(Customes, CustomersTable);
             if(isExsist)
             {
-                ErCustomer.Text = "Not valied search value";
+                ErCustomer.Text = "Not valid search value";
             }
         }
         public bool BindTable(DataTable table,GridView gridView)
         {
-            bool seccsess = table != null&&table.Rows.Count>0;
-            if(seccsess)
+            bool succsess = table != null&&table.Rows.Count>0;
+            if(succsess)
             {
                 gridView.DataSource = table;
                 gridView.DataBind();

@@ -9,7 +9,7 @@ namespace BLFlyPack
 {
     public class BLUser
     {
-        
+
         public string UserID { get; }
         public int Type { get; }
         public string Email { get; set; }
@@ -17,19 +17,19 @@ namespace BLFlyPack
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public Point Possision { get; }
+        public Point location { get; }
         //user
         public BLUser(string userId, int type, string email, string phone, string firstName, string lastName, string password, double lat, double lng)
         {
             FlyPack.DalUser.AddUser(email, phone, firstName, lastName, password, type, userId, lat, lng);
-            UserID = userId; 
+            UserID = userId;
             Type = type;
-            Email = email; 
+            Email = email;
             Phone = phone;
             FirstName = firstName;
             LastName = lastName;
             Password = password;
-            Possision = new Point(lat, lng);
+            location = new Point(lat, lng);
         }
 
         //public BLUser(string userId)
@@ -49,21 +49,39 @@ namespace BLFlyPack
                 FirstName = row["FirstName"].ToString();
                 LastName = row["LastName"].ToString();
                 Password = row["Password"].ToString();
-                Possision = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+                location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
             }
 
 
         }
-        public BLUser(DataRow row)
+
+        public static BLUser UserByID(int UserID)
         {
-            UserID = row["ID"].ToString();
-            Type = int.Parse(row["UserType"].ToString());
-            Email = row["Email"].ToString();
-            Phone = row["PhoneNumber"].ToString();
-            FirstName = row["FirstName"].ToString();
-            LastName = row["LastName"].ToString();
-            Password = row["Password"].ToString();
-            Possision = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+            DataRow row = null;
+            try
+            {
+                row = DalUser.GetUserByID(UserID);
+            }
+            catch
+            {
+                return null;
+            }
+            return UserByRow(row);
+
+        }
+
+
+        public static BLUser UserByRow (DataRow row)
+        {
+            string UserID = row["ID"].ToString();
+            int Type = int.Parse(row["UserType"].ToString());
+            string Email = row["Email"].ToString();
+            string Phone = row["PhoneNumber"].ToString();
+            string FirstName = row["FirstName"].ToString();
+            string LastName = row["LastName"].ToString();
+            string Password = row["Password"].ToString();
+            Point Possision = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+            return  new BLUser(UserID, Type, Email, Phone, FirstName, LastName, Password, Possision.Lat, Possision.Lng);
         }
         public static bool PasswordCheck(string pass)
         {
@@ -74,6 +92,14 @@ namespace BLFlyPack
             }
             return true;
         }
+
+        public override string ToString()
+        {
+            Dictionary<int,string> UsersTypes=new Dictionary<int, string> {{1, "Shop Manager" }, { 2, "System Manager" } , { 3, "Deliver" } , { 4, "Customer" } };
+
+            return $"{FirstName} {LastName} Deer {UsersTypes[Type]}";
+        }
+
         //shop maneger
         public int GetshopID()
         {
@@ -105,7 +131,7 @@ namespace BLFlyPack
             }
             return t;
         }
-        public virtual DataTable CustomersSerch(string condition)
+        public virtual DataTable CustomersSearch(string condition)
         {
             DataTable t = null;
             try
@@ -118,7 +144,7 @@ namespace BLFlyPack
             }
             return t;
         }
-      
+
         public virtual string GetNumOfActiveCustomers()
         {
             if (Type == 1)
@@ -149,11 +175,11 @@ namespace BLFlyPack
             }
             return t;
         }
-        public static List<Point> GetDeliveryiesPossitions()
+        public static List<Point> GetDeliveryiesLocations()
         {
-            DataTable DeliveryiesPossitions = DalUser.GetDeliveryiesPossitions();
+            DataTable deliverersLocations = DalUser.GetDeliverersLocations();
 
-            return (from DataRow row in DeliveryiesPossitions.Rows select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
+            return (from DataRow row in deliverersLocations.Rows select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
         }
 
         public static string GetDeliveryIDByPoint(Point point)
@@ -161,9 +187,9 @@ namespace BLFlyPack
             string ret = "";
             try
             {
-                ret = DalUser.GetDeliveryIDByPoint(point.Lat, point.Lng);
+                ret = DalUser.GetDeliveryIdByPoint(point.Lat, point.Lng);
             }
-            catch 
+            catch
             {
                 return ret;
             }
@@ -171,8 +197,8 @@ namespace BLFlyPack
         }
         public static string GetMatchDeliveryIDByPoints(List<Point> points)
         {
-            int index=0;
-            while (index+1<=points.Count&&GetNumOfDeliveryOrders(GetDeliveryIDByPoint(points[index]))>=6)//continue loop if delivery orders is full
+            int index = 0;
+            while (index + 1 <= points.Count && GetNumOfDeliveryOrders(GetDeliveryIDByPoint(points[index])) >= 6)//continue loop if delivery orders is full
             {
                 index++;
             }
@@ -185,9 +211,9 @@ namespace BLFlyPack
         }
         public static string GetMatchesDeliveryID(Point shopPoint)
         {
-            List<Point> points = GetDeliveryiesPossitions();
+            List<Point> points = GetDeliveryiesLocations();
             List<Point> SortedDeliveryPoints = shopPoint.SelectSort(points);
-            
+
             //int index = shopPoint.MinimumDistance(points,0);
             //Point deliveryPoint = points[index];
             return GetMatchDeliveryIDByPoints(SortedDeliveryPoints);
@@ -196,6 +222,22 @@ namespace BLFlyPack
         public static int GetNumOfDeliveryOrders(string UserID)
         {
             return DalOrder.NumOfOrders($"WHERE Orders.DeliverID ='{UserID}' AND Orders.OrderStutus =4");
+        }
+
+        public  double GetDistanceToCustomerHome(List<BLShop> shops, List<BLCustomersAddress> customersAddresses)
+        {
+            Point startPoint=new Point(location);
+            double TotalDistance = 0.0;
+
+            for (int index = 0; index < shops.Count; index++)
+            {
+                Point shop = shops[index].location;
+                Point customer = customersAddresses[index].location;
+                TotalDistance += startPoint.Distance(shop) + shop.Distance(customer);
+                startPoint=new Point(customer);
+            }
+
+            return TotalDistance;
         }
     }
 }

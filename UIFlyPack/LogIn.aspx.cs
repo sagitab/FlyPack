@@ -23,14 +23,7 @@ namespace UIFlyPack
             if(name!=""&&pass!="")
             {
                 BLUser user = null;
-                if (user.Type == 1)
-                {
-                    user = new BLShopMenager(pass);
-                }
-                else
-                {
-                    user = new BLUser(pass);
-                }
+                user = user.Type == 1 ? new BLShopMenager(pass) : new BLUser(pass);
                
                 bool IsExsist = NameValidator.IsValid && passValidator.IsValid && user != null;
                 if (IsExsist)
@@ -41,12 +34,12 @@ namespace UIFlyPack
                 }
                 else
                 {
-                    massage.Text = "User name or password uncorect";
+                    massage.Text = "User name or password incorrect";
                 }
             }
             else
             {
-                massage.Text = "User name or password uncorect";
+                massage.Text = "User name or password incorrect";
             }
         }
     }

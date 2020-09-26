@@ -23,7 +23,7 @@ namespace FlyPack
             return DalHelper.AllWhere("Shops", "ID", Id).Rows[0];
         }
 
-        public static DataRow GetPosission(int shopID)
+        public static DataRow GetLocation(int shopID)
         {
             return DalHelper.Select("SELECT Users.Lat, Users.Lng FROM Users INNER JOIN Shops ON Users.ID = Shops.ShopManagerID WHERE(([Shops].[ID] = 1));").Rows[0];
         }

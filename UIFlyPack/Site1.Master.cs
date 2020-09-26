@@ -12,53 +12,46 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            int type=-1;
-           
-           
-              BLUser  user = (BLUser)Session["user"];
+
+            int type = -1;
+
+
+            BLUser user = (BLUser)Session["user"];
             string des = "";
-                if(user!=null)
-                {
-                    type = user.Type;
-                des = $"Helo {user.FirstName}";
-                }
-                 
-            //}
-            //catch(Exception ex)
-            //{
-            //    type = -1;
-            //}
-          
-            if(type==1)
+            if (user != null)
             {
-                //sh
-                ShopMenager.Visible = true;
-                UserString2.Text = des;
+                type = user.Type;
+                des = $"Ahoy! {user.ToString()}!";
             }
-            else if (type == 2)
+
+            switch (type)
             {
-                //system
-                SystemMenager.Visible = true;
-                UserString3.Text = des;
+                case 1:
+                    //sh
+                    ShopMenager.Visible = true;
+                    UserString2.Text = des;
+                    break;
+                case 2:
+                    //system
+                    SystemMenager.Visible = true;
+                    UserString3.Text = des;
+                    break;
+                case 3:
+                    //delivery
+                    Delivery.Visible = true;
+                    UserString4.Text = des;
+                    break;
+                case 4:
+                    //customer
+                    Customer.Visible = true;
+                    UserString.Text = des;
+                    break;
             }
-            else if (type == 3)
-            {
-                //delivery
-                Delivery.Visible = true;
-                UserString4.Text = des;
-            }
-            else if (type == 4)
-            {
-                //custumer
-                Customer.Visible = true;
-                UserString.Text = des;
-            }
-           if(type!=-1)
+            if (type != -1)
             {
                 UnConected.Visible = false;
             }
-           
+
         }
 
         protected void LogIn1_Click(object sender, EventArgs e)

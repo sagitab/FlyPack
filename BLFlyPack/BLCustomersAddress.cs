@@ -8,13 +8,13 @@ namespace BLFlyPack
 {
     public class BLCustomersAddress
     {
-      public  Point Possision { get; }
+      public  Point location { get; }
         public  int NumOfFloor { get; }
         public  string CustomerName { get; }
 
         public BLCustomersAddress(Point point, int numOfFloor, string customerName)
         {
-            Possision= new Point(point);
+            location= new Point(point);
               NumOfFloor = numOfFloor;
             CustomerName = customerName;
         }

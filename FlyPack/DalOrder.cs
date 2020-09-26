@@ -15,16 +15,16 @@ namespace FlyPack
         }
         public static bool DeleteOrder(int id)
         {
-            bool secess = true;
+            bool successes = true;
             try
             {
-              secess=  DalHelper.DeleteRowById(id, "Orders","ID");
+              successes=  DalHelper.DeleteRowById(id, "Orders","ID");
             }
             catch
             {
-                secess = false;
+                successes = false;
             }
-            return secess;
+            return successes;
         }
         //public static int NumOfOrdersFromShop(int ShopID)
         //{
@@ -41,18 +41,18 @@ namespace FlyPack
        public static bool UpdateArrivalTime(DateTime ArrivalTime,int OrderID)
         {
             string StringArrivalTime = $"#{ArrivalTime.ToString()}#";
-            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", StringArrivalTime, "ArrivalTime");
+            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", StringArrivalTime, "ArrivalTime");
         }
         public static bool UpdateStatus(int status, int OrderID)
         {
             string StringStatus = (status.ToString());
-            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", StringStatus, "OrderStutus");
+            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", StringStatus, "OrderStutus");
         }
 
         public static bool UpdateReadyTime(DateTime ReadyTime, int OrderID)
         {
             string StringReadyTime = $"#{ReadyTime.ToString()}#";
-            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", StringReadyTime, "ReadyTime");
+            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", StringReadyTime, "ReadyTime");
         }
         public static int GetOrderStatus(int OrderID)
         {
@@ -66,7 +66,7 @@ namespace FlyPack
 
         public static bool UpdateDelivery(int OrderID,string DeliveryID)
         {
-            return DalHelper.UpdateColumById(OrderID, "Orders", "ID", DeliveryID, "DeliverID");
+            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", DeliveryID, "DeliverID");
         }
         public static DataRow GetOrderByID(int OrderID)
         {

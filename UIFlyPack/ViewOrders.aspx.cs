@@ -15,7 +15,7 @@ namespace UIFlyPack
             BLUser user = (BLUser)Session["user"];
             if (!Page.IsPostBack)
             {
-                //to gneratte grid view dynamically*************
+                // generate grid view dynamically
                 DataTable orders = BLOrderUser.GetOrders(user.Type, user.UserID, true, "");
                 DataColumnCollection columns = orders.Columns;
                 foreach (DataColumn column in columns)
@@ -25,7 +25,7 @@ namespace UIFlyPack
                         //Declare the bound field and allocate memory for the bound field.
                         BoundField field = new BoundField();
 
-                        //Initalize the DataField value.
+                        //Initialize the DataField value.
                         field.DataField = column.ColumnName;
 
                         //Initialize the HeaderText field value.
@@ -39,27 +39,29 @@ namespace UIFlyPack
                 int t = user.Type;
                 if (t == 4)
                 {
-                    CommandField cf = new CommandField();
-                    cf.ButtonType = ButtonType.Button;
-                    cf.DeleteText = "cancel";
-                    cf.ShowDeleteButton = true;
+                    CommandField cf = new CommandField
+                    {
+                        ButtonType = ButtonType.Button, DeleteText = "cancel", ShowDeleteButton = true
+                    };
 
                     OrderTable.Columns.Add(cf);
                 }
                 else if (t == 3)
                 {
-                    ButtonField b = new ButtonField();
-                    b.Text = "Start order";
-                    b.ButtonType = ButtonType.Button;
-                    b.CommandName = "updateArrivalTime";
+                    ButtonField b = new ButtonField
+                    {
+                        Text = "Start order", ButtonType = ButtonType.Button, CommandName = "updateArrivalTime"
+                    };
                     OrderTable.Columns.Add(b);
                 }
                 else if (t == 1)
                 {
-                    ButtonField b = new ButtonField();
-                    b.Text = "product ready to delivered";
-                    b.ButtonType = ButtonType.Button;
-                    b.CommandName = "updateReadyTime";
+                    ButtonField b = new ButtonField
+                    {
+                        Text = "product ready to delivered",
+                        ButtonType = ButtonType.Button,
+                        CommandName = "updateReadyTime"
+                    };
                     OrderTable.Columns.Add(b);
                 }
 
@@ -204,11 +206,11 @@ namespace UIFlyPack
 
 
                 DateTime ExitTime = DateTime.Now;
-                DateTime AraivelTime = ExitTime.AddMinutes(20);//need to cuculate how match time
-                bool succsess = BLOrder.UpdateArrivalTime(AraivelTime, orderID) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;
-                if (!succsess)
+                DateTime AraivelTime = ExitTime.AddMinutes(20);//need to calculate how match time with GetDistanceToCustomerHome()
+                bool success = BLOrder.UpdateArrivalTime(AraivelTime, orderID) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;
+                if (!success)
                 {
-                    ErMSG.Text = "fail to start order";
+                    ErMSG.Text = "fail to start order ";
 
                 }
                 else
@@ -231,9 +233,9 @@ namespace UIFlyPack
                 //get the shop object 
                 BLShop shop = BLShop.GetShopById(order.ShopID);
                 //get the Id of the closest and . delivery  
-                string MatchDeliveryID = BLUser.GetMatchesDeliveryID(shop.Possision);
-                bool seccsess = BLOrder.UpdateReadyTime(ReadyTime, orderID)&&BLOrder.UpdateDelivery(orderID,MatchDeliveryID)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;
-                if (!seccsess)
+                string MatchDeliveryID = BLUser.GetMatchesDeliveryID(shop.location);
+                bool success = BLOrder.UpdateReadyTime(ReadyTime, orderID)&&BLOrder.UpdateDelivery(orderID,MatchDeliveryID)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;
+                if (!success)
                 {
                     ErMSG.Text = "fail to update ready time";
                 }

@@ -40,7 +40,7 @@ namespace BLFlyPack
         {
             return DalUser.CustomersTableByShop(ShopID);
         }
-        public override DataTable CustomersSerch(string condition)
+        public override DataTable CustomersSearch(string condition)
         {
             return DalUser.CustomersSearchByShop(ShopID, condition);
         }

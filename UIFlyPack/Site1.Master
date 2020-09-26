@@ -13,7 +13,7 @@
      <form id="form1" runat="server">
     <div id="UnConected" runat="server" >
         <ul class="inner_main_menu">
-            <li >
+            <li  style="float: right">
                 <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />
             </li>
              <li>
@@ -26,11 +26,11 @@
     </div>
       <div id="Customer" runat="server" visible="false" >
         <ul class="inner_main_menu">
-            <li>
-                <asp:Button runat="server" ID="logout1" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
+            <li style="float: right">
+                <asp:Button runat="server" ID="logout1" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch" />
             </li>
              <li>
-                 <a href="HomePage.aspx">Fly Pack</a>
+                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
             </li>
              <li>
                   <a href="OrderNow.aspx">Order Now</a>
@@ -45,38 +45,32 @@
     </div>
      <div id="ShopMenager" runat="server" visible="false">
         <ul class="inner_main_menu">
-            <li>
+            <li style="float: right">
                 <asp:Button runat="server" ID="logout2" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                 <a href="HomePage.aspx">Fly Pack</a>
+                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
             </li>
-             <li>
-                  <a href="Register.aspx">Register</a>
-            </li>
-              <li>
+            <li>
                   <a href="ViewOrders.aspx">View orders</a>
             </li>
              <li>
-                  <a href="ManegerInfo.aspx">Informaton</a>
+                  <a href="ManegerInfo.aspx">Information</a>
             </li>
-              <li>
+              <li style="padding: 1vh 1vh">
                 <asp:Label ID="UserString2"  runat="server" Text=""></asp:Label>
             </li>
         </ul>
     </div>
      <div id="Delivery" runat="server" visible="false">
         <ul class="inner_main_menu">
-            <li>
+            <li style="float: right">
                 <asp:Button runat="server" ID="logout3" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                 <a href="HomePage.aspx">Fly Pack</a>
+                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
             </li>
-             <li>
-                  <a href="Register.aspx">Register</a>
-            </li>
-              <li>
+            <li>
                   <a href="ViewOrders.aspx">View orders</a>
             </li>
               <li>
@@ -86,11 +80,11 @@
     </div>
      <div id="SystemMenager" runat="server" visible="false" >
         <ul class="inner_main_menu">
-            <li>
+            <li style="float: right">
                 <asp:Button runat="server" ID="logout4" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                 <a href="HomePage.aspx">Fly Pack</a>
+                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
             </li>
              <li>
                   <a href="Register.aspx?Type=3">Add Delivery</a>
@@ -105,7 +99,7 @@
                   <a href="AddShop.aspx">Add Shop</a>
             </li>
             <li>
-                  <a href="ManegerInfo.aspx">Informaton</a>
+                  <a href="ManegerInfo.aspx">Information</a>
             </li>
               <li>
                 <asp:Label ID="UserString4"  runat="server" Text=""></asp:Label>

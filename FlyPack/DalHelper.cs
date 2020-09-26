@@ -229,20 +229,20 @@ namespace FlyPack
             helper.CloseConnection();
             return tb;
         }
-        public static bool DeleteRowById(int id,string table,string idColumName)
+        public static bool DeleteRowById(int id,string table,string idColumnName)
         {
             DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
-            string sql = $"DELETE * FROM {table} WHERE {idColumName}={id}";
+            string sql = $"DELETE * FROM {table} WHERE {idColumnName}={id}";
            return  helper.WriteData(sql)==1;
         }
-        public static bool UpdateColumById(int id, string table, string idColumName,string ReplaceValue, string ReplacedColumName)
+        public static bool UpdateColumnById(int id, string table, string idColumnName,string ReplaceValue, string ReplacedColumName)
         {
             DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
-            string sql = $"UPDATE {table} SET {ReplacedColumName}={ReplaceValue} WHERE {idColumName}={id}";
+            string sql = $"UPDATE {table} SET {ReplacedColumName}={ReplaceValue} WHERE {idColumnName}={id}";
             return helper.WriteData(sql) == 1;
         }
     }

@@ -15,14 +15,14 @@ namespace BLFlyPack
         public int ID { get; }
         public string ShopManegerID { get; set; }
         public string ShopName { get; set; }
-        public  Point Possision { get; }
+        public  Point location { get; }
         
         public BLShop( string shopManegerId, string shopName)
         {
             try
             {
                 ID = DalShop.AddShop(shopManegerId,shopName);
-                Possision = GetPosission(ID);
+                location = GetPosission(ID);
             }
             catch
             {
@@ -38,7 +38,7 @@ namespace BLFlyPack
             ID = int.Parse(row["ID"].ToString());
             ShopName = row["ShopName"].ToString();
             ShopManegerID= row["ShopManagerID"].ToString();
-            Possision = GetPosission(ID);
+            location = GetPosission(ID);
         }
         public static List<BLShop> GetShops()
         {
@@ -63,7 +63,7 @@ namespace BLFlyPack
         }
         public static Point GetPosission(int shopID)
         {
-            DataRow row = DalShop.GetPosission(shopID);
+            DataRow row = DalShop.GetLocation(shopID);
             return new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()));
         }
     }

@@ -41,14 +41,14 @@ namespace BLFlyPack
             Dictionary<int, string> stautus = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shiping time selected" }, { 4, "delivery take care your order" }, { 5, "order shiped" } };
             DataTable copy = OrdersTable.Clone();
             copy.Columns["OrderStutus"].DataType = typeof(string);
-            DataColumnCollection colums = copy.Columns;
+            DataColumnCollection columns = copy.Columns;
             foreach (DataRow row in OrdersTable.Rows)
             {
                 int key = int.Parse(row["OrderStutus"].ToString());
                 string id = row["ID"].ToString();
                 DateTime date = DateTime.Parse(row["ArrivalTime"].ToString());
                 DataRow NewRow = copy.NewRow();
-                foreach (DataColumn column in colums)
+                foreach (DataColumn column in columns)
                 {
                     string colName = column.ColumnName.ToString();
                     if (colName == "OrderStutus")

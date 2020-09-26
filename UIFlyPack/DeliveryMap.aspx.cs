@@ -20,7 +20,7 @@ namespace UIFlyPack
             {
                 shops.Add( BLShop.GetShopById(order.ShopID));
                 Point CustomerAddress = null;
-                CustomerAddress = order.Possision != null ? new Point(order.Possision) : new Point(user.Possision);
+                CustomerAddress = order.location != null ? new Point(order.location) : new Point(user.location);
                 customersAddresses.Add(new BLCustomersAddress(CustomerAddress, order.NumOfFloor,BLUser.GetName(order.CustomerID)));
             }
             
