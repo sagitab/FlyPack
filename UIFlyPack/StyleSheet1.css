@@ -13,7 +13,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    height: 1.2em;
+    height: 1.8em;
     width: 150px;
     font-size: 0.6em;
     display: block;
@@ -112,7 +112,7 @@ ul {
     height:60vh;
 }
 .Header {
-    font-size: 1.2em;
+    font-size: 2.2em;
     font-family: fantasy;
     color: dodgerblue;
 }
@@ -158,4 +158,9 @@ ul {
     float: left;
     border-color: dodgerblue;
     height: 1.2em;
+}
+#map {
+    width: 50%;
+    height: 40vh;
+    margin: 0% auto;
 }

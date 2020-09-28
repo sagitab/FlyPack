@@ -15,6 +15,27 @@ namespace UIFlyPack
             
         }
 
+        public double GetLat(string latlng)
+        {
+            string lat = "";
+            for (int i = 0; i < latlng.Length&&latlng[i]!=','; i++)
+            {
+                lat += latlng[i];
+            }
+
+            return double.Parse(lat);
+        }
+        public double GetLng(string latlng)
+        {
+            string lng = "";
+            int start = latlng.IndexOf(',');
+            for (int i = start+1; i < latlng.Length; i++)
+            {
+                lng += latlng[i];
+            }
+
+            return double.Parse(lng);
+        }
         protected void regB_Click(object sender, EventArgs e)
         {
             bool validetors = NameValidator.IsValid && LNameValidator.IsValid && passValidator.IsValid && EmailValidator.IsValid &&PhoneValidator.IsValid&& IDValidator.IsValid;
@@ -27,10 +48,13 @@ namespace UIFlyPack
                 string phoneNum = Phone.Text;
                 string email = Email.Text;
                 bool passCheck = BLUser.PasswordCheck(password);
-                if(passCheck)
+                string LatLng =this.LatLng.Value.ToString();
+                double lat = GetLat(LatLng);
+                double lng = GetLng(LatLng);
+                if (passCheck)
                 {
                     int type =int.Parse( Request.QueryString.Get("Type"));
-                    BLUser user = new BLUser(id, type, email, phoneNum, name, lname, password,1,1);
+                    BLUser user = new BLUser(id, type, email, phoneNum, name, lname, password, lat, lng);
                     MSG.Text = "Register completed";
                 }
                 else
