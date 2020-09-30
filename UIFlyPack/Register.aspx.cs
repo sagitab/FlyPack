@@ -12,7 +12,16 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             this.UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
-            
+            if (!Page.IsPostBack)
+            {
+                Session["user"]=new BLUser("12345678");
+                BLUser user = (BLUser) Session["user"];
+                int type = user.Type;
+                if (type==1)
+                {
+                    instractor.InnerHtml = "Type shop address or click on the map to add address";
+                }
+            }
         }
 
         public double GetLat(string latlng)

@@ -18,8 +18,12 @@ namespace BLFlyPack
               NumOfFloor = numOfFloor;
             CustomerName = customerName;
         }
-      
-        
+
+        public override string ToString()
+        {
+            return $"Floor-{NumOfFloor} Customer name-{CustomerName}";
+        }
+
         //public BLCustomers(string email, string phone, string fname, string lname, string adress, string password, int type, int NumOfFloor):base(email,phone,fname,lname,adress,password,type)
         //{
         //    this.NumOfFloor = NumOfFloor;

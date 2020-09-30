@@ -70,6 +70,7 @@
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
     <Content Include="Img\BGimg.jpg" />
+    <Content Include="Img\redFlag.png" />
     <Content Include="LogIn.aspx" />
     <Content Include="ManegerInfo.aspx" />
     <Content Include="OrderNow.aspx" />

@@ -75,7 +75,7 @@ namespace FlyPack
         }
         public static string GetName(string CustomerID)
         {
-            return DalHelper.Select($"SELECT Users.FirstName FROM Users WHERE  Users.ID={CustomerID}").Rows[0]["FirstName"].ToString();
+            return DalHelper.Select($"SELECT Users.FirstName FROM Users WHERE  Users.ID='{CustomerID}'").Rows[0]["FirstName"].ToString();
         }
         //delivery
         public static DataTable DeliveriesTable()
