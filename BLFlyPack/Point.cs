@@ -50,6 +50,49 @@ namespace BLFlyPack
 
             return MinIndex;
         }
+        public int MinimumDistanceShops(List<BLShop> points, int startIndex)
+        {
+            int MinIndex = startIndex;
+            for (var index = startIndex; index < points.Count; index++)
+            {
+                var point = points[index];
+                if (this.Distance(point.location) < Distance(points[MinIndex].location))
+                {
+                    MinIndex = index;
+                }
+            }
+
+            return MinIndex;
+        }
+        
+        public List<int> MinimumDistanceShopsList(List<BLShop> points, int startIndex)
+        {
+            List<BLShop> Copy = new List<BLShop>(points);
+            List<int> OrderShops = new List<int>();
+            int MinIndex;
+            for (var index = startIndex; index < points.Count; index++)
+            {
+                MinIndex = MinimumDistanceShops(Copy, 0);
+                OrderShops.Add(MinIndex);
+                Copy.RemoveAt(MinIndex);
+            }
+
+            return OrderShops;
+        }
+    public int MinimumDistanceCustomers(List<BLCustomersAddress> points, int startIndex)
+        {
+            int MinIndex = startIndex;
+            for (var index = startIndex; index < points.Count; index++)
+            {
+                var point = points[index];
+                if (this.Distance(point.location) < Distance(points[MinIndex].location))
+                {
+                    MinIndex = index;
+                }
+            }
+
+            return MinIndex;
+        }
 
         public List<Point> SelectSort(List<Point> points)
         {
@@ -67,13 +110,13 @@ namespace BLFlyPack
         {
             return StartPoint.Time(shop.location) + shop.location.Time(customersAddress.location);
         }
-        public static double ArriveTime(Point StartPoint,List<BLCustomersAddress> customersAddresses,List<BLShop> shops)
+        public static double ArriveTime(Point StartPoint,List<BLCustomersAddress> customersAddresses,List<BLShop> shops,int MaxIndex)
         {
             Point startCopy=new Point(StartPoint);
             double ArriveTime =0.0;
-            for (int i = 0; i < shops.Count; i++)
+            for (int i = 0; i < MaxIndex+1; i++)
             {
-                ArriveTime += Point.ArriveTime(StartPoint, customersAddresses[i], shops[i]);
+                ArriveTime += Point.ArriveTime(startCopy, customersAddresses[i], shops[i]);
                 startCopy = customersAddresses[i].location;
             }
 

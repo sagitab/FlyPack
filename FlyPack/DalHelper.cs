@@ -61,7 +61,7 @@ namespace FlyPack
         /// <param name="id">id of the row requested</param>
         /// <param name="table">name of SQL table</param>
         /// <returns>DataRow containing the row</returns>
-        public static DataRow GetRowById(int id, string table)
+        public static DataRow GetRowById(string id, string table)
         {
             DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
 

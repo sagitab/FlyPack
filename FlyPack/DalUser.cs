@@ -41,7 +41,7 @@ namespace FlyPack
 
         }
 
-        public static DataRow GetUserByID(int UserID)
+        public static DataRow GetUserByID(string UserID)
         {
             return DalHelper.GetRowById(UserID, "Users");
         }

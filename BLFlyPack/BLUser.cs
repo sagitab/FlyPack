@@ -55,7 +55,7 @@ namespace BLFlyPack
 
         }
 
-        public static BLUser UserByID(int UserID)
+        public static BLUser UserByID(string UserID)
         {
             DataRow row = null;
             try
