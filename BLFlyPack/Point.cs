@@ -110,7 +110,11 @@ namespace BLFlyPack
         {
             return StartPoint.Time(shop.location) + shop.location.Time(customersAddress.location);
         }
-        public static double ArriveTime(Point StartPoint,List<BLCustomersAddress> customersAddresses,List<BLShop> shops,int MaxIndex)
+        public static double ArriveTimeShop(Point StartPoint, BLCustomersAddress customersAddress, BLShop shop)
+        {
+            return StartPoint.Time(customersAddress.location) + customersAddress.location.Time(shop.location);
+        }
+        public static double ArriveTimeCustomer(Point StartPoint,List<BLCustomersAddress> customersAddresses,List<BLShop> shops,int MaxIndex)
         {
             Point startCopy=new Point(StartPoint);
             double ArriveTime =0.0;
@@ -120,6 +124,26 @@ namespace BLFlyPack
                 startCopy = customersAddresses[i].location;
             }
 
+            return ArriveTime;
+        }
+        public static double ArriveTimeShop(Point StartPoint, List<BLCustomersAddress> customersAddresses, List<BLShop> shops, int MaxIndex)
+        {
+            Point locationNow = new Point(StartPoint);
+            double ArriveTime = 0.0;
+            for (int i = 0; i < MaxIndex + 1; i++)
+            {
+                if (i==0)
+                {
+                    ArriveTime += StartPoint.Time(shops[i].location);
+                    locationNow = shops[i].location;
+                }
+                else
+                {
+                    ArriveTime += Point.ArriveTimeShop(locationNow, customersAddresses[i], shops[i]);
+                    locationNow = shops[i].location;
+                }
+                
+            }
             return ArriveTime;
         }
     }

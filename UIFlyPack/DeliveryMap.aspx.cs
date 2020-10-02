@@ -37,73 +37,63 @@ namespace UIFlyPack
             List<BLOrder> CopyOrders = new List<BLOrder>(orders);
             List<BLShop> OrderShops = new List<BLShop>();
             List<BLCustomersAddress> OrderCustomersAddresses = new List<BLCustomersAddress>();
-            int minIndex=0;
-            Point LocationNow = new Point(0, 0);
+            int minIndex = 0;
+            Point LocationNow = user.location;
+            List<int> OrderShopIndex;
             for (int i = 0; i < shops.Count; i++)
             {
-                if (i == 0)
+                minIndex = LocationNow.MinimumDistanceShops(CopyShops, 0);
+                OrderShopIndex = LocationNow.MinimumDistanceShopsList(CopyShops, 0);
+                int lateTimes = 0;
+                //to add shop and customer
+                OrderShops[i] = CopyShops[minIndex];
+                OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
+                //calculate Times
+                DateTime ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                DateTime ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                DateTime ArriveTime = CopyOrders[minIndex].AriveTime;
+                DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
+                if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop))
                 {
-                    Point deliveryLocation = user.location;
-                    minIndex = deliveryLocation.MinimumDistanceShops(CopyShops, 0);
-                    List<int> OrderShopIndex = deliveryLocation.MinimumDistanceShopsList(CopyShops,0);
-                    if (IsLate(ArriveTime(deliveryLocation, CopyCustomersAddresses, CopyShops, minIndex), CopyOrders[minIndex].AriveTime))
+                    foreach (var index in OrderShopIndex)
                     {
-                        foreach (var index in OrderShopIndex)
+                        //calculate Times
+                        ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, index));
+                        ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                        ArriveTime = CopyOrders[index].AriveTime;
+                        ReadyTime = CopyOrders[index].ReadyTime;
+                        if (!IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop))
                         {
-                            if (!IsLate(ArriveTime(deliveryLocation, CopyCustomersAddresses, CopyShops, index), CopyOrders[index].AriveTime))
-                            {
-                                minIndex = index;
-                                break;
-                            }
+                            break;
+                        }
+                        else
+                        {
+                            //remove because index not good
+                            CopyShops.RemoveAt(minIndex);
+                            CopyOrders.RemoveAt(minIndex);
+                            CopyCustomersAddresses.RemoveAt(minIndex);
+
+                            lateTimes++;
                         }
                     }
-
-                    OrderShops[i] = CopyShops[minIndex];
-                    CopyShops.RemoveAt(minIndex);
-                    CopyOrders.RemoveAt(minIndex);
-
-                    //minIndex = Ordershops[minIndex].location.MinimumDistanceCustomers(CopyCustomersAddresses, 0);
-                    OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
-                    CopyCustomersAddresses.RemoveAt(minIndex);
-                   
-
-                    LocationNow = new Point(OrderCustomersAddresses[i].location);
                 }
-                else
+
+                if (lateTimes == OrderShopIndex.Count)
                 {
-                    minIndex = LocationNow.MinimumDistanceShops(CopyShops, 0);
-                    List<int> OrderShopIndex = LocationNow.MinimumDistanceShopsList(CopyShops, 0);
-                    if (IsLate(ArriveTime(LocationNow, CopyCustomersAddresses, CopyShops, minIndex), CopyOrders[minIndex].AriveTime))
-                    {
-                        foreach (var index in OrderShopIndex)
-                        {
-                            if (!IsLate(ArriveTime(LocationNow, CopyCustomersAddresses, CopyShops, index), CopyOrders[index].AriveTime))
-                            {
-                                minIndex = index;
-                                break;
-                            }
-                        }
-                    }
-                    OrderShops[i] = CopyShops[minIndex];
-                    CopyShops.RemoveAt(minIndex);
-                    CopyOrders.RemoveAt(minIndex);
 
-                    //minIndex = Ordershops[minIndex].location.MinimumDistanceCustomers(CopyCustomersAddresses, 0);
-                    OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
-                    CopyCustomersAddresses.RemoveAt(minIndex);
-
-                    LocationNow = new Point(OrderCustomersAddresses[i].location);
                 }
+                //update location
+                LocationNow = new Point(OrderCustomersAddresses[i].location);
             }
             Shops = OrderShops;
             CustomersAddresses = OrderCustomersAddresses;
         }
 
-        public static bool IsLate(double minuteFromNow, DateTime OriginalArriveTime)
+        public static bool IsLate(DateTime ArriveTimeCustomer, DateTime ArriveTime, DateTime ReadyTime, DateTime OriginalReadyTime)
         {
-            DateTime ArriveTime = DateTime.Now.AddMinutes(minuteFromNow);
-            int temp = DateTime.Compare(ArriveTime, OriginalArriveTime);
-            return temp > 0;
+            int temp = DateTime.Compare(ArriveTimeCustomer, ArriveTime);
+            int temp2 = DateTime.Compare(ReadyTime, OriginalReadyTime);
+            return temp > 0 && temp2 < 0;
         }
         //public  static  MatchIndex()
         //public static void AddPoint(Point startPoint, List<BLCustomersAddress> CopyCustomersAddress,)
