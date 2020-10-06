@@ -31,7 +31,7 @@ namespace UIFlyPack
             string Value = serchedValue.Text;
             DataTable Customes = user.CustomersSearch($"(Users.{SearchBys}='{Value}')");
             bool isExsist= BindTable(Customes, CustomersTable);
-            if(isExsist)
+            if(!isExsist)
             {
                 ErCustomer.Text = "Not valid search value";
             }

@@ -9,7 +9,7 @@
         </li>
         <li>
             <asp:TextBox ID="ID" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="IDValidator" runat="server" ControlToValidate="ID" ErrorMessage="ID need to be  9 tabs" SetFocusOnError="True" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator  ID="IDValidator" runat="server" ControlToValidate="ID" ErrorMessage="ID need to be  9 tabs" SetFocusOnError="True" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"></asp:RegularExpressionValidator>
         </li>
         <li>
             <span class="Header">Name</span>
@@ -44,19 +44,13 @@
         </li>
         <li>
             <asp:TextBox ID="Email" runat="server" Text="example@gmail.com" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="Email" ErrorMessage="Unvalid email" SetFocusOnError="True" ValidationExpression="^.{3,10}@gmail.com"></asp:RegularExpressionValidator>
-        </li>
-        <li style="margin-right: 150px">
-            <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="BSearch" />
+            <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="Email" ErrorMessage="Unvalid email" SetFocusOnError="True" ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"></asp:RegularExpressionValidator>
         </li>
         <li>
             <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
         </li>
-        <li>
-            <span class="Header" id="instractor" runat="server"> Type your address or click on the map to add address </span>
-        </li>
     </ul>
-
+    <span class="Header" style="margin: 0 35% 2% 45%;" id="instractor" runat="server"> Type your address or click on the map to add address </span>
     <div id="map"></div>
     <ul class="addList">
         <li>
@@ -68,9 +62,12 @@
         <li>
             <span id="massage"></span>
         </li>
+        <li style="margin-right: 150px">
+            <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="BSearch" />
+        </li>
     </ul>
     <asp:HiddenField runat="server" ID="LatLng" Value="" />
-    <script>
+ <%--   <script>
         var geocoder;
         var map;
         var googleMarkerPoints = [];
@@ -173,5 +170,5 @@
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfNHGvBm3VSe6XZ9oVKrYfW4YqyJJq9v4&callback=initMap">
-    </script>
+    </script>--%>
 </asp:Content>

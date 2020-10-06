@@ -123,15 +123,6 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
 
         /// <summary>
-        /// regB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button regB;
-
-        /// <summary>
         /// MSG control.
         /// </summary>
         /// <remarks>
@@ -148,6 +139,15 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl instractor;
+
+        /// <summary>
+        /// regB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button regB;
 
         /// <summary>
         /// LatLng control.

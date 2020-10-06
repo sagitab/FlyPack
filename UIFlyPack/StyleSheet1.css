@@ -64,8 +64,8 @@ a {
 span {
     color: #880e0e;
     float: left;
-    font-size:0.8em;
-    font-family:monospace;
+    font-size: 0.8em;
+    font-family: monospace;
 }
 
 ul {
@@ -104,12 +104,13 @@ ul {
     margin-right: 50px;
     font-family: serif;
 }
-#LogInDiv{
-    background-color:black;
-    width:25%;
-    padding-right:80px;
-    margin: 0px 35%;
-    height:60vh;
+#LogInDiv {
+    background-color: black;
+    width: 15%;
+    padding-right: 0px;
+    margin: 5% auto;
+    height: 35vh;
+    border-radius: 1.5vh;
 }
 .Header {
     font-size: 2.2em;
@@ -163,4 +164,19 @@ ul {
     width: 50%;
     height: 40vh;
     margin: 0% auto;
+}
+.UnvalidTextBox {
+    position: relative;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    height: 1.8em;
+    width: 150px;
+    font-size: 0.6em;
+    display: block;
+    border-bottom: solid 4px;
+    display: block;
+    color: darkblue;
+    background-color: white;
+    border-bottom-color: #880e0e;
 }

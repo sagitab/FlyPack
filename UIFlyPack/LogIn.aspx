@@ -3,13 +3,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="LogInDiv">
-    <ul class="addList">
+    <ul class="addList" style="margin: 5vh 35%">
         <li>
             <span class="Header">User Name </span>
         </li>
          <li>
              <asp:TextBox runat="server" ID="Name" CssClass="TextBox"></asp:TextBox>
-               <asp:RegularExpressionValidator ID="NameValidator" runat="server"  ControlToValidate="Name" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,11}$" ></asp:RegularExpressionValidator>
+               <asp:RegularExpressionValidator ID="NameValidator" runat="server"  ControlToValidate="Name" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$" ></asp:RegularExpressionValidator>
         </li>
          <li>
            <span class="Header">Password </span>

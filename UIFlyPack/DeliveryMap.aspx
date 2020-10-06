@@ -6,10 +6,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="map"></div>
-    <script>
+    <%--<script>
         var map;
         var points = [];
-        var shops = JSON.parse(`<%=Json.Serialize(Shops.AsReadOnly())%>`);
+       var shops = JSON.parse(`<%=Json.Serialize(Shops.AsReadOnly())%>`);
         var customersAddresses = JSON.parse(`<%=Json.Serialize(CustomersAddresses.AsReadOnly())%>`);
         console.log(shops);
 
@@ -71,5 +71,5 @@
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfNHGvBm3VSe6XZ9oVKrYfW4YqyJJq9v4&callback=initMap">
-    </script>
+    </script>--%>
 </asp:Content>

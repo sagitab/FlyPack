@@ -23,12 +23,15 @@ namespace UIFlyPack
             if(name!=""&&pass!="")
             {
                 BLUser user = null;
-                user = user.Type == 1 ? new BLShopMenager(pass) : new BLUser(pass);
-               
+                user =  new BLUser(pass);
+              
                 bool IsExsist = NameValidator.IsValid && passValidator.IsValid && user != null;
                 if (IsExsist)
                 {
-                    
+                    if (user.Type == 1)
+                    {
+                        user = new BLShopMenager(pass);
+                    }
                     Session["user"] = user;
                     Response.Redirect("HomePage.aspx");
                 }

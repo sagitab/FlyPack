@@ -14,13 +14,17 @@ namespace UIFlyPack
             this.UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
             if (!Page.IsPostBack)
             {
-                Session["user"]=new BLUser("12345678");
+                //Session["user"]=new BLUser("12345678");
                 BLUser user = (BLUser) Session["user"];
-                int type = user.Type;
-                if (type==1)
+                if (user!=null)
                 {
-                    instractor.InnerHtml = "Type shop address or click on the map to add address";
+                    int type = user.Type;
+                    if (type == 1)
+                    {
+                        instractor.InnerHtml = "Type shop address or click on the map to add address";
+                    }
                 }
+              
             }
         }
 
@@ -48,7 +52,7 @@ namespace UIFlyPack
         protected void regB_Click(object sender, EventArgs e)
         {
             bool validetors = NameValidator.IsValid && LNameValidator.IsValid && passValidator.IsValid && EmailValidator.IsValid &&PhoneValidator.IsValid&& IDValidator.IsValid;
-            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Value != "" && Phone.Text != "" )
+            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Value != "" && Phone.Text != ""&&ID.Text!="" )
             {
                 string id = ID.Text;
                 string name = Name.Text;
