@@ -42,16 +42,7 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.RangeValidator RangeShopOrderID;
 
         /// <summary>
-        /// times control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect times;
-
-        /// <summary>
-        /// Address control.
+        /// Adress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -85,5 +76,14 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label MSG;
+
+        /// <summary>
+        /// LatLng control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField LatLng;
     }
 }

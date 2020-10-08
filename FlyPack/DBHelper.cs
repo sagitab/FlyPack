@@ -16,15 +16,15 @@ namespace FlyPack
     /// <summary>
     /// DB Helper, methods to do operations on a database
     /// </summary>
-    public class DBHelper
+    public class DbHelper
     {
 
-        public const int WRITEDATA_ERROR = -1;
+        public const int WritedataError = -1;
 
-        private OleDbConnection conn;
-        private string provider;
-        private string source;
-        private bool connOpen;
+        private OleDbConnection _conn;
+        private string _provider;
+        private string _source;
+        private bool _connOpen;
 
         /// <summary>
         /// constructor of the DBHelper class, which is used to 
@@ -32,10 +32,10 @@ namespace FlyPack
         /// <param name="provider"></param>
         /// <param name="source"></param>
 
-        public DBHelper(string provider, string source)
+        public DbHelper(string provider, string source)
         {
-            this.provider = provider;
-            this.source = source;
+            this._provider = provider;
+            this._source = source;
 
 
         }
@@ -46,7 +46,7 @@ namespace FlyPack
         /// <returns>connection string</returns>
         public string BuildConnString()
         {
-            return String.Format(@"Provider={0};Data Source={1};", provider, source);
+            return String.Format(@"Provider={0};Data Source={1};", _provider, _source);
 
         }
 
@@ -55,9 +55,9 @@ namespace FlyPack
         /// </summary>
         public void CloseConnection()
         {
-            if (conn == null) return;
-            conn.Close();
-            connOpen = false;
+            if (_conn == null) return;
+            _conn.Close();
+            _connOpen = false;
         }
 
         /// <summary>
@@ -87,28 +87,28 @@ namespace FlyPack
         {
             try
             {
-                OleDbCommand cmd = new OleDbCommand(sql, conn);
+                OleDbCommand cmd = new OleDbCommand(sql, _conn);
 
                 OleDbDataReader reader = cmd.ExecuteReader();
 
                 if (reader != null && reader.RecordsAffected == 1)
                 {
-                    cmd = new OleDbCommand(@"SELECT @@Identity", conn);
+                    cmd = new OleDbCommand(@"SELECT @@Identity", _conn);
                     reader = cmd.ExecuteReader();
-                    int newID = WRITEDATA_ERROR;
+                    int newId = WritedataError;
                     while (reader.Read())
                     {
                         //The new ID will be on the first (and only) column
-                        newID = (int)reader[0];
+                        newId = (int)reader[0];
                     }
-                    return newID;
+                    return newId;
                 }
-                else return WRITEDATA_ERROR;
+                else return WritedataError;
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-                return WRITEDATA_ERROR;
+                return WritedataError;
             }
         }
 
@@ -122,8 +122,8 @@ namespace FlyPack
         {
             try
             {
-                if (!connOpen) return WRITEDATA_ERROR;
-                OleDbCommand cmd = new OleDbCommand(sql, conn);
+                if (!_connOpen) return WritedataError;
+                OleDbCommand cmd = new OleDbCommand(sql, _conn);
 
                 OleDbDataReader reader = cmd.ExecuteReader();
                 
@@ -132,7 +132,7 @@ namespace FlyPack
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return WRITEDATA_ERROR;
+                return WritedataError;
             }
         }
 
@@ -146,7 +146,7 @@ namespace FlyPack
         {
 
             
-            OleDbCommand cmd = new OleDbCommand(sql, conn);
+            OleDbCommand cmd = new OleDbCommand(sql, _conn);
             // since execute reader returns null on failure, that's all we have to do.
             return cmd.ExecuteReader();
         }
@@ -159,11 +159,11 @@ namespace FlyPack
         /// <returns>if the connection went successful</returns>
         public bool OpenConnection()
         {
-            if (conn == null) conn = new OleDbConnection(BuildConnString());
+            if (_conn == null) _conn = new OleDbConnection(BuildConnString());
             try
             {
-                conn.Open();
-                connOpen = true;
+                _conn.Open();
+                _connOpen = true;
 
             }
             catch (Exception e) // basically, if the connection throws some kind of exception.
@@ -189,7 +189,7 @@ namespace FlyPack
                 int i = 1;
                 foreach (string s in sql)
                 {
-                    OleDbDataAdapter adapter = new OleDbDataAdapter(s, conn);
+                    OleDbDataAdapter adapter = new OleDbDataAdapter(s, _conn);
                     adapter.Fill(set, $"sql{i}");
 
                     // to release resources.

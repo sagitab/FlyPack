@@ -8,7 +8,7 @@ namespace BLFlyPack
 {
    public class ShopManeger
     {
-        public int ShopID { get; }
+        public int ShopId { get; }
 
     }
 }

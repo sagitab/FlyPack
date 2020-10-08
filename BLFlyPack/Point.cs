@@ -32,66 +32,66 @@ namespace BLFlyPack
 
         public double Time(Point point)
         {
-            const int Speed = 10;
-            return Distance(point) / Speed;
+            const int speed = 10;
+            return Distance(point) / speed;
         }
 
         public int MinimumDistance(List<Point> points,int startIndex)
         {
-            int MinIndex = startIndex;
+            int minIndex = startIndex;
             for (var index = startIndex; index < points.Count; index++)
             {
                 var point = points[index];
-                if (this.Distance(point) < Distance(points[MinIndex]))
+                if (this.Distance(point) < Distance(points[minIndex]))
                 {
-                    MinIndex = index;
+                    minIndex = index;
                 }
             }
 
-            return MinIndex;
+            return minIndex;
         }
-        public int MinimumDistanceShops(List<BLShop> points, int startIndex)
+        public int MinimumDistanceShops(List<BlShop> points, int startIndex)
         {
-            int MinIndex = startIndex;
+            int minIndex = startIndex;
             for (var index = startIndex; index < points.Count; index++)
             {
                 var point = points[index];
-                if (this.Distance(point.location) < Distance(points[MinIndex].location))
+                if (this.Distance(point.Location) < Distance(points[minIndex].Location))
                 {
-                    MinIndex = index;
+                    minIndex = index;
                 }
             }
 
-            return MinIndex;
+            return minIndex;
         }
         
-        public List<int> MinimumDistanceShopsList(List<BLShop> points, int startIndex)
+        public List<int> MinimumDistanceShopsList(List<BlShop> points, int startIndex)
         {
-            List<BLShop> Copy = new List<BLShop>(points);
-            List<int> OrderShops = new List<int>();
-            int MinIndex;
+            List<BlShop> copy = new List<BlShop>(points);
+            List<int> orderShops = new List<int>();
+            int minIndex;
             for (var index = startIndex; index < points.Count; index++)
             {
-                MinIndex = MinimumDistanceShops(Copy, 0);
-                OrderShops.Add(MinIndex);
-                Copy.RemoveAt(MinIndex);
+                minIndex = MinimumDistanceShops(copy, 0);
+                orderShops.Add(minIndex);
+                copy.RemoveAt(minIndex);
             }
 
-            return OrderShops;
+            return orderShops;
         }
-    public int MinimumDistanceCustomers(List<BLCustomersAddress> points, int startIndex)
+    public int MinimumDistanceCustomers(List<BlCustomersAddress> points, int startIndex)
         {
-            int MinIndex = startIndex;
+            int minIndex = startIndex;
             for (var index = startIndex; index < points.Count; index++)
             {
                 var point = points[index];
-                if (this.Distance(point.location) < Distance(points[MinIndex].location))
+                if (this.Distance(point.Location) < Distance(points[minIndex].Location))
                 {
-                    MinIndex = index;
+                    minIndex = index;
                 }
             }
 
-            return MinIndex;
+            return minIndex;
         }
 
         public List<Point> SelectSort(List<Point> points)
@@ -106,45 +106,45 @@ namespace BLFlyPack
 
             return points;
         }
-        public static double ArriveTime(Point StartPoint, BLCustomersAddress customersAddress, BLShop shop)
+        public static double ArriveTime(Point startPoint, BlCustomersAddress customersAddress, BlShop shop)
         {
-            return StartPoint.Time(shop.location) + shop.location.Time(customersAddress.location);
+            return startPoint.Time(shop.Location) + shop.Location.Time(customersAddress.Location);
         }
-        public static double ArriveTimeShop(Point StartPoint, BLCustomersAddress customersAddress, BLShop shop)
+        public static double ArriveTimeShop(Point startPoint, BlCustomersAddress customersAddress, BlShop shop)
         {
-            return StartPoint.Time(customersAddress.location) + customersAddress.location.Time(shop.location);
+            return startPoint.Time(customersAddress.Location) + customersAddress.Location.Time(shop.Location);
         }
-        public static double ArriveTimeCustomer(Point StartPoint,List<BLCustomersAddress> customersAddresses,List<BLShop> shops,int MaxIndex)
+        public static double ArriveTimeCustomer(Point startPoint,List<BlCustomersAddress> customersAddresses,List<BlShop> shops,int maxIndex)
         {
-            Point startCopy=new Point(StartPoint);
-            double ArriveTime =0.0;
-            for (int i = 0; i < MaxIndex+1; i++)
+            Point startCopy=new Point(startPoint);
+            double arriveTime =0.0;
+            for (int i = 0; i < maxIndex+1; i++)
             {
-                ArriveTime += Point.ArriveTime(startCopy, customersAddresses[i], shops[i]);
-                startCopy = customersAddresses[i].location;
+                arriveTime += Point.ArriveTime(startCopy, customersAddresses[i], shops[i]);
+                startCopy = customersAddresses[i].Location;
             }
 
-            return ArriveTime;
+            return arriveTime;
         }
-        public static double ArriveTimeShop(Point StartPoint, List<BLCustomersAddress> customersAddresses, List<BLShop> shops, int MaxIndex)
+        public static double ArriveTimeShop(Point startPoint, List<BlCustomersAddress> customersAddresses, List<BlShop> shops, int maxIndex)
         {
-            Point locationNow = new Point(StartPoint);
-            double ArriveTime = 0.0;
-            for (int i = 0; i < MaxIndex + 1; i++)
+            Point locationNow = new Point(startPoint);
+            double arriveTime = 0.0;
+            for (int i = 0; i < maxIndex + 1; i++)
             {
                 if (i==0)
                 {
-                    ArriveTime += StartPoint.Time(shops[i].location);
-                    locationNow = shops[i].location;
+                    arriveTime += startPoint.Time(shops[i].Location);
+                    locationNow = shops[i].Location;
                 }
                 else
                 {
-                    ArriveTime += Point.ArriveTimeShop(locationNow, customersAddresses[i], shops[i]);
-                    locationNow = shops[i].location;
+                    arriveTime += Point.ArriveTimeShop(locationNow, customersAddresses[i], shops[i]);
+                    locationNow = shops[i].Location;
                 }
                 
             }
-            return ArriveTime;
+            return arriveTime;
         }
     }
 }

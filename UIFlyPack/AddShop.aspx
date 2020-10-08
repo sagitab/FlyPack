@@ -10,16 +10,8 @@
             <asp:TextBox ID="ShopName" runat="server" CssClass="TextBox"></asp:TextBox>
             <asp:RegularExpressionValidator ID="NameValidator" runat="server"  ControlToValidate="ShopName" ErrorMessage="Shop name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$" ></asp:RegularExpressionValidator>
         </li>
-         <li>
-             
-             <span class="Header" >Address</span>
-        </li>
-         <li>           
-            <asp:TextBox ID="Address" runat="server" CssClass="TextBox"></asp:TextBox>
-             <asp:RegularExpressionValidator ID="AddressValidator" runat="server"  ControlToValidate="Address" ErrorMessage="Address need to be  10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}" ></asp:RegularExpressionValidator>
-        </li>
-         <li>
-             <span class="Header" >Select shop maneger</span>
+        <li>
+             <span class="Header" >Select shop manager</span>
         </li>
          <li>           
             <asp:DropDownList ID="ShopMSelect" runat="server" CssClass="Select">
@@ -29,7 +21,7 @@
              <asp:Button ID="AddShop1" runat="server" Text="Add shop" CssClass="BSearch" OnClick="AddShop_Click" />
         </li>
         <li>           
-             <asp:Label ID="MSG" runat="server" Text="Label"></asp:Label>
+             <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
         </li>
     </ul>
     

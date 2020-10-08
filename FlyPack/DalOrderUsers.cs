@@ -10,7 +10,7 @@ namespace FlyPack
 {
    public class DalOrderUsers
     {
-        public static DataTable GetOrders(int type, string Userid,string newOrOld)
+        public static DataTable GetOrders(int type, string userid,string newOrOld)
         {
             switch (type)
             {

@@ -8,44 +8,45 @@ using System.Web.UI.WebControls;
 using System.Data;
 namespace UIFlyPack
 {
-    public partial class ManegerInfo : System.Web.UI.Page
+    public partial class ManagerInfo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BLUser user = (BLUser)Session["user"];
+            BlUser user = (BlUser)Session["user"];
             if(!Page.IsPostBack)
             {
-                DataTable Customes = user.CustomersTable();
-                DataTable Deliveries = user.DeliveriesTable();
-                ErDelivery.Text = !BindTable(Deliveries, DeliveriesTable) ? "fail show deliveries table" : "";
-                ErCustomer.Text = !BindTable(Customes, CustomersTable) ? "fail show customers table" : "";
+                DataTable customes = user.CustomersTable();
+                DataTable deliveries = user.DeliveriesTable();
+                ErDelivery.Text = !BindTable(deliveries, DeliveriesTable) ? "fail show deliveries table" : "";
+                ErCustomer.Text = !BindTable(customes, CustomersTable) ? "fail show customers table" : "";
                 NumOfOrders.Text ="Number of orders- "+ user.GetNumOfOrders()+"Number of customers that order- "+user.GetNumOfActiveCustomers();
             }
         }
 
         protected void SearchCustomerB_Click(object sender, EventArgs e)
         {
-            BLUser user = (BLUser)Session["user"];
-            string SearchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
+            BlUser user = (BlUser)Session["user"];
+            string searchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
             
-            string Value = serchedValue.Text;
-            DataTable Customes = user.CustomersSearch($"(Users.{SearchBys}='{Value}')");
-            bool isExsist= BindTable(Customes, CustomersTable);
+            string value = serchedValue.Text;
+            DataTable customers = user.CustomersSearch($"(Users.{searchBys}='{value}')");
+            bool isExsist= BindTable(customers, CustomersTable);
             if(!isExsist)
             {
                 ErCustomer.Text = "Not valid search value";
             }
+            else
+            {
+                ErCustomer.Text = "";
+            }
         }
         public bool BindTable(DataTable table,GridView gridView)
         {
-            bool succsess = table != null&&table.Rows.Count>0;
-            if(succsess)
-            {
-                gridView.DataSource = table;
-                gridView.DataBind();
-                return true;
-            }
-            return false;
+            bool success = table != null&&table.Rows.Count>0;
+            if (!success) return false;
+            gridView.DataSource = table;
+            gridView.DataBind();
+            return true;
         }
     }
 }

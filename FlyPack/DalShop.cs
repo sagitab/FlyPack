@@ -17,13 +17,13 @@ namespace FlyPack
             return DalHelper.Insert($"INSERT INTO Shops(ShopName,ShopManagerID) VALUES('{shopName}','{shopManegerId}')");
         }
 
-        public static DataRow GetShop(int Id)
+        public static DataRow GetShop(int id)
         {
             
-            return DalHelper.AllWhere("Shops", "ID", Id).Rows[0];
+            return DalHelper.AllWhere("Shops", "ID", id).Rows[0];
         }
 
-        public static DataRow GetLocation(int shopID)
+        public static DataRow GetLocation(int shopId)
         {
             return DalHelper.Select("SELECT Users.Lat, Users.Lng FROM Users INNER JOIN Shops ON Users.ID = Shops.ShopManagerID WHERE(([Shops].[ID] = 1));").Rows[0];
         }

@@ -7,60 +7,65 @@ using System.Threading.Tasks;
 using FlyPack;
 namespace BLFlyPack
 {
-    public class BLOrder
+    public class BlOrder
     {
-        public int OrderID { get; }
-        public string CustomerID { get; set; }
-        public string DeliveryID { get; set; }
-        public int ShopID { get; set; }
+        public int OrderId { get; }
+        public string CustomerId { get; set; }
+        public string DeliveryId { get; set; }
+        public int ShopId { get; set; }
         public DateTime AriveTime { get; set; }
         public DateTime Time { get; set; }
         public DateTime ReadyTime { get; set; }
         public int Status { get; set; }
-        public Point location { get; set; }
+        public Point Location { get; set; }
         public int NumOfFloor { get; set; }
        
 
-        public BLOrder( string customerId, string deliveryId, int shopId, DateTime ariveTime, DateTime readyTime, int status, double lat, double lng, int numOfFloor)
+        public BlOrder( string customerId, string deliveryId, int shopId, DateTime ariveTime, DateTime readyTime, int status, double lat, double lng, int numOfFloor)
         {
             int id;
             try
             {
-                id = FlyPack.DalOrder.AddOrder(CustomerID, DeliveryID, ShopID, AriveTime, Status,numOfFloor, ReadyTime,lat,lng);
+                id = FlyPack.DalOrder.AddOrder(customerId, deliveryId, shopId, ariveTime, status, numOfFloor, readyTime, lat,lng);
             }
             catch
             {
                 throw new Exception("fail");
             }
-            OrderID = id;
-            CustomerID = customerId;
-            DeliveryID = deliveryId;
-            ShopID = shopId;
-            AriveTime = ariveTime;
-            Time = DateTime.Now;
-            ReadyTime = readyTime;
-            Status = status;
-            location=new Point(lat,lng);
-            NumOfFloor = numOfFloor;
+
+            if (id!=-1)
+            {
+                OrderId = id;
+                CustomerId = customerId;
+                DeliveryId = deliveryId;
+                ShopId = shopId;
+                AriveTime = ariveTime;
+                Time = DateTime.Now;
+                ReadyTime = readyTime;
+                Status = status;
+                Location = new Point(lat, lng);
+                NumOfFloor = numOfFloor;
+            }
+          
         }
-        public BLOrder(DataRow row)
+        public BlOrder(DataRow row)
         {
-            this.OrderID =int.Parse(row["ID"].ToString()) ;
-            this.CustomerID = row["CustomerID"].ToString();
-            this.DeliveryID = row["DeliverID"].ToString();
-            this.ShopID = int.Parse(row["ShopID"].ToString());
+            this.OrderId =int.Parse(row["ID"].ToString()) ;
+            this.CustomerId = row["CustomerID"].ToString();
+            this.DeliveryId = row["DeliverID"].ToString();
+            this.ShopId = int.Parse(row["ShopID"].ToString());
             this.AriveTime =DateTime.Parse(row["ArrivalTime"].ToString());
             this.Time = DateTime.Parse(row["Time"].ToString()); ;//what to do?
             this.Status = int.Parse(row["OrderStutus"].ToString());
-            location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+            Location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
             this.NumOfFloor = int.Parse(row["NumOfFloor"].ToString());
             this.ReadyTime = DateTime.Parse(row["ReadyTime"].ToString());
         }
 
-        public static BLOrder GetBLOrderByID(int OrderID)
+        public static BlOrder GetBlOrderById(int orderId)
         {
-            DataRow OrderRow = GetOrderByID(OrderID);
-            return new  BLOrder(OrderRow);
+            DataRow orderRow = GetOrderById(orderId);
+            return new  BlOrder(orderRow);
         }
         public static bool DeleteOrder(int id)
         {
@@ -76,16 +81,16 @@ namespace BLFlyPack
         //    this.Time = Time;
         //    this.Status = Status;
         //}
-        public static string NumOfOrdersFromShop(int ShopID)
+        public static string NumOfOrdersFromShop(int shopId)
         {
-            return  DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {ShopID})").ToString();
+            return  DalOrder.NumOfOrders($"WHERE([Orders].[ShopID] = {shopId})").ToString();
         }
-        public static bool UpdateArrivalTime(DateTime ArrivalTime,int OrderID)
+        public static bool UpdateArrivalTime(DateTime arrivalTime,int orderId)
         {
             bool seccess = true;
             try
             {
-                seccess = DalOrder.UpdateArrivalTime(ArrivalTime,OrderID);
+                seccess = DalOrder.UpdateArrivalTime(arrivalTime,orderId);
             }
             catch
             {
@@ -93,12 +98,12 @@ namespace BLFlyPack
             }
             return seccess;
         }
-        public static bool UpdateReadyTime(DateTime ArrivalTime, int OrderID)
+        public static bool UpdateReadyTime(DateTime arrivalTime, int orderId)
         {
             bool seccsess = true;
             try
             {
-                seccsess = DalOrder.UpdateReadyTime(ArrivalTime, OrderID);
+                seccsess = DalOrder.UpdateReadyTime(arrivalTime, orderId);
             }
             catch
             {
@@ -106,12 +111,12 @@ namespace BLFlyPack
             }
             return seccsess;
         }
-        public static bool UpdateStatus(int Status, int OrderID)
+        public static bool UpdateStatus(int status, int orderId)
         {
             bool seccsess = true;
             try
             {
-                seccsess = DalOrder.UpdateStatus(Status, OrderID);
+                seccsess = DalOrder.UpdateStatus(status, orderId);
             }
             catch
             {
@@ -119,12 +124,12 @@ namespace BLFlyPack
             }
             return seccsess;
         }
-        public static int GetOrderStatus(int OrderID)
+        public static int GetOrderStatus(int orderId)
         {
             int stastus = -1;
             try
             {
-                return DalOrder.GetOrderStatus(OrderID);
+                return DalOrder.GetOrderStatus(orderId);
             }
             catch(Exception e)
             {
@@ -133,30 +138,30 @@ namespace BLFlyPack
             return stastus;
         }
 
-        public static List<BLOrder> GetOrdersListByTime(string deliveryId)
+        public static List<BlOrder> GetOrdersListByTime(string deliveryId)
         {
             DataTable orderTable = DalOrder.GetOrdersListByTime(deliveryId);
 
-            return (from object row in orderTable.Rows select new BLOrder((DataRow) row)).ToList();
+            return (from object row in orderTable.Rows select new BlOrder((DataRow) row)).ToList();
         }
 
-        public static bool UpdateDelivery(int OrderID, string DeliveryID)
+        public static bool UpdateDelivery(int orderId, string deliveryId)
         {
            
             try
             {
-                return DalOrder.UpdateDelivery(OrderID, DeliveryID);
+                return DalOrder.UpdateDelivery(orderId, deliveryId);
             }
             catch
             {
                 return false;
             }
         }
-        public static DataRow GetOrderByID(int OrderID)
+        public static DataRow GetOrderById(int orderId)
         {
             try
             {
-                return DalOrder.GetOrderByID(OrderID);
+                return DalOrder.GetOrderById(orderId);
             }
             catch
             {

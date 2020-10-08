@@ -9,9 +9,9 @@ namespace FlyPack
 {
     public class DalOrder
     {
-        public static int AddOrder(string CustomerID, string DeliveryID, int ShopID, DateTime AriveTime,  int Status,int NumOfFloor, DateTime ReadyTime,double Lat, double Lng)
+        public static int AddOrder(string customerId, string deliveryId, int shopId, DateTime ariveTime,  int status,int numOfFloor, DateTime readyTime,double lat, double lng)
         {
-            return DalHelper.Insert($"INSERT INTO Orders([CustomerID],[DeliverID],[ShopID],[ArrivalTime],[OrderStutus],ReadyTime,,NumOfFloor,Lat,Lng) VALUES ({CustomerID},{DeliveryID},{ShopID},#{AriveTime}#,{Status},#{ReadyTime}#,{NumOfFloor},{Lat},{Lng})");
+            return DalHelper.Insert($"INSERT INTO Orders([CustomerID],[DeliverID],[ShopID],[ArrivalTime],[OrderStutus],ReadyTime,NumOfFloor,Lat,Lng) VALUES ('{customerId}','{deliveryId}',{shopId},#{ariveTime}#,{status},#{readyTime}#,{numOfFloor},{lat},{lng})");
         }
         public static bool DeleteOrder(int id)
         {
@@ -38,25 +38,25 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT Count(Orders.CustomerID) AS NumOfActiveCustomers FROM Orders {condition}").Rows[0]["NumOfActiveCustomers"].ToString();
         }
-       public static bool UpdateArrivalTime(DateTime ArrivalTime,int OrderID)
+       public static bool UpdateArrivalTime(DateTime arrivalTime,int orderId)
         {
-            string StringArrivalTime = $"#{ArrivalTime.ToString()}#";
-            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", StringArrivalTime, "ArrivalTime");
+            string stringArrivalTime = $"#{arrivalTime.ToString()}#";
+            return DalHelper.UpdateColumnById(orderId, "Orders", "ID", stringArrivalTime, "ArrivalTime");
         }
-        public static bool UpdateStatus(int status, int OrderID)
+        public static bool UpdateStatus(int status, int orderId)
         {
-            string StringStatus = (status.ToString());
-            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", StringStatus, "OrderStutus");
+            string stringStatus = (status.ToString());
+            return DalHelper.UpdateColumnById(orderId, "Orders", "ID", stringStatus, "OrderStutus");
         }
 
-        public static bool UpdateReadyTime(DateTime ReadyTime, int OrderID)
+        public static bool UpdateReadyTime(DateTime readyTime, int orderId)
         {
-            string StringReadyTime = $"#{ReadyTime.ToString()}#";
-            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", StringReadyTime, "ReadyTime");
+            string stringReadyTime = $"#{readyTime.ToString()}#";
+            return DalHelper.UpdateColumnById(orderId, "Orders", "ID", stringReadyTime, "ReadyTime");
         }
-        public static int GetOrderStatus(int OrderID)
+        public static int GetOrderStatus(int orderId)
         {
-            return int.Parse( DalHelper.Select($"SELECT OrderStutus FROM Orders WHERE ID={OrderID}").Rows[0]["OrderStutus"].ToString());
+            return int.Parse( DalHelper.Select($"SELECT OrderStutus FROM Orders WHERE ID={orderId}").Rows[0]["OrderStutus"].ToString());
         }
 
         public static DataTable GetOrdersListByTime(string deliveryId)
@@ -64,13 +64,13 @@ namespace FlyPack
             return DalHelper.Select($"SELECT * FROM Orders WHERE DeliverID='{deliveryId}' AND OrderStutus=4 ORDER BY Time");
         }
 
-        public static bool UpdateDelivery(int OrderID,string DeliveryID)
+        public static bool UpdateDelivery(int orderId,string deliveryId)
         {
-            return DalHelper.UpdateColumnById(OrderID, "Orders", "ID", DeliveryID, "DeliverID");
+            return DalHelper.UpdateColumnById(orderId, "Orders", "ID", deliveryId, "DeliverID");
         }
-        public static DataRow GetOrderByID(int OrderID)
+        public static DataRow GetOrderById(int orderId)
         {
-            return DalHelper.Select($"SELECT * FROM Orders WHERE ID={OrderID}").Rows[0];
+            return DalHelper.Select($"SELECT * FROM Orders WHERE ID={orderId}").Rows[0];
         }
     }
 }

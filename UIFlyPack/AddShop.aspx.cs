@@ -16,7 +16,7 @@ namespace UIFlyPack
             if (!Page.IsPostBack)
             {
                 //set data source
-                ShopMSelect.DataSource = BLFlyPack.BLShopMenager.ShopManegerTable();
+                ShopMSelect.DataSource = BLFlyPack.BlShopManager.ShopManagerTable();
                 ShopMSelect.DataTextField = "FirstName";
                 ShopMSelect.DataValueField = "ID";
                 // Bind the data to the control.
@@ -31,10 +31,9 @@ namespace UIFlyPack
         protected void AddShop_Click(object sender, EventArgs e)
         {
             string shopName = ShopName.Text;
-            string address = Address.Text;
-            string ShopManegerID = ShopMSelect.SelectedValue;
-            BLShop shop = new BLShop(ShopManegerID,shopName);
-            if(shop!=null||shop.ID==-1)
+            string shopManegerId = ShopMSelect.SelectedValue;
+            BlShop shop = new BlShop(shopManegerId,shopName);
+            if(shop!=null||shop.Id==-1)
             {
                 MSG.Text = "fail to add shop";
             }

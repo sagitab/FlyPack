@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ManegerInfo.aspx.cs" Inherits="UIFlyPack.ManegerInfo" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ManegerInfo.aspx.cs" Inherits="UIFlyPack.ManagerInfo" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -10,7 +10,7 @@
             <asp:BoundField DataField="FirstName" HeaderText="Delivery name" />
             <asp:BoundField DataField="PhoneNumber" HeaderText="Phone number" />
             <asp:BoundField DataField="Email" HeaderText="Email" />
-            
+            <asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />
           
         </Columns>
     </asp:GridView>
@@ -42,6 +42,7 @@
             <asp:BoundField DataField="FirstName" HeaderText="Customer name" />
             <asp:BoundField DataField="PhoneNumber" HeaderText="Phone number" />
             <asp:BoundField DataField="Email" HeaderText="Email" />
+            <asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />
             
           
         </Columns>

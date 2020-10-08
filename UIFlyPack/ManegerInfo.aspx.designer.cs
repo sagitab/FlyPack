@@ -11,7 +11,7 @@ namespace UIFlyPack
 {
 
 
-    public partial class ManegerInfo
+    public partial class ManagerInfo
     {
 
         /// <summary>

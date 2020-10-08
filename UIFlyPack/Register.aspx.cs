@@ -15,7 +15,7 @@ namespace UIFlyPack
             if (!Page.IsPostBack)
             {
                 //Session["user"]=new BLUser("12345678");
-                BLUser user = (BLUser) Session["user"];
+                BlUser user = (BlUser) Session["user"];
                 if (user!=null)
                 {
                     int type = user.Type;
@@ -60,14 +60,14 @@ namespace UIFlyPack
                 string password = pass.Value ;
                 string phoneNum = Phone.Text;
                 string email = Email.Text;
-                bool passCheck = BLUser.PasswordCheck(password);
-                string LatLng =this.LatLng.Value.ToString();
-                double lat = GetLat(LatLng);
-                double lng = GetLng(LatLng);
+                bool passCheck = BlUser.PasswordCheck(password);
+                string latLng =this.LatLng.Value.ToString();
+                double lat = GetLat(latLng);
+                double lng = GetLng(latLng);
                 if (passCheck)
                 {
                     int type =int.Parse( Request.QueryString.Get("Type"));
-                    BLUser user = new BLUser(id, type, email, phoneNum, name, lname, password, lat, lng);
+                    BlUser user = new BlUser(id, type, email, phoneNum, name, lname, password, lat, lng);
                     MSG.Text = "Register completed";
                 }
                 else

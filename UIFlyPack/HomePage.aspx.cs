@@ -11,7 +11,11 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*  Session["user"] = new BLShopMenager("12345678");*/ //to del BLUser BLShopMenager
+            //to del########################@@@@@@@@########%%%%%%%%%>>>>>>>>>>>>
+            /* Session["user"] = new BlShopManager("12345678");*/ // BLShopMenager
+            Session["user"] = new BlUser("shlakot1"); //deliver
+            //Session["user"] = new BlUser("hoohoo12");//customer
+            //Session["user"] = new BlUser("lucky123");//system Maneger
             if (!Page.IsPostBack)
             {
                 shopManager.Visible = false;
@@ -19,7 +23,7 @@ namespace UIFlyPack
                 delivery.Visible = false;
                 customer.Visible = false;
                 unconnected.Visible = false;
-                BLUser user = (BLUser)Session["user"];
+                BlUser user = (BlUser)Session["user"];
                 if (user != null)
                 {
                     int type = user.Type;

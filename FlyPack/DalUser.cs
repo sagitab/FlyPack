@@ -6,9 +6,9 @@ namespace FlyPack
     public class DalUser
     {
         //User
-        public static DataTable IsExsist(string pass)
+        public static DataTable IsExist(string pass)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
             helper.OpenConnection();
             string sql = $"SELECT * FROM Users WHERE [Password]='{pass}'";
             DataTable table = null;
@@ -25,7 +25,7 @@ namespace FlyPack
         }
         public static void AddUser(string email, string phone, string fname, string lname, string password, int type, string id, double lat, double lng)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
             helper.OpenConnection();
             string sql = $"INSERT INTO Users([Email],[Password],[PhoneNumber],[FirstName],[LastName],[UserType],[ID],Lat,Lng) VALUES ('{email}','{password}','{phone}','{fname}','{lname}','{type}',{id},{lat},{lng})";
 
@@ -41,50 +41,49 @@ namespace FlyPack
 
         }
 
-        public static DataRow GetUserByID(string UserID)
+        public static DataRow GetUserById(string userId)
         {
-            return DalHelper.GetRowById(UserID, "Users");
+            return DalHelper.GetRowById(userId, "Users");
         }
-        //shop Maneger
-        public static int GetshopID(string ManegerID)
+        //shop Manager
+        public static int GetshopId(string managerId)
         {
-            return int.Parse(DalHelper.Select($"SELECT Shops.ID FROM Shops WHERE(((Shops.ShopManagerID) = '{ManegerID}'));").Rows[0]["ID"].ToString());
-
+            return int.Parse(DalHelper.Select($"SELECT Shops.ID FROM Shops WHERE(((Shops.ShopManagerID) = '{managerId}'));").Rows[0]["ID"].ToString());
         }
-        public static DataTable ShopManegerTable()
+        public static DataTable ShopManagersWithNoShop()
         {
-            return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users WHERE(Users.UserType = 1)");
+            return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users INNER JOIN Shops ON Users.ID <> Shops.ShopManagerID WHERE(((Users.UserType) = 1)); ");
         }
      
         //Customer
         public static DataTable CustomersTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4)");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4) ");
         }
-        public static DataTable CustomersTableByShop(int ShopID)
+        public static DataTable CustomersTableByShop(int shopId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID}));");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");
         }
         public static DataTable CustomersSearch(string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{condition})");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE((Users.UserType = 4) AND{condition}) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber");
         }
-        public static DataTable CustomersSearchByShop(int ShopID, string condition)
+        public static DataTable CustomersSearchByShop(int shopId, string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {ShopID})AND{condition});");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})AND{condition}) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");
         }
-        public static string GetName(string CustomerID)
+        public static string GetName(string customerId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName FROM Users WHERE  Users.ID='{CustomerID}'").Rows[0]["FirstName"].ToString();
+            return DalHelper.Select($"SELECT Users.FirstName FROM Users WHERE  Users.ID='{customerId}'").Rows[0]["FirstName"].ToString();
         }
         //delivery
         public static DataTable DeliveriesTable()
         {
             return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111'))");
         }
-        public static DataTable DeliveriesTableByShop(int ShopID)
+        public static DataTable DeliveriesTableByShop(int shopId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {ShopID}) AND (Users.ID<>'111111111'));");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {shopId}) AND (Users.ID<>'111111111')) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");
         }
         public  static DataTable GetDeliverersLocations()
         {

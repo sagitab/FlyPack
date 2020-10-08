@@ -8,15 +8,15 @@ namespace FlyPack
 {
     public class Constants
     {
-        public static string PROVIDER = @"Microsoft.ACE.OLEDB.12.0";
-        public static string PATH = "";/*@"C:\Users\User\Desktop\FlyPack\DataBaseFlyPack (2).accdb*/
+        public static string Provider = @"Microsoft.ACE.OLEDB.12.0";
+        public static string Path = "";/*@"C:\Users\User\Desktop\FlyPack\DataBaseFlyPack (2).accdb*/
         public Constants()
         {
 
         }
         public Constants(string path)
         {
-            PATH = path;
+            Path = path;
         }
     }
 }

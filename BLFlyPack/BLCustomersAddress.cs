@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BLFlyPack
 {
-    public class BLCustomersAddress
+    public class BlCustomersAddress
     {
-      public  Point location { get; }
+      public  Point Location { get; }
         public  int NumOfFloor { get; }
         public  string CustomerName { get; }
 
-        public BLCustomersAddress(Point point, int numOfFloor, string customerName)
+        public BlCustomersAddress(Point point, int numOfFloor, string customerName)
         {
-            location= new Point(point);
+            Location= new Point(point);
               NumOfFloor = numOfFloor;
             CustomerName = customerName;
         }

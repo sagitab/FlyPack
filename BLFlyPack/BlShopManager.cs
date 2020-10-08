@@ -7,20 +7,20 @@ using System.Data;
 using FlyPack;
 namespace BLFlyPack
 {
-   public class BLShopMenager:BLUser
+   public class BlShopManager:BlUser
     {
         
-        public int ShopID { get; set; }
-        public BLShopMenager(string pass):base(pass)
+        public int ShopId { get; set; }
+        public BlShopManager(string pass):base(pass)
         {
-            ShopID = this.GetshopID();
+            ShopId = this.GetshopId();
         }
-        public static DataTable ShopManegerTable()
+        public static DataTable ShopManagerTable()
         {
             DataTable t = null;
             try
             {
-                t = DalUser.ShopManegerTable();
+                t = DalUser.ShopManagersWithNoShop();
             }
             catch
             {
@@ -30,19 +30,19 @@ namespace BLFlyPack
         }
         public override string GetNumOfActiveCustomers()
         {
-             return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetshopID()})");
+             return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetshopId()})");
         }
         public override DataTable DeliveriesTable()
         {
-            return DalUser.DeliveriesTableByShop(ShopID);
+            return DalUser.DeliveriesTableByShop(ShopId);
         }
         public override DataTable CustomersTable()
         {
-            return DalUser.CustomersTableByShop(ShopID);
+            return DalUser.CustomersTableByShop(ShopId);
         }
         public override DataTable CustomersSearch(string condition)
         {
-            return DalUser.CustomersSearchByShop(ShopID, condition);
+            return DalUser.CustomersSearchByShop(ShopId, condition);
         }
 
     }

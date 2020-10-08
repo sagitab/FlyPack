@@ -8,50 +8,50 @@ using System.Threading.Tasks;
 
 namespace BLFlyPack
 {
-    public class BLShop
+    public class BlShop
     {
         
        
-        public int ID { get; }
-        public string ShopManegerID { get; set; }
+        public int Id { get; }
+        public string ShopManegerId { get; set; }
         public string ShopName { get; set; }
-        public  Point location { get; }
+        public  Point Location { get; }
         
-        public BLShop( string shopManegerId, string shopName)
+        public BlShop( string shopManegerId, string shopName)
         {
             try
             {
-                ID = DalShop.AddShop(shopManegerId,shopName);
-                location = GetPosission(ID);
+                Id = DalShop.AddShop(shopManegerId,shopName);
+                Location = GetPosission(Id);
             }
             catch
             {
-                ID = -1;
+                Id = -1;
             }
-            ShopManegerID = shopManegerId;
+            ShopManegerId = shopManegerId;
            
             ShopName = shopName;
           
         }
-        public BLShop(DataRow row)
+        public BlShop(DataRow row)
         {
-            ID = int.Parse(row["ID"].ToString());
+            Id = int.Parse(row["ID"].ToString());
             ShopName = row["ShopName"].ToString();
-            ShopManegerID= row["ShopManagerID"].ToString();
-            location = GetPosission(ID);
+            ShopManegerId= row["ShopManagerID"].ToString();
+            Location = GetPosission(Id);
         }
-        public static List<BLShop> GetShops()
+        public static List<BlShop> GetShops()
         {
             DataTable shops = DalShop.GetShopTable();
-            return (from DataRow row in shops.Rows select new BLShop(row)).ToList();
+            return (from DataRow row in shops.Rows select new BlShop(row)).ToList();
         }
 
-        public static BLShop GetShopById(int ID)
+        public static BlShop GetShopById(int id)
         {
             DataRow row = null;
             try
             {
-                 row = DalShop.GetShop(ID);
+                 row = DalShop.GetShop(id);
             }
             catch (Exception e)
             {
@@ -59,11 +59,11 @@ namespace BLFlyPack
                 
                 return null;
             }
-            return new BLShop(row);
+            return new BlShop(row);
         }
-        public static Point GetPosission(int shopID)
+        public static Point GetPosission(int shopId)
         {
-            DataRow row = DalShop.GetLocation(shopID);
+            DataRow row = DalShop.GetLocation(shopId);
             return new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()));
         }
     }

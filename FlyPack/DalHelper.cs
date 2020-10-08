@@ -16,7 +16,7 @@ namespace FlyPack
         /// <returns>id of newly inserted row, -1 if it didn't work</returns>
         public static int Insert(string sql)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
 
             if (!helper.OpenConnection()) throw new ConnectionException();
@@ -34,7 +34,7 @@ namespace FlyPack
         /// <returns>DataTable containing the results</returns>
         public static DataTable Select(string sql)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
 
             if (!helper.OpenConnection()) throw new ConnectionException();
@@ -63,7 +63,7 @@ namespace FlyPack
         /// <returns>DataRow containing the row</returns>
         public static DataRow GetRowById(string id, string table)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT * FROM {table} WHERE ID = {id}";
@@ -84,7 +84,7 @@ namespace FlyPack
         /// <returns>DataRow containing the results</returns>
         public static DataRow Random(string table, string column)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT top 1 * from {table} ORDER BY rnd({column})";
@@ -104,7 +104,7 @@ namespace FlyPack
         /// <returns>DataRow containing the results</returns>
         public static DataRow RandomWhere(string table, string column, int value)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT top 1 * from {table} WHERE {column} = {value} ORDER BY rnd({column})";
@@ -124,7 +124,7 @@ namespace FlyPack
         /// <returns>DataRow containing the results</returns>
         public static DataRow RandomWhere(string table, string column, string value)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT top 1 * from {table} WHERE {column} = '{value}' ORDER BY rnd({column})";
@@ -146,7 +146,7 @@ namespace FlyPack
         /// <returns>DataRow containing the matching row</returns>
         public static DataRow RowWhere(string table, string column, string value)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT * FROM {table} WHERE `{column}` = '{value}'";
@@ -164,7 +164,7 @@ namespace FlyPack
                  /// <returns>DataRow containing the matching row</returns>
         public static DataRow RowWhere(string table, string column, int value)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT * FROM {table} WHERE `{column}` = {value}";
@@ -184,7 +184,7 @@ namespace FlyPack
         /// <returns>DataTable containing the matching rows</returns>
         public static DataTable AllWhere(string table, string column, int value)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT * FROM {table} WHERE `{column}` = {value}";
@@ -203,7 +203,7 @@ namespace FlyPack
         /// <returns>DataTable containing the matching rows</returns>
         public static DataTable AllWhere(string table, string column, string value)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT * FROM {table} WHERE `{column}` = '{value}'";
@@ -220,7 +220,7 @@ namespace FlyPack
         /// <returns>DataTable containing all rows of a table</returns>
         public static DataTable AllFromTable(string table)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"SELECT * FROM {table}";
@@ -231,18 +231,18 @@ namespace FlyPack
         }
         public static bool DeleteRowById(int id,string table,string idColumnName)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"DELETE * FROM {table} WHERE {idColumnName}={id}";
            return  helper.WriteData(sql)==1;
         }
-        public static bool UpdateColumnById(int id, string table, string idColumnName,string ReplaceValue, string ReplacedColumName)
+        public static bool UpdateColumnById(int id, string table, string idColumnName,string replaceValue, string replacedColumName)
         {
-            DBHelper helper = new DBHelper(Constants.PROVIDER, Constants.PATH);
+            DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
-            string sql = $"UPDATE {table} SET {ReplacedColumName}={ReplaceValue} WHERE {idColumnName}={id}";
+            string sql = $"UPDATE {table} SET {replacedColumName}={replaceValue} WHERE {idColumnName}={id}";
             return helper.WriteData(sql) == 1;
         }
     }

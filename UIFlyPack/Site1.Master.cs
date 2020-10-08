@@ -16,7 +16,7 @@ namespace UIFlyPack
             int type = -1;
 
 
-            BLUser user = (BLUser)Session["user"];
+            BlUser user = (BlUser)Session["user"];
             string des = "";
             if (user != null)
             {
@@ -34,12 +34,12 @@ namespace UIFlyPack
                 case 2:
                     //system
                     SystemMenager.Visible = true;
-                    UserString3.Text = des;
+                    UserString4.Text = des;
                     break;
                 case 3:
                     //delivery
                     Delivery.Visible = true;
-                    UserString4.Text = des;
+                    UserString3.Text = des;
                     break;
                 case 4:
                     //customer
