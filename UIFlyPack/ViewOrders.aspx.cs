@@ -198,7 +198,7 @@ namespace UIFlyPack
             if (success)
             {
                 MSG.Text = "order cancel successfully";
-                UpOrders(user, "");
+               Response.Redirect("ViewOrders.aspx");
                 //Page_Load(sender, e);
             }
             else

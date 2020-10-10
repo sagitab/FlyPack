@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="HomePage.aspx.cs" Inherits="UIFlyPack.HomePage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .Header {
+            color: darkblue;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
    <span class="Header" id="customer" runat="server">Use drowns to take care your deliveries fast and accurate,track your order and keep contact with the deliver and the shop you order from. </span><%--customer--%>

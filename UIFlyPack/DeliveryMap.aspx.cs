@@ -33,82 +33,92 @@ namespace UIFlyPack
                     customerAddress = order.Location != null ? new Point(order.Location) : new Point(BlUser.UserById(order.CustomerId).Location);
                     customersAddresses.Add(new BlCustomersAddress(customerAddress, order.NumOfFloor, BlUser.GetName(order.CustomerId)));
                 }
-                //calculate shorter way to deliver
-                List<BlShop> copyShops = new List<BlShop>(shops);
-                List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
-                List<BlOrder> copyOrders = new List<BlOrder>(orders);
-                List<BlShop> orderShops = new List<BlShop>();
-                List<BlCustomersAddress> orderCustomersAddresses = new List<BlCustomersAddress>();
-                int minIndex = 0;
-                Point locationNow = user.Location;
-                List<int> orderShopIndex;
-                List<double> readyTimes = new List<double>();
-                List<double> arriveTimes = new List<double>();
-                int lateTimes = 0;
-                for (int i = 0; i < shops.Count; i++)
-                {
-                    minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
-                    orderShopIndex = locationNow.MinimumDistanceShopsList(copyShops, 0);
 
-                    //to add shop and customer
-                    //OrderShops[i] = CopyShops[minIndex];
-                    //OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
-                    ////calculate Times
-                    //DateTime ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
-                    //DateTime ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
-                    //DateTime ArriveTime = CopyOrders[minIndex].AriveTime;
-                    //DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
-                    //if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop, ReadyTimes, ArriveTimes))
-                    //{
-                    foreach (var index in orderShopIndex)
-                    {
-                        //to add shop and customer
-                        orderShops[i] = copyShops[index];
-                        orderCustomersAddresses[i] = copyCustomersAddresses[index];
-                        //calculate Times
-                        DateTime arriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(locationNow, copyCustomersAddresses, copyShops, index));
-                        DateTime arriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(locationNow, copyCustomersAddresses, copyShops, index));
-                        DateTime arriveTime = copyOrders[index].AriveTime;
-                        DateTime readyTime = copyOrders[index].ReadyTime;
-                        if (!IsLate(arriveTimeCustomer, arriveTime, readyTime, arriveTimeShop, readyTimes, arriveTimes))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            //remove because index not good
-                            copyShops.RemoveAt(index);
-                            copyOrders.RemoveAt(index);
-                            copyCustomersAddresses.RemoveAt(index);
-                            lateTimes++;
-                        }
-                    }
-                    //}GetBestShopIndex
-
-                    //update location
-                    locationNow = new Point(orderCustomersAddresses[i].Location);
-                }
-                if (lateTimes == shops.Count)
+                if (orders.Count>1)
                 {
-                    List<BlShop> bestWayShops = new List<BlShop>();
-                    List<BlCustomersAddress> bestWayCustomers = new List<BlCustomersAddress>();
+                    //calculate shorter way to deliver
+                    List<BlShop> copyShops = new List<BlShop>(shops);
+                    List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
+                    List<BlOrder> copyOrders = new List<BlOrder>(orders);
+                    List<BlShop> orderShops = new List<BlShop>();
+                    List<BlCustomersAddress> orderCustomersAddresses = new List<BlCustomersAddress>();
+                    int minIndex = 0;
+                    Point locationNow = user.Location;
+                    List<int> orderShopIndex;
+                    List<double> readyTimes = new List<double>();
+                    List<double> arriveTimes = new List<double>();
+                    int lateTimes = 0;
                     for (int i = 0; i < shops.Count; i++)
                     {
-                        List<BlShop> cShops = new List<BlShop>(shops);
-                        orderShopIndex = locationNow.MinimumDistanceShopsList(cShops, 0);
-                        int bestIndex = GetBestShopIndex(readyTimes, arriveTimes, orderShopIndex);
-                        bestWayShops[i] = copyShops[bestIndex];
-                        bestWayCustomers[i] = copyCustomersAddresses[bestIndex];
-                    }
-                    Shops = bestWayShops;
-                    CustomersAddresses = bestWayCustomers;
+                        minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
+                        orderShopIndex = locationNow.MinimumDistanceShopsList(copyShops, 0);
 
+                        //to add shop and customer
+                        //OrderShops[i] = CopyShops[minIndex];
+                        //OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
+                        ////calculate Times
+                        //DateTime ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                        //DateTime ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                        //DateTime ArriveTime = CopyOrders[minIndex].AriveTime;
+                        //DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
+                        //if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop, ReadyTimes, ArriveTimes))
+                        //{
+                        foreach (var index in orderShopIndex)
+                        {
+                            //to add shop and customer
+                            orderShops[i] = copyShops[index];
+                            orderCustomersAddresses[i] = copyCustomersAddresses[index];
+                            //calculate Times
+                            DateTime arriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(locationNow, copyCustomersAddresses, copyShops, index));
+                            DateTime arriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(locationNow, copyCustomersAddresses, copyShops, index));
+                            DateTime arriveTime = copyOrders[index].AriveTime;
+                            DateTime readyTime = copyOrders[index].ReadyTime;
+                            if (!IsLate(arriveTimeCustomer, arriveTime, readyTime, arriveTimeShop, readyTimes, arriveTimes))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                //remove because index not good
+                                copyShops.RemoveAt(index);
+                                copyOrders.RemoveAt(index);
+                                copyCustomersAddresses.RemoveAt(index);
+                                lateTimes++;
+                            }
+                        }
+                        //}GetBestShopIndex
+
+                        //update location
+                        locationNow = new Point(orderCustomersAddresses[i].Location);
+                    }
+                    if (lateTimes == shops.Count)
+                    {
+                        List<BlShop> bestWayShops = new List<BlShop>();
+                        List<BlCustomersAddress> bestWayCustomers = new List<BlCustomersAddress>();
+                        for (int i = 0; i < shops.Count; i++)
+                        {
+                            List<BlShop> cShops = new List<BlShop>(shops);
+                            orderShopIndex = locationNow.MinimumDistanceShopsList(cShops, 0);
+                            int bestIndex = GetBestShopIndex(readyTimes, arriveTimes, orderShopIndex);
+                            bestWayShops[i] = copyShops[bestIndex];
+                            bestWayCustomers[i] = copyCustomersAddresses[bestIndex];
+                        }
+                        Shops = bestWayShops;
+                        CustomersAddresses = bestWayCustomers;
+
+                    }
+                    else
+                    {
+                        Shops = orderShops;
+                        CustomersAddresses = orderCustomersAddresses;
+                    }
                 }
                 else
                 {
-                    Shops = orderShops;
-                    CustomersAddresses = orderCustomersAddresses;
+                    Shops = shops;
+                    CustomersAddresses = customersAddresses;
                 }
+              
             }
 
 

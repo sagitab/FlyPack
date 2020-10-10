@@ -1,9 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="LogIn.aspx.cs" Inherits="UIFlyPack.LogIn" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        body {
+            background-image: none;
+            background-color: #28679b;
+            background-size: 100% 100%;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <img src="Img/droneIMG.jpg" id="DroneLogIn" style=" margin: 0px 40% -0.3% 42.5%;width: 15%;" />
     <div id="LogInDiv">
-    <ul class="addList" style="margin: 5vh 35%">
+    <ul class="addList" style="margin: 0vh 35%">
         <li>
             <span class="Header">User Name </span>
         </li>
