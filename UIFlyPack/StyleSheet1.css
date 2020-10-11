@@ -162,7 +162,7 @@ ul {
     border-radius: 5px 5px 0 0;
     float: left;
     border-color: dodgerblue;
-    height: 1.2em;
+    height: 2.5em;
 }
 #map {
     width: 50%;
@@ -183,4 +183,8 @@ ul {
     color: darkblue;
     background-color: white;
     border-bottom-color: #880e0e;
+}
+.RowDiv {
+    display: flex;
+    align-items: center;
 }

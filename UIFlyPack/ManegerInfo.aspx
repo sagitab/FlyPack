@@ -15,21 +15,18 @@
         </Columns>
     </asp:GridView>
         </li>
-        <li >
-             <li style="margin:0% 0% 0% 30%">
-               <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
+        <li style="margin-left: 17.5vh;">
+            <div class="RowDiv"><asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
+       
+                <select  id="SearchBy" name="D1" style="height: 2.5em;"  runat="server" class="Select" >
+                    <option value="ID" >ID</option>
+                    <option value="LastName" >Last name</option>
+                    <option value="FirstName" >First name</option>
+                </select>
+        
+                <asp:Button ID="SearchCustomerB" runat="server" Text="search" OnClick="SearchCustomerB_Click" CssClass="BSearch"  /></div>
         </li>
-         <li  style="margin:0% 1% 0% 1%">
-<select  id="SearchBy" name="D1" style=""  runat="server" class="Select" >
-            <option value="ID" >ID</option>
-             <option value="LastName" >Last name</option>
-            <option value="FirstName" >First name</option>
-        </select>
-        </li>
-         <li style="margin:0% 0% 0% 1%">
- <asp:Button ID="SearchCustomerB" runat="server" Text="search" OnClick="SearchCustomerB_Click" CssClass="BSearch"  />
-        </li>
-        </li>
+
         <li style="margin: 0% 30% 2% 0%;">
             <asp:Label ID="ErCustomer" runat="server" Text=""></asp:Label>
         </li>

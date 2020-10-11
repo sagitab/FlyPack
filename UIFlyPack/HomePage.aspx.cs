@@ -14,7 +14,7 @@ namespace UIFlyPack
             //to del########################@@@@@@@@########%%%%%%%%%>>>>>>>>>>>>
             /* Session["user"] = new BlShopManager("12345678");*/ // BLShopMenager
             /*  Session["user"] = new BlUser("shlakot1");*/ //deliver
-          /*  Session["user"] = new BlUser("hoohoo12");*///customer
+            Session["user"] = new BlUser("hoohoo12");//customer
             //Session["user"] = new BlUser("lucky123");//system Maneger
             if (!Page.IsPostBack)
             {
