@@ -95,9 +95,17 @@ namespace BLFlyPack
 
         public override string ToString()
         {
-            Dictionary<int,string> usersTypes=new Dictionary<int, string> {{1, "Shop Manager" }, { 2, "System Manager" } , { 3, "Deliver" } , { 4, "Customer" } };
+            try
+            {
+                Dictionary<int, string> usersTypes = new Dictionary<int, string> { { 1, "Shop Manager" }, { 2, "System Manager" }, { 3, "Deliver" }, { 4, "Customer" } };
 
-            return $"{FirstName} {LastName} Deer {usersTypes[Type]}";
+                return $"{FirstName} {LastName} Deer {usersTypes[Type]}";
+            }
+            catch 
+            {
+                return "";
+            }
+          
         }
 
         //shop maneger

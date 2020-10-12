@@ -25,7 +25,7 @@ namespace UIFlyPack
                 BlUser user = null;
                 user =  new BlUser(pass);
               
-                bool isExsist = NameValidator.IsValid && passValidator.IsValid && user != null;
+                bool isExsist = NameValidator.IsValid && passValidator.IsValid && user != null&&user.Type!=0;
                 if (isExsist)
                 {
                     if (user.Type == 1)

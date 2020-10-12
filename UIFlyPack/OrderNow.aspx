@@ -36,7 +36,7 @@
         </li>
         <li>          
              <asp:TextBox ID="NumOfFloor" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RangeValidator ID="NumOfFloorValidator" runat="server" ErrorMessage="no" Type="Integer" MaximumValue="120" MinimumValue="0" ControlToValidate="NumOfFloor"></asp:RangeValidator>
+            <asp:RangeValidator ID="NumOfFloorValidator" runat="server" ErrorMessage="Enter floor between 0 to 120" Type="Integer" MaximumValue="120" MinimumValue="0" ControlToValidate="NumOfFloor"></asp:RangeValidator>
         </li>
          <li>
              <asp:Button runat="server" ID="OrderB" OnClick="OrderB_Click" CssClass="BSearch" Text="Order" />
