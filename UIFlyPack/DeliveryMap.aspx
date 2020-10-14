@@ -5,6 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <span class="Header" >Deliveries Map</span>
     <div id="map"></div>
     <%--<script>
         var map;

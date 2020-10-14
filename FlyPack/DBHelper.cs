@@ -166,7 +166,7 @@ namespace FlyPack
                 _connOpen = true;
 
             }
-            catch (Exception e) // basically, if the connection throws some kind of exception.
+            catch  // basically, if the connection throws some kind of exception.
             {
                 return false;
             }

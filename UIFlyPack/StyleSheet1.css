@@ -7,6 +7,7 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
+    font-family: poppins-300;
 }
 .TextBox {
     position: relative;
@@ -23,10 +24,28 @@
     color: darkblue;
     background-color: white;
 }
+.TextBoxUnValidValue {
+    position: relative;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    height: 1.8em;
+    width: 150px;
+    font-size: 0.6em;
+    display: block;
+    border-bottom: solid 4px;
+    border-bottom-color: #880e0e;
+    display: block;
+    color: #880e0e;
+    background-color: black;
+}
 #LogIn1, #logout1, #logout2, #logout3, #logout4 {
     float: right;
+    font-size: 1em;
+    background-color: dodgerblue;
+    margin: 2.7vh;
+    font-family: serif;
 }
-
 .BSearch {
     border-style: none;
     border-color: inherit;
@@ -54,31 +73,36 @@ a {
     text-transform: uppercase;
     text-decoration: none;
     display: block;
-    padding: 0px 40px;
+    padding: 2.21vh 2vh;
     float: right;
     text-decoration: none;
     font-family: fantasy;
   
 }
-
-span {
-    color: #880e0e;
+.ErrorMSG {
+    color: #de4646;
     float: left;
     font-size: 0.8em;
-    font-family: monospace;
+    font-family: poppins-500;
+}
+span {
+    color: #069ea6;
+    float: left;
+    font-size: 2em;
+    font-family: poppins-500;
 }
 
 ul {
     list-style-type: none;
     text-align: left;
-    padding-inline-start: 0px;
+    padding-inline-start: 2vh;
 }
 
 .inner_main_menu {
     margin: 0 auto;
     width: 100%;
     background-color: black;
-    height: 5vh;
+    height: 10vh;
 }
 .nave li {
   
@@ -93,16 +117,9 @@ ul {
     z-index: 29;
     background-color: black;
 }
-.logo{
-    font-family:fantasy;
-    float:left;
-}
-#LogIn1 {
-    float: right;
-    font-size: 1em;
-    background-color: dodgerblue;
-    margin-right: 50px;
-    font-family: serif;
+.logo {
+    float: left;
+    height: 10vh;
 }
 #LogInDiv {
     background-color: black;
@@ -113,8 +130,8 @@ ul {
     border-radius: 1.5vh;
 }
 .Header {
-    font-size: 2.2em;
-    font-family: fantasy;
+    font-size: 2.6em;
+    font-family: lobster;
     color: dodgerblue;
 }
 #DroneLogIn {
@@ -186,5 +203,43 @@ ul {
 }
 .RowDiv {
     display: flex;
+    align-items: center;
+}
+.RegDiv {
+    background-color: #01193a;
+    width: 30%;
+    padding-right: 0px;
+    margin: 5% auto;
+    height: 126vh;
+    border-radius: 1.5vh;
+    align-items: center;
+}
+#UserString, #UserString2, #UserString3, #UserString4 {
+    color: #069ea6;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    padding: 3vh 2vh;
+    float: left;
+    text-decoration: none;
+    font-family: lobster
+}
+#OrdeNowDiv {
+    background-color: #01193a;
+    width: 30%;
+    padding-right: 0px;
+    margin: 5% auto;
+    height: 80vh;
+    border-radius: 1.5vh;
+    align-items: center;
+}
+#AddShopDiv {
+    background-color: #01193a;
+    width: 30%;
+    padding-right: 0px;
+    margin: 5% auto;
+    height: 50vh;
+    border-radius: 1.5vh;
     align-items: center;
 }

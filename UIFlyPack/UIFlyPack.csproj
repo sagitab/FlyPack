@@ -72,6 +72,7 @@
     <Content Include="Img\BGimg.jpg" />
     <Content Include="Img\BLogIn.jpg" />
     <Content Include="Img\droneIMG.jpg" />
+    <Content Include="Img\Logo.svg" />
     <Content Include="Img\redFlag.png" />
     <Content Include="LogIn.aspx" />
     <Content Include="ManegerInfo.aspx" />

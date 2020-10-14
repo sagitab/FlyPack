@@ -11,54 +11,59 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <ul class="addList" style="margin: 20px 50%">
+    <div class="RegDiv">
+    <ul class="addList" >
         <li>
-            <span class="Header">ID</span>
+            <span class="Header" >Register</span>
         </li>
         <li>
-            <asp:TextBox ID="ID" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator  ID="IDValidator" runat="server" ControlToValidate="ID" ErrorMessage="ID need to be  9 tabs" SetFocusOnError="True" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"></asp:RegularExpressionValidator>
+            <span >ID</span>
         </li>
         <li>
-            <span class="Header">Name</span>
+            <asp:TextBox ID="ID" runat="server" CssClass="TextBox" ></asp:TextBox>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG"  ID="IDValidator" runat="server" ControlToValidate="ID" ErrorMessage="ID need to be  9 tabs" SetFocusOnError="True" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"></asp:RegularExpressionValidator>
         </li>
         <li>
-            <asp:TextBox ID="Name" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="NameValidator" runat="server" ControlToValidate="Name" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$"></asp:RegularExpressionValidator>
+            <span >Name</span>
         </li>
         <li>
-            <span class="Header">Last Name</span>
+            <asp:TextBox ID="Name" runat="server" CssClass="TextBox" ></asp:TextBox>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="NameValidator" runat="server" ControlToValidate="Name" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$"></asp:RegularExpressionValidator>
+        </li>
+        <li>
+            <span >Last Name</span>
         </li>
         <li>
             <asp:TextBox ID="LName" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="LNameValidator" runat="server" ControlToValidate="LName" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="LNameValidator" on runat="server" ControlToValidate="LName" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$"></asp:RegularExpressionValidator>
         </li>
         <li>
-            <span class="Header">Password</span>
+            <span >Password</span>
         </li>
         <li>
-            <input runat="server" type="password" id="pass" cssclass="TextBox" style="position: relative; border-top: none; border-left: none; border-right: none; height: 1.2em; width: 150px; font-size: 0.6em; display: block; border-bottom: solid 4px; border-bottom-color: darkblue; display: block; color: white; background-color: black;" />
-            <asp:RegularExpressionValidator ID="passValidator" runat="server" ControlToValidate="pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True" ValidationExpression="^.{8}$"></asp:RegularExpressionValidator>
+            <asp:TextBox ID="pass" runat="server" CssClass="TextBox" TextMode="Password"  ></asp:TextBox>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="passValidator" runat="server" ControlToValidate="pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True" ValidationExpression="^.{8}$"></asp:RegularExpressionValidator>
+            <asp:RequiredFieldValidator runat="server" ID="PassNotEmpty" CssClass="ErrorMSG" ControlToValidate="pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True"></asp:RequiredFieldValidator>
         </li>
         <li>
-            <span class="Header">Phone Number</span>
+            <span >Phone Number</span>
         </li>
         <li>
-            <asp:TextBox ID="Phone" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="PhoneValidator" runat="server" ControlToValidate="Phone" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" ErrorMessage="Unvalid phone" SetFocusOnError="True"></asp:RegularExpressionValidator>
+            <asp:TextBox ID="Phone" runat="server" CssClass="TextBox" TextMode="Phone"></asp:TextBox>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="PhoneValidator" runat="server" ControlToValidate="Phone" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" ErrorMessage="Unvalid phone" SetFocusOnError="True"></asp:RegularExpressionValidator>
         </li>
         <li>
-            <span class="Header" style="padding: 2px 80px 0px 0px;">Email</span>
+            <span  style="padding: 2px 80px 0px 0px;">Email</span>
         </li>
         <li>
-            <asp:TextBox ID="Email" runat="server" Text="example@gmail.com" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="Email" ErrorMessage="Unvalid email" SetFocusOnError="True" ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"></asp:RegularExpressionValidator>
+            <asp:TextBox ID="Email" runat="server" Text="example@gmail.com" CssClass="TextBox" TextMode="Email"></asp:TextBox>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="EmailValidator" runat="server" ControlToValidate="Email" ErrorMessage="Unvalid email" SetFocusOnError="True" ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"></asp:RegularExpressionValidator>
         </li>
         <li>
             <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
         </li>
     </ul>
-    <span class="Header" style="margin: 0 35% 2% 45%;" id="instractor" runat="server"> Type your address or click on the map to add address </span>
+    <span  style=" margin: 0 20% 2% 35%;" id="instractor" runat="server"> Type your address or click on the map to add address </span>
     <div id="map"></div>
     <ul class="addList" style="margin: 0px 50% ">
         <li>
@@ -71,10 +76,12 @@
             <span id="massage"></span>
         </li>
         <li style="margin-right: 150px">
-            <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="BSearch" />
+            <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="BSearch" OnClientClick=" return BtnClick()" CausesValidation="True" />
         </li>
     </ul>
     <asp:HiddenField runat="server" ID="LatLng" Value="" />
+    </div>
+  
  <%--   <script>
         var geocoder;
         var map;

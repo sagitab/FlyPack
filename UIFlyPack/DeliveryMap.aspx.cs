@@ -23,9 +23,12 @@ namespace UIFlyPack
             BlUser user = (BlUser)Session["user"]; /*(BLUser)Session["user"];*/
             if (user != null)
             {
+                //get the new orders of the deliver
                 List<BlOrder> orders = BlOrder.GetOrdersListByTime(user.UserId);
+                //set the road lists
                 List<BlShop> shops = new List<BlShop>();
                 List<BlCustomersAddress> customersAddresses = new List<BlCustomersAddress>();
+                //full road lists
                 foreach (BlOrder order in orders)
                 {
                     shops.Add(BlShop.GetShopById(order.ShopId));
@@ -36,7 +39,8 @@ namespace UIFlyPack
 
                 if (orders.Count>1)
                 {
-                    //calculate shorter way to deliver
+                    //calculate shorter way to deliver 
+                    //set vars
                     List<BlShop> copyShops = new List<BlShop>(shops);
                     List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
                     List<BlOrder> copyOrders = new List<BlOrder>(orders);
@@ -48,10 +52,12 @@ namespace UIFlyPack
                     List<double> readyTimes = new List<double>();
                     List<double> arriveTimes = new List<double>();
                     int lateTimes = 0;
+                    //loop the shop and find the best shop 
                     for (int i = 0; i < shops.Count; i++)
                     {
+
                         minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
-                        orderShopIndex = locationNow.MinimumDistanceShopsList(copyShops, 0);
+                        orderShopIndex = locationNow.MinimumDistanceShopsList(copyShops, 0);//set a list of the index of the shop order by distance ( the first is the closest)
 
                         //to add shop and customer
                         //OrderShops[i] = CopyShops[minIndex];
@@ -63,6 +69,7 @@ namespace UIFlyPack
                         //DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
                         //if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop, ReadyTimes, ArriveTimes))
                         //{
+                        // for orderShopIndex to select the shortest distance shop that the deliver deliver the pack on time
                         foreach (var index in orderShopIndex)
                         {
                             //to add shop and customer
@@ -75,7 +82,7 @@ namespace UIFlyPack
                             DateTime readyTime = copyOrders[index].ReadyTime;
                             if (!IsLate(arriveTimeCustomer, arriveTime, readyTime, arriveTimeShop, readyTimes, arriveTimes))
                             {
-                                break;
+                                break;//out the loop (the shop and the match customer address already added
                             }
                             else
                             {
@@ -83,16 +90,18 @@ namespace UIFlyPack
                                 copyShops.RemoveAt(index);
                                 copyOrders.RemoveAt(index);
                                 copyCustomersAddresses.RemoveAt(index);
+                                //update late times
                                 lateTimes++;
                             }
                         }
-                        //}GetBestShopIndex
 
-                        //update location
+
+                        //update locationNow
                         locationNow = new Point(orderCustomersAddresses[i].Location);
                     }
                     if (lateTimes == shops.Count)
                     {
+                        //if the best way is the shortest way
                         List<BlShop> bestWayShops = new List<BlShop>();
                         List<BlCustomersAddress> bestWayCustomers = new List<BlCustomersAddress>();
                         for (int i = 0; i < shops.Count; i++)
@@ -109,12 +118,14 @@ namespace UIFlyPack
                     }
                     else
                     {
+                        //update the global vars
                         Shops = orderShops;
                         CustomersAddresses = orderCustomersAddresses;
                     }
                 }
                 else
                 {
+                    //update the global vars
                     Shops = shops;
                     CustomersAddresses = customersAddresses;
                 }

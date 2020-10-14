@@ -64,5 +64,10 @@ namespace UIFlyPack
             Session.Abandon();
             Response.Redirect("HomePage.aspx");
         }
+
+        protected void OnClick(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("HomePage.aspx");
+        }
     }
 }

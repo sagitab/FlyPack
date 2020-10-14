@@ -4,6 +4,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul style="display: inline">
+        <li>
+            <span class="Header"  >View Orders</span>
+            <br\ />
+        </li>
+      
        <li>
            <div class="RowDiv">
                <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>

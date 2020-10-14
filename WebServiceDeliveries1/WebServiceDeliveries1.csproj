@@ -87,9 +87,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FlyPack\DalFlyPack.csproj">
-      <Project>{30fd3cfd-02bc-419b-8c90-3e12ac3e0dde}</Project>
-      <Name>DalFlyPack</Name>
+    <ProjectReference Include="..\BLFlyPack\BLFlyPack.csproj">
+      <Project>{734885ed-bef6-498b-b4c6-11ff39d3a0b9}</Project>
+      <Name>BLFlyPack</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

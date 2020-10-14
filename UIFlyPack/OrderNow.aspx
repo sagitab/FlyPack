@@ -2,15 +2,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="OrdeNowDiv">
     <ul class="addList" style="margin: 5vh 44%;">
         <li>
-             <span class="Header" > Shop </span>
+            <span class="Header" >Place your order</span>
+        </li>
+        <li>
+             <span  > Shop </span>
         </li>
          <li>           
           <asp:DropDownList ID="ShopDropDownList" runat="server" CssClass="Select" >
              </asp:DropDownList>
         <li>
-             <span class="Header" > Shop order id</span>
+             <span  >Shop order id</span>
         </li>
         <li>           
             <asp:TextBox ID="ShopOrderID" runat="server" CssClass="TextBox"></asp:TextBox>
@@ -26,13 +30,13 @@
            </select>
         </li>--%>
         <li>
-             <span  class="Header">Address</span>
+             <span  >Address</span>
         </li>
         <li>          
              <asp:TextBox ID="Adress" runat="server" CssClass="TextBox"></asp:TextBox>
         </li>
          <li>
-             <span  class="Header">Number of floor</span>
+             <span  >Number of floor</span>
         </li>
         <li>          
              <asp:TextBox ID="NumOfFloor" runat="server" CssClass="TextBox"></asp:TextBox>
@@ -47,5 +51,6 @@
             
         </li>
         </ul>
+    </div>
     <asp:HiddenField runat="server" ID="LatLng" Value="1,1" />
 </asp:Content>

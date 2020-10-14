@@ -58,7 +58,7 @@ namespace FlyPack
         //Customer
         public static DataTable CustomersTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4) ");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE(Users.UserType = 4) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber; ");
         }
         public static DataTable CustomersTableByShop(int shopId)
         {
@@ -79,7 +79,7 @@ namespace FlyPack
         //delivery
         public static DataTable DeliveriesTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111'))");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber");
         }
         public static DataTable DeliveriesTableByShop(int shopId)
         {

@@ -75,7 +75,7 @@ namespace UIFlyPack
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword pass;
+        protected global::System.Web.UI.WebControls.TextBox pass;
 
         /// <summary>
         /// passValidator control.
@@ -85,6 +85,15 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator passValidator;
+
+        /// <summary>
+        /// PassNotEmpty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PassNotEmpty;
 
         /// <summary>
         /// Phone control.

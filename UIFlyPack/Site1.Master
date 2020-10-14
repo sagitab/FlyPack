@@ -6,8 +6,10 @@
 <head runat="server">
     <title></title>
       <link rel="stylesheet" type="text/css" href="StyleSheet1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+
 </head>
 <body>
      <form id="form1" runat="server">
@@ -17,10 +19,11 @@
                 <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />
             </li>
              <li>
-                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
+                 <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
+               
             </li>
              <li>
-                  <a href="Register.aspx?Type=4">Register</a>
+                  <a href="Register.aspx?Type=4" >Register</a>
             </li>
         </ul>
     </div>
@@ -30,7 +33,7 @@
                 <asp:Button runat="server" ID="logout1" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch" />
             </li>
              <li>
-                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
+                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
             </li>
              <li>
                   <a href="OrderNow.aspx">Order Now</a>
@@ -49,7 +52,7 @@
                 <asp:Button runat="server" ID="logout2" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
+                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
             </li>
             <li>
                   <a href="ViewOrders.aspx">View orders</a>
@@ -68,7 +71,7 @@
                 <asp:Button runat="server" ID="logout3" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
+                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
             </li>
             <li>
                   <a href="ViewOrders.aspx">View orders</a>
@@ -84,7 +87,7 @@
                 <asp:Button runat="server" ID="logout4" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                 <a href="HomePage.aspx"  class="logo">Fly Pack</a>
+                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
             </li>
              <li>
                   <a href="Register.aspx?Type=3">Add Delivery</a>
