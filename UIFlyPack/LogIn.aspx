@@ -30,7 +30,7 @@
              <asp:Button runat="server" ID="LogInB" OnClick="LogInB_Click" CssClass="BSearch" Text="Log In" />
         </li>
         <li>
-           <asp:Label runat="server" ID="massage"></asp:Label>
+           <asp:Label runat="server" ID="massage" CssClass="ErrorMSG"></asp:Label>
         </li>
     </ul>
         </div>

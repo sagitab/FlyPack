@@ -14,11 +14,17 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["user"] = (BlUser)new BlShopManager("12345678");//del
             BlUser user = (BlUser)Session["user"];
             if (!Page.IsPostBack)
             {
+                //BlOrderUser orderUser=new BlOrderUser(user.Password);
                 // generate grid view dynamically
-                DataTable orders = BlOrderUser.GetOrders(user.Type, user.UserId, true, "");
+                DataTable orders = null;
+                if (user is BlOrderUser blOrderUser)
+                {
+                    orders = blOrderUser.GetOrders(true, "");
+                }
                 DataColumnCollection columns = orders.Columns;
                 foreach (DataColumn column in columns)
                 {
@@ -148,15 +154,31 @@ namespace UIFlyPack
             int type = user.Type;
             DataTable orders = null;
             int index = NewOrOld.SelectedIndex;
+            BlOrderUser orderUser = new BlOrderUser(user.Password);
             switch (NewOrOld.Items[index].Value)
             {
                 case "N":
                     OrderTable.Columns[OrderTable.Columns.Count - 1].Visible = true;
-                    orders = BlOrderUser.GetOrders(type, user.UserId, true, condition);
+                    try
+                    {
+                        orders = orderUser.GetOrders(true, condition);
+                    }
+                    catch (Exception e)
+                    {
+                        ErMSG.Text = "fail"+e.Message;
+                    }
+                   
                     break;
                 default:
                     OrderTable.Columns[OrderTable.Columns.Count - 1].Visible = false;
-                    orders = BlOrderUser.GetOrders(type, user.UserId, false, condition);
+                    try
+                    {
+                        orders = orderUser.GetOrders(false, condition);
+                    }
+                    catch (Exception e)
+                    {
+                        ErMSG.Text = "fail " + e.Message;
+                    }
                     break;
             }
 
@@ -194,7 +216,15 @@ namespace UIFlyPack
 
             int orderId = (int)orders.Rows[index]["ID"];
             int status = BlOrder.GetOrderStatus(orderId);
-            bool success = BlOrder.DeleteOrder(orderId)&&status<4;
+            bool success = false;
+            try
+            {
+                success = BlOrder.DeleteOrder(orderId) && status < 4;
+            }
+            catch (Exception exception)
+            {
+                ErMSG.Text = "fail cancel order " + exception.Message;
+            }
             if (success)
             {
                 MSG.Text = "order cancel successfully";
@@ -210,6 +240,7 @@ namespace UIFlyPack
         protected void SearchOrderB_Click(object sender, EventArgs e)
         {
             BlUser user = (BlUser)Session["user"];
+            //get input values
             string searchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
             string condition = "";
             string value = serchedValue.Text;
@@ -230,8 +261,6 @@ namespace UIFlyPack
                     Dictionary<int, string> stautus = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
                     condition = $"AND (Orders.OrderStutus={stautus.FirstOrDefault(x => x.Value == value).Key})";
                 }
-             
-
             }
             else if (searchBys == "FirstName" && user.Type != 3)
             {

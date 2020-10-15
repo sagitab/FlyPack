@@ -10,25 +10,22 @@ namespace BLFlyPack
 {
     public class BlShop
     {
-        
-       
         public int Id { get; }
-        public string ShopManegerId { get; set; }
+        public string ShopManagerId { get; set; }
         public string ShopName { get; set; }
         public  Point Location { get; }
-        
-        public BlShop( string shopManegerId, string shopName)
+        public BlShop( string shopManagerId, string shopName)
         {
             try
             {
-                Id = DalShop.AddShop(shopManegerId,shopName);
+                Id = DalShop.AddShop(shopManagerId,shopName);
                 Location = GetPosission(Id);
             }
             catch
             {
                 Id = -1;
             }
-            ShopManegerId = shopManegerId;
+            ShopManagerId = shopManagerId;
            
             ShopName = shopName;
           
@@ -37,7 +34,7 @@ namespace BLFlyPack
         {
             Id = int.Parse(row["ID"].ToString());
             ShopName = row["ShopName"].ToString();
-            ShopManegerId= row["ShopManagerID"].ToString();
+            ShopManagerId= row["ShopManagerID"].ToString();
             Location = GetPosission(Id);
         }
         public static List<BlShop> GetShops()
@@ -45,7 +42,6 @@ namespace BLFlyPack
             DataTable shops = DalShop.GetShopTable();
             return (from DataRow row in shops.Rows select new BlShop(row)).ToList();
         }
-
         public static BlShop GetShopById(int id)
         {
             DataRow row = null;

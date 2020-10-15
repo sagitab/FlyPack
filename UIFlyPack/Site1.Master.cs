@@ -12,18 +12,10 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            int type = -1;
-
-
             BlUser user = (BlUser)Session["user"];
-            string des = "";
-            if (user != null)
-            {
-                type = user.Type;
-                des = $"Ahoy! {user.ToString()}!";
-            }
-
+            if (user == null) return;
+            var type = user.Type;
+            var des = $"Ahoy! {user.ToString()}!";
             switch (type)
             {
                 case 1:
@@ -47,11 +39,7 @@ namespace UIFlyPack
                     UserString.Text = des;
                     break;
             }
-            if (type != -1)
-            {
-                UnConected.Visible = false;
-            }
-
+            UnConected.Visible = false;
         }
 
         protected void LogIn1_Click(object sender, EventArgs e)

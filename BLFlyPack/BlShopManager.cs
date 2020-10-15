@@ -7,7 +7,7 @@ using System.Data;
 using FlyPack;
 namespace BLFlyPack
 {
-   public class BlShopManager:BlUser
+   public class BlShopManager:BlOrderUser
     {
         
         public int ShopId { get; set; }

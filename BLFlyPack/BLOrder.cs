@@ -138,13 +138,6 @@ namespace BLFlyPack
             return stastus;
         }
 
-        public static List<BlOrder> GetOrdersListByTime(string deliveryId)
-        {
-            DataTable orderTable = DalOrder.GetOrdersListByTime(deliveryId);
-
-            return (from object row in orderTable.Rows select new BlOrder((DataRow) row)).ToList();
-        }
-
         public static bool UpdateDelivery(int orderId, string deliveryId)
         {
            

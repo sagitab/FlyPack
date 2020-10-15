@@ -20,11 +20,11 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             //Session["user"] = new BLUser("gigi1234");
-            BlUser user = (BlUser)Session["user"]; /*(BLUser)Session["user"];*/
+            BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
             if (user != null)
             {
                 //get the new orders of the deliver
-                List<BlOrder> orders = BlOrder.GetOrdersListByTime(user.UserId);
+                List<BlOrder> orders = user.GetOrdersListByTime();
                 //set the road lists
                 List<BlShop> shops = new List<BlShop>();
                 List<BlCustomersAddress> customersAddresses = new List<BlCustomersAddress>();

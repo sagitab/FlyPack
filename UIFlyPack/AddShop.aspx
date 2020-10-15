@@ -12,7 +12,7 @@
         </li>
         <li>           
             <asp:TextBox ID="ShopName" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="NameValidator" runat="server"  ControlToValidate="ShopName" ErrorMessage="Shop name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$" ></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="ShopNameValidator" runat="server"  ControlToValidate="ShopName" ErrorMessage="Shop name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$" ></asp:RegularExpressionValidator>
         </li>
         <li>
              <span  >Select shop manager</span>

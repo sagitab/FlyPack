@@ -11,7 +11,7 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
 
             if (!Page.IsPostBack)
             {
@@ -30,17 +30,33 @@ namespace UIFlyPack
 
         protected void AddShop_Click(object sender, EventArgs e)
         {
+            //get input values
             string shopName = ShopName.Text;
-            string shopManegerId = ShopMSelect.SelectedValue;
-            BlShop shop = new BlShop(shopManegerId,shopName);
-            if(shop!=null||shop.Id==-1)
+            string shopManagerId = ShopMSelect.SelectedValue;
+            if (Page.IsValid)//if all validator is valid
             {
-                MSG.Text = "fail to add shop";
+                BlShop shop = null;
+                try
+                {
+                    shop = new BlShop(shopManagerId, shopName);//crate the new shop
+                }
+                catch (Exception exception)
+                {
+                    MSG.Text = "fail to add shop " + exception.Message;
+                }
+
+                if (shop == null || shop.Id == -1)//if id=-1 of shop is null add shop fail
+                {
+                    MSG.Text = "fail to add shop";
+                }
+                else//if not  add shop success
+                {
+                    MSG.Text = "shop added seccsessfully!!!";
+                }
             }
-            else
-            {
-                MSG.Text = "shop added seccsessfully!!!";
-            }
+            ShopName.CssClass = ShopNameValidator.IsValid ? "TextBox" : "TextBoxUnValidValue";//convert the the bob style by the validator
+
+
         }
     }
 }

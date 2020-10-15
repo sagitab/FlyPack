@@ -17,32 +17,36 @@ namespace UIFlyPack
 
         protected void LogInB_Click(object sender, EventArgs e)
         {
-            
+            //get input values
             string name = Name.Text;
             string pass = Pass.Value.ToString();
             if(name!=""&&pass!="")
             {
                 BlUser user = null;
-                user =  new BlUser(pass);
-              
-                bool IsExsist = NameValidator.IsValid && passValidator.IsValid && user != null&&user.Type!=0;
-                if (IsExsist)
+                try
                 {
-                    if (user.Type == 1)
-                    {
-                        user = new BlShopManager(pass);
-                    }
+                    user = new BlUser(pass,name);//create new user by pass
+                }
+                catch (Exception exception)
+                {
+                    massage.Text = "Fail to log in "+exception.Message;
+                    return;
+                }
+                bool isExist = Page.IsValid && user.Type!=0;//check if all validators are valid and user is exist
+                if (isExist)
+                {
+                    user = user.Type == 1 ? (BlUser) new BlShopManager(pass) : new BlOrderUser(pass);//choose the right constructor by type
                     Session["user"] = user;
                     Response.Redirect("HomePage.aspx");
                 }
                 else
                 {
-                    massage.Text = "User name or password incorrect";
+                    massage.Text = "User name or password incorrect";//fail massage
                 }
             }
             else
             {
-                massage.Text = "User name or password incorrect";
+                massage.Text = "password field or name field is empty ";//fail massage
             }
         }
     }

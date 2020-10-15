@@ -14,7 +14,7 @@
     <div class="RegDiv">
     <ul class="addList" >
         <li>
-            <span class="Header" >Register</span>
+            <span class="Header" id="PageHeader"  runat="server">Register</span>
         </li>
         <li>
             <span >ID</span>
@@ -79,7 +79,7 @@
             <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="BSearch" OnClientClick=" return BtnClick()" CausesValidation="True" />
         </li>
     </ul>
-    <asp:HiddenField runat="server" ID="LatLng" Value="" />
+    <asp:HiddenField runat="server" ID="LatLng" Value="1,1" />
     </div>
   
  <%--   <script>

@@ -13,13 +13,13 @@
          <li>           
           <asp:DropDownList ID="ShopDropDownList" runat="server" CssClass="Select" >
              </asp:DropDownList>
-        <li>
+       <%-- <li>
              <span  >Shop order id</span>
         </li>
         <li>           
             <asp:TextBox ID="ShopOrderID" runat="server" CssClass="TextBox"></asp:TextBox>
                <asp:RangeValidator ID="RangeShopOrderID" runat="server" ErrorMessage="no" Type="Integer" MaximumValue="10" MinimumValue="1" ControlToValidate="ShopOrderID"></asp:RangeValidator>
-        </li>
+        </li>--%>
        <%--  <li>
              <span  class="Header" >Arirval time</span>
         </li>
@@ -40,14 +40,14 @@
         </li>
         <li>          
              <asp:TextBox ID="NumOfFloor" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RangeValidator ID="NumOfFloorValidator" runat="server" ErrorMessage="Enter floor between 0 to 120" Type="Integer" MaximumValue="120" MinimumValue="0" ControlToValidate="NumOfFloor"></asp:RangeValidator>
+            <asp:RangeValidator ID="NumOfFloorValidator" CssClass="ErrorMSG" SetFocusOnError="True" runat="server" ErrorMessage="Enter floor between 0 to 120" Type="Integer" MaximumValue="120" MinimumValue="0" ControlToValidate="NumOfFloor"></asp:RangeValidator>
         </li>
          <li>
              <asp:Button runat="server" ID="OrderB" OnClick="OrderB_Click" CssClass="BSearch" Text="Order" />
         </li>
         <li>          
             
-            <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
+            <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG"></asp:Label>
             
         </li>
         </ul>

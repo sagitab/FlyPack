@@ -24,24 +24,6 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.DropDownList ShopDropDownList;
 
         /// <summary>
-        /// ShopOrderID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ShopOrderID;
-
-        /// <summary>
-        /// RangeShopOrderID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RangeShopOrderID;
-
-        /// <summary>
         /// Adress control.
         /// </summary>
         /// <remarks>

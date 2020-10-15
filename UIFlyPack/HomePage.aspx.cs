@@ -14,41 +14,38 @@ namespace UIFlyPack
             //to del########################@@@@@@@@########%%%%%%%%%>>>>>>>>>>>>
             /* Session["user"] = new BlShopManager("12345678");*/ // BLShopMenager
             /*  Session["user"] = new BlUser("shlakot1");*/ //deliver
-          /*  Session["user"] = new BlUser("hoohoo12");*///customer
-            //Session["user"] = new BlUser("lucky123");//system Maneger
-            if (!Page.IsPostBack)
+            /*  Session["user"] = new BlUser("hoohoo12");*///customer
+            Session["user"] = new BlUser("lucky123");//system Maneger
+            if (Page.IsPostBack) return;//if page already do page loud the headers is already changed
+            //set all headers Visible to false
+            shopManager.Visible = false;
+            systemManager.Visible = false;
+            delivery.Visible = false;
+            customer.Visible = false;
+            unconnected.Visible = false;
+            BlUser user = (BlUser)Session["user"];
+            if (user != null)
             {
-                shopManager.Visible = false;
-                systemManager.Visible = false;
-                delivery.Visible = false;
-                customer.Visible = false;
-                unconnected.Visible = false;
-                BlUser user = (BlUser)Session["user"];
-                if (user != null)
+                int type = user.Type;
+                switch (type)//choose the right header
                 {
-                    int type = user.Type;
-                    switch (type)
-                    {
-                        case 1:
-                            shopManager.Visible = true;
-                            break;
-                        case 2:
-                            systemManager.Visible = true;
-                            break;
-                        case 3:
-                            delivery.Visible = true;
-                            break;
-                        default:
-                            customer.Visible = true;
-                            break;
-                    }
+                    case 1:
+                        shopManager.Visible = true;
+                        break;
+                    case 2:
+                        systemManager.Visible = true;
+                        break;
+                    case 3:
+                        delivery.Visible = true;
+                        break;
+                    default:
+                        customer.Visible = true;
+                        break;
                 }
-                else
-                {
-                    unconnected.Visible = true;
-                }
-
-
+            }
+            else//hide unconnected headers if there is a connected user
+            {
+                unconnected.Visible = true;
             }
         }
     }

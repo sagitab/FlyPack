@@ -38,19 +38,55 @@ namespace BLFlyPack
         //}
         public BlUser(string pass)
         {
-            DataTable t = DalUser.IsExist(pass);
-            if (t != null&&t.Rows.Count>0)
+            DataTable t = null;
+            try
             {
-                DataRow row = t.Rows[0];
-                UserId = row["ID"].ToString();
-                Type = int.Parse(row["UserType"].ToString());
-                Email = row["Email"].ToString();
-                Phone = row["PhoneNumber"].ToString();
-                FirstName = row["FirstName"].ToString();
-                LastName = row["LastName"].ToString();
-                Password = row["Password"].ToString();
-                Location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+                t = DalUser.IsExist(pass);
             }
+            catch
+            {
+                return;
+            }
+
+            if (t == null || t.Rows.Count <= 0) return;
+            DataRow row = t.Rows[0];
+            UserId = row["ID"].ToString();
+            Type = int.Parse(row["UserType"].ToString());
+            Email = row["Email"].ToString();
+            Phone = row["PhoneNumber"].ToString();
+            FirstName = row["FirstName"].ToString();
+            LastName = row["LastName"].ToString();
+            Password = row["Password"].ToString();
+            Location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+
+
+        }
+        public BlUser(string pass,string UserName)
+        {
+            DataTable t = null;
+            try
+            {
+                t = DalUser.IsExist(pass);
+            }
+            catch 
+            {
+               return;
+            }
+
+            if (t == null || t.Rows.Count <= 0) return;
+            DataRow row = t.Rows[0];
+            if (UserName!= row["FirstName"].ToString())
+            {
+                return;
+            }
+            UserId = row["ID"].ToString();
+            Type = int.Parse(row["UserType"].ToString());
+            Email = row["Email"].ToString();
+            Phone = row["PhoneNumber"].ToString();
+            FirstName = row["FirstName"].ToString();
+            LastName = row["LastName"].ToString();
+            Password = row["Password"].ToString();
+            Location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
 
 
         }
@@ -80,8 +116,8 @@ namespace BLFlyPack
             string firstName = row["FirstName"].ToString();
             string lastName = row["LastName"].ToString();
             string password = row["Password"].ToString();
-            Point possision = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
-            return  new BlUser(userId, type, email, phone, firstName, lastName, password, possision.Lat, possision.Lng);
+            Point position = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
+            return  new BlUser(userId, type, email, phone, firstName, lastName, password, position.Lat, position.Lng);
         }
         public static bool PasswordCheck(string pass)
         {

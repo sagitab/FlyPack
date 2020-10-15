@@ -20,25 +20,18 @@ namespace BLFlyPack
         //{
 
         //}
-        public static DataTable GetOrders(int type, string userId, bool isnew, string condition)
+        public  DataTable GetOrders( bool IsNew, string condition)
         {
             DataTable ordersTable = null;
-            if (isnew)
-            {
-                ordersTable = DalOrderUsers.GetOrders(type, userId, "AND ([Orders].[OrderStutus]<5)" + condition);
-            }
-            else
-            {
-                ordersTable = DalOrderUsers.GetOrders(type, userId, "AND ([Orders].[OrderStutus]=5)" + condition);
-            }
+            ordersTable = IsNew ? DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]<5)" + condition) : DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]=5)" + condition);
 
             //List<BLOrder> orders = new List<BLOrder>();
             //foreach (DataRow row in t.Rows)
             //{
             //    orders.Add();
             //}
-            //change stusus to string
-            Dictionary<int, string> stautus = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shiping time selected" }, { 4, "delivery take care your order" }, { 5, "order shiped" } };
+            //change status to string
+            Dictionary<int, string> status = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
             DataTable copy = ordersTable.Clone();
             copy.Columns["OrderStutus"].DataType = typeof(string);
             DataColumnCollection columns = copy.Columns;
@@ -53,7 +46,7 @@ namespace BLFlyPack
                     string colName = column.ColumnName.ToString();
                     if (colName == "OrderStutus")
                     {
-                        newRow[colName] = stautus[key];
+                        newRow[colName] = status[key];
                     }
                     else if (colName == "ArrivalTime")
                     {
@@ -68,6 +61,12 @@ namespace BLFlyPack
                 copy.Rows.Add(newRow);
             }
             return copy;
+        }
+        public  List<BlOrder> GetOrdersListByTime()
+        {
+            DataTable orderTable = DalOrder.GetOrdersListByTime(this.UserId);
+
+            return (from object row in orderTable.Rows select new BlOrder((DataRow)row)).ToList();
         }
     }
 }
