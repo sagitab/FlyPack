@@ -34,7 +34,7 @@ namespace UIFlyPack
                     shops.Add(BlShop.GetShopById(order.ShopId));
                     Point customerAddress = null;
                     customerAddress = order.Location != null ? new Point(order.Location) : new Point(BlUser.UserById(order.CustomerId).Location);
-                    customersAddresses.Add(new BlCustomersAddress(customerAddress, order.NumOfFloor, BlUser.GetName(order.CustomerId)));
+                    customersAddresses.Add(new BlCustomersAddress(customerAddress, order.NumOfFloor, user.GetName()));
                 }
 
                 if (orders.Count>1)
@@ -76,9 +76,9 @@ namespace UIFlyPack
                             orderShops[i] = copyShops[index];
                             orderCustomersAddresses[i] = copyCustomersAddresses[index];
                             //calculate Times
-                            DateTime arriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(locationNow, copyCustomersAddresses, copyShops, index));
-                            DateTime arriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(locationNow, copyCustomersAddresses, copyShops, index));
-                            DateTime arriveTime = copyOrders[index].AriveTime;
+                            DateTime arriveTimeCustomer = DateTime.Now.AddMinutes(locationNow.ArriveTimeCustomer(copyCustomersAddresses, copyShops, index));
+                            DateTime arriveTimeShop = DateTime.Now.AddMinutes(locationNow.ArriveTimeShop(copyCustomersAddresses, copyShops, index));
+                            DateTime arriveTime = copyOrders[index].ArriveTime;
                             DateTime readyTime = copyOrders[index].ReadyTime;
                             if (!IsLate(arriveTimeCustomer, arriveTime, readyTime, arriveTimeShop, readyTimes, arriveTimes))
                             {

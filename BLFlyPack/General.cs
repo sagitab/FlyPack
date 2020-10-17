@@ -8,6 +8,10 @@ namespace BLFlyPack
 {
    public class General
     {
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="path"></param>
         public static void SetPath(string path)
         {
             Constants c = new Constants(path);

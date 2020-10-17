@@ -14,12 +14,17 @@ namespace BLFlyPack
         public string ShopManagerId { get; set; }
         public string ShopName { get; set; }
         public  Point Location { get; }
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="shopManagerId"></param>
+        /// <param name="shopName"></param>
         public BlShop( string shopManagerId, string shopName)
         {
             try
             {
                 Id = DalShop.AddShop(shopManagerId,shopName);
-                Location = GetPosission(Id);
+                Location =this.GetPosition();
             }
             catch
             {
@@ -30,18 +35,31 @@ namespace BLFlyPack
             ShopName = shopName;
           
         }
+        /// <summary>
+        /// constructor by data row
+        /// </summary>
+        /// <param name="row"></param>
         public BlShop(DataRow row)
         {
             Id = int.Parse(row["ID"].ToString());
             ShopName = row["ShopName"].ToString();
             ShopManagerId= row["ShopManagerID"].ToString();
-            Location = GetPosission(Id);
+            Location = new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()) );
         }
+        /// <summary>
+        /// get all the shop in DB
+        /// </summary>
+        /// <returns> shop list</returns>
         public static List<BlShop> GetShops()
         {
             DataTable shops = DalShop.GetShopTable();
             return (from DataRow row in shops.Rows select new BlShop(row)).ToList();
         }
+        /// <summary>
+        /// a new shop by shop id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static BlShop GetShopById(int id)
         {
             DataRow row = null;
@@ -57,9 +75,13 @@ namespace BLFlyPack
             }
             return new BlShop(row);
         }
-        public static Point GetPosission(int shopId)
+        /// <summary>
+        /// get the shop location
+        /// </summary>
+        /// <returns>point object that represent the shop location</returns>
+        public Point GetPosition()
         {
-            DataRow row = DalShop.GetLocation(shopId);
+            DataRow row = DalShop.GetLocation(this.Id);
             return new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()));
         }
     }

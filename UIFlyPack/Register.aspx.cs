@@ -20,7 +20,7 @@ namespace UIFlyPack
                 if (user != null)
                 {
                     int type = user.Type;
-                    if (type == 1)
+                    if (type == 1)//massage to shop manager
                     {
                         instractor.InnerHtml = "Type shop address or click on the map to add address";
                     }
@@ -35,7 +35,7 @@ namespace UIFlyPack
                         Response.Redirect("HomePage.aspx");
                     }
 
-                    switch (RegType)
+                    switch (RegType)//change header text
                     {
                         case 3:
                             PageHeader.InnerHtml = "Add delivery";
@@ -85,8 +85,8 @@ namespace UIFlyPack
         protected void regB_Click(object sender, EventArgs e)
         {
 
-            bool validetors = Page.IsValid;
-            if (validetors && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Text != "" && Phone.Text != "" && ID.Text != "")
+            bool validators = Page.IsValid;
+            if (validators && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Text != "" && Phone.Text != "" && ID.Text != "")
             {
                 //get input values
                 string id = ID.Text;
@@ -98,11 +98,11 @@ namespace UIFlyPack
                 bool passCheck = false;
                 try
                 {
-                    passCheck = BlUser.PasswordCheck(password);
+                    passCheck = BlUser.PasswordCheck(password);//check if there is a user with the same password
                 }
                 catch (Exception exception)
                 {
-                      MSG.Text = "fail register "+exception.Message;
+                      MSG.Text = "fail register "+exception.Message;//error massage
                 }
                 string latLng = this.LatLng.Value.ToString();
                 double lat = GetLat(latLng);
@@ -130,11 +130,11 @@ namespace UIFlyPack
                     BlUser user = null;
                     try
                     {
-                         user = new BlUser(id, type, email, phoneNum, name, lname, password, lat, lng);
+                         user = new BlUser(id, type, email, phoneNum, name, lname, password, lat, lng);//add new user to DB
                     }
                     catch (Exception exception)
                     {
-                        MSG.Text = "fail register "+exception.Message;
+                        MSG.Text = "fail register "+exception.Message;//error massage
                     }
 
                     //log in when finish to register
@@ -144,19 +144,21 @@ namespace UIFlyPack
                     //    user = user.Type == 1 ? (BlUser)new BlShopManager(pass) : new BlOrderUser(pass);
                     //    Session["user"] = user;
                     //}
-                  
-                    MSG.Text = "Register completed";
+                    if (user!=null&&user.UserId!= "-1")
+                    {
+                        MSG.Text = "Register completed";//success massage
+                    }
+                   
                 }
                 else
                 {
-
-
-                    MSG.Text = "Password caught please try again";
+                    MSG.Text = "Password caught please try again";//error massage
                 }
 
             }
             else
             {
+                //convert the the text box style by the validator
                 Phone.CssClass = PhoneValidator.IsValid ? "TextBox" : "TextBoxUnValidValue";
                 pass.CssClass = passValidator.IsValid&& PassNotEmpty.IsValid ? "TextBox" : "TextBoxUnValidValue";
                 Email.CssClass = EmailValidator.IsValid ? "TextBox" : "TextBoxUnValidValue";
@@ -165,7 +167,7 @@ namespace UIFlyPack
                 ID.CssClass = IDValidator.IsValid ? "TextBox" : "TextBoxUnValidValue";
 
 
-                MSG.Text = "Please type all the details";
+                MSG.Text = "Please type all the details";//error massage
             }
         }
 

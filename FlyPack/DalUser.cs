@@ -6,6 +6,11 @@ namespace FlyPack
     public class DalUser
     {
         //User
+        /// <summary>
+        /// get a data table of user by password
+        /// </summary>
+        /// <param name="pass"></param>
+        /// <returns>data table of user</returns>
         public static DataTable IsExist(string pass)
         {
             DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
@@ -23,6 +28,18 @@ namespace FlyPack
             helper.CloseConnection();
             return table;
         }
+        /// <summary>
+        /// add new user to DB
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="phone"></param>
+        /// <param name="fname"></param>
+        /// <param name="lname"></param>
+        /// <param name="password"></param>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
         public static void AddUser(string email, string phone, string fname, string lname, string password, int type, string id, double lat, double lng)
         {
             DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
@@ -40,16 +57,29 @@ namespace FlyPack
             helper.CloseConnection();
 
         }
-
+        /// <summary>
+        /// Get User data row By Id
+        /// </summary> 
+        /// <param name="userId"></param>
+        /// <returns>User data row</returns>
         public static DataRow GetUserById(string userId)
         {
             return DalHelper.GetRowById(userId, "Users");
         }
         //shop Manager
-        public static int GetshopId(string managerId)
+        /// <summary>
+        /// get shop id by shop manager id
+        /// </summary>
+        /// <param name="managerId"></param>
+        /// <returns></returns>
+        public static  int GetShopId(string managerId)
         {
             return int.Parse(DalHelper.Select($"SELECT Shops.ID FROM Shops WHERE(((Shops.ShopManagerID) = '{managerId}'));").Rows[0]["ID"].ToString());
         }
+        /// <summary>
+        /// get data table of shop manager with no shop
+        /// </summary>
+        /// <returns>data table of shop manager with no shop</returns>
         public static DataTable ShopManagersWithNoShop()
         {
             return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users INNER JOIN Shops ON Users.ID <> Shops.ShopManagerID WHERE(((Users.UserType) = 1)); ");

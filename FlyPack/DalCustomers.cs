@@ -37,6 +37,10 @@ namespace FlyPack
 
         //    return a;
         //}
+        /// <summary>
+        /// get data table of customer orders
+        /// </summary>
+        /// <returns></returns>
         public static DataTable GetOrders()
         {
             return DalHelper.Select("SELECT Orders.ArrivalTime, Orders.OrderStutus, Users.FirstName, Shops.ShopName FROM Users INNER JOIN(Shops INNER JOIN Orders ON Shops.ID = Orders.ShopID) ON(Users.ID = Shops.ShopManagerID) AND(Users.ID = Orders.DeliverID) AND(Users.ID = Orders.[CustomerID]) WHERE[CustomerID] = '1' ORDER BY Orders.ArrivalTime DESC;");

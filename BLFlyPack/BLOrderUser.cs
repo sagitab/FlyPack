@@ -12,6 +12,10 @@ namespace BLFlyPack
     public class BlOrderUser : BlUser
     {
         public List<BlOrder> Orders { get; }
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="pass"></param>
         public BlOrderUser(string pass) : base(pass)
         {
             //Orders= call dal
@@ -20,7 +24,13 @@ namespace BLFlyPack
         //{
 
         //}
-        public  DataTable GetOrders( bool IsNew, string condition)
+        /// <summary>
+        /// get the orders table
+        /// </summary>
+        /// <param name="IsNew"></param>
+        /// <param name="condition"></param>
+        /// <returns>orders table</returns>
+        public DataTable GetOrders( bool IsNew, string condition)
         {
             DataTable ordersTable = null;
             ordersTable = IsNew ? DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]<5)" + condition) : DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]=5)" + condition);
@@ -44,25 +54,28 @@ namespace BLFlyPack
                 foreach (DataColumn column in columns)
                 {
                     string colName = column.ColumnName.ToString();
-                    if (colName == "OrderStutus")
+                    switch (colName)
                     {
-                        newRow[colName] = status[key];
+                        case "OrderStutus":
+                            newRow[colName] = status[key];
+                            break;
+                        case "ArrivalTime":
+                            newRow[colName] = DateTime.Parse(row[colName].ToString());
+                            break;
+                        default:
+                            newRow[colName] = row[colName].ToString();
+                            break;
                     }
-                    else if (colName == "ArrivalTime")
-                    {
-                        newRow[colName] = DateTime.Parse(row[colName].ToString());
-                    }
-                    else
-                    {
-                        newRow[colName] = row[colName].ToString();
-                    }
-                   
                 }
                 copy.Rows.Add(newRow);
             }
             return copy;
         }
-        public  List<BlOrder> GetOrdersListByTime()
+        /// <summary>
+        /// get order list order by order time
+        /// </summary>
+        /// <returns>orders list</returns>
+        public List<BlOrder> GetOrdersListByTime()
         {
             DataTable orderTable = DalOrder.GetOrdersListByTime(this.UserId);
 

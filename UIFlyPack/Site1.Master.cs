@@ -16,7 +16,7 @@ namespace UIFlyPack
             if (user == null) return;
             var type = user.Type;
             var des = $"Ahoy! {user.ToString()}!";
-            switch (type)
+            switch (type)//display the right nave bar
             {
                 case 1:
                     //sh

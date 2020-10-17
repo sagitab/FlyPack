@@ -19,23 +19,47 @@ namespace BLFlyPack
         public string Password { get; set; }
         public Point Location { get; }
         //user
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <param name="email"></param>
+        /// <param name="phone"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="password"></param>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
         public BlUser(string userId, int type, string email, string phone, string firstName, string lastName, string password, double lat, double lng)
         {
-            FlyPack.DalUser.AddUser(email, phone, firstName, lastName, password, type, userId, lat, lng);
-            UserId = userId;
-            Type = type;
-            Email = email;
-            Phone = phone;
-            FirstName = firstName;
-            LastName = lastName;
-            Password = password;
-            Location = new Point(lat, lng);
+            try
+            {
+                FlyPack.DalUser.AddUser(email, phone, firstName, lastName, password, type, userId, lat, lng);
+                UserId = userId;
+                Type = type;
+                Email = email;
+                Phone = phone;
+                FirstName = firstName;
+                LastName = lastName;
+                Password = password;
+                Location = new Point(lat, lng);
+            }
+            catch
+            {
+                UserId = "-1";
+            }
+         
         }
 
         //public BLUser(string userId)
         //{
 
         //}
+        /// <summary>
+        /// constructor by data row
+        /// </summary>
+        /// <param name="pass"></param>
         public BlUser(string pass)
         {
             DataTable t = null;
@@ -58,9 +82,12 @@ namespace BLFlyPack
             LastName = row["LastName"].ToString();
             Password = row["Password"].ToString();
             Location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
-
-
         }
+        /// <summary>
+        /// return a user object by user name and password
+        /// </summary>
+        /// <param name="pass"></param>
+        /// <param name="UserName"></param>
         public BlUser(string pass,string UserName)
         {
             DataTable t = null;
@@ -90,7 +117,11 @@ namespace BLFlyPack
 
 
         }
-
+        /// <summary>
+        /// get user object by id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>user object</returns>
         public static BlUser UserById(string userId)
         {
             DataRow row = null;
@@ -106,7 +137,11 @@ namespace BLFlyPack
 
         }
 
-
+        /// <summary>
+        /// get user object by data row
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns>user object</returns>
         public static BlUser UserByRow (DataRow row)
         {
             string userId = row["ID"].ToString();
@@ -119,16 +154,20 @@ namespace BLFlyPack
             Point position = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
             return  new BlUser(userId, type, email, phone, firstName, lastName, password, position.Lat, position.Lng);
         }
+        /// <summary>
+        /// check if password already exist
+        /// </summary>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         public static bool PasswordCheck(string pass)
         {
             DataTable t = DalUser.IsExist(pass);
-            if (t.Rows.Count > 0)
-            {
-                return false;
-            }
-            return true;
+            return t.Rows.Count <= 0;
         }
-
+        /// <summary>
+        /// describe the user object
+        /// </summary>
+        /// <returns>string that describe the user object</returns>
         public override string ToString()
         {
             try
@@ -145,16 +184,27 @@ namespace BLFlyPack
         }
 
         //shop maneger
-        public int GetshopId()
+        /// <summary>
+        /// Get Shop Id
+        /// </summary>
+        /// <returns>Shop Id</returns>
+        public int GetShopId()
         {
-
-            return DalUser.GetshopId(this.UserId);
+            return DalUser.GetShopId(this.UserId);
         }
+        /// <summary>
+        /// Get Num Of Orders
+        /// </summary>
+        /// <returns>Num Of Orders</returns>
         public int GetNumOfOrders()
         {
-            return DalOrder.NumOfOrders(Type == 1 ? $"WHERE([Orders].[ShopID] = {GetshopId()})" : "");
+            return DalOrder.NumOfOrders(Type == 1 ? $"WHERE([Orders].[ShopID] = {GetShopId()})" : "");
         }
         //customer
+        /// <summary>
+        /// get Customers Table
+        /// </summary>
+        /// <returns>Customers Table</returns>
         public virtual DataTable CustomersTable()
         {
             DataTable t = null;
@@ -168,6 +218,11 @@ namespace BLFlyPack
             }
             return t;
         }
+        /// <summary>
+        /// get customer data table by search value
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns>customer data table</returns>
         public virtual DataTable CustomersSearch(string condition)
         {
             DataTable t = null;
@@ -181,22 +236,15 @@ namespace BLFlyPack
             }
             return t;
         }
-
+        
         public virtual string GetNumOfActiveCustomers()
         {
-            if (Type == 1)
-            {
-                return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetshopId()})");
-            }
-            else
-            {
-                return DalOrder.NumOfActiveCustomers("");
-            }
+            return DalOrder.NumOfActiveCustomers(Type == 1 ? $"WHERE([Orders].[ShopID] = {GetShopId()})" : "");
         }
 
-        public static string GetName(string customerId)
+        public  string GetName()
         {
-            return DalUser.GetName(customerId);
+            return DalUser.GetName(this.UserId);
         }
         //delivery
         public virtual DataTable DeliveriesTable()
@@ -212,13 +260,21 @@ namespace BLFlyPack
             }
             return t;
         }
+        /// <summary>
+        /// get point list of all deliveries location
+        /// </summary>
+        /// <returns> list of all deliveries location</returns>
         public static List<Point> GetDeliveriesLocations()
         {
             DataTable deliverersLocations = DalUser.GetDeliverersLocations();
 
             return (from DataRow row in deliverersLocations.Rows select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
         }
-
+        /// <summary>
+        /// get Delivery Id By Point
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns>Delivery Id</returns>
         public static string GetDeliveryIdByPoint(Point point)
         {
             string ret = "";
@@ -232,6 +288,11 @@ namespace BLFlyPack
             }
             return ret;
         }
+        /// <summary>
+        /// return the closest delivery that available
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns>delivery id</returns>
         public static string GetMatchDeliveryIdByPoints(List<Point> points)
         {
             int index = 0;
@@ -240,12 +301,13 @@ namespace BLFlyPack
                 index++;
             }
 
-            if (index + 1 > points.Count)
-            {
-                return "";
-            }
-            return GetDeliveryIdByPoint(points[index]);
+            return index + 1 > points.Count ? "" : GetDeliveryIdByPoint(points[index]);
         }
+        /// <summary>
+        /// return the closest delivery that available by shop point
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns>delivery id</returns>
         public static string GetMatchesDeliveryId(Point shopPoint)
         {
             List<Point> points = GetDeliveriesLocations();
@@ -255,13 +317,18 @@ namespace BLFlyPack
             //Point deliveryPoint = points[index];
             return GetMatchDeliveryIdByPoints(sortedDeliveryPoints);
         }
-
+     
         public static int GetNumOfDeliveryOrders(string userId)
         {
             return DalOrder.NumOfOrders($"WHERE Orders.DeliverID ='{userId}' AND Orders.OrderStutus =4");
         }
-
-        public  double GetDistanceToCustomerHome(List<BlShop> shops, List<BlCustomersAddress> customersAddresses)
+        /// <summary>
+        /// return the total distance between the delivery to the customer home  
+        /// </summary>
+        /// <param name="shops"></param>
+        /// <param name="customersAddresses"></param>
+        /// <returns></returns>
+        public double GetDistanceToCustomerHome(List<BlShop> shops, List<BlCustomersAddress> customersAddresses)
         {
             Point startPoint=new Point(Location);
             double totalDistance = 0.0;

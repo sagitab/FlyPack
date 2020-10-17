@@ -28,7 +28,7 @@
 
         <li style="">
 
-            <asp:GridView ID="OrderTable" runat="server" AutoGenerateColumns="false" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting" OnRowCommand="OrderTable_RowCommand" OnRowDataBound="OrderTable_RowDataBound"  >
+            <asp:GridView ID="OrderTable" runat="server" AutoGenerateColumns="false" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting" OnRowCommand="OrderTable_RowCommand"   >
             </asp:GridView>
         </li>
         <li>

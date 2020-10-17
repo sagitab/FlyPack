@@ -229,6 +229,13 @@ namespace FlyPack
             helper.CloseConnection();
             return tb;
         }
+        /// <summary>
+        /// delete row by id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="table"></param>
+        /// <param name="idColumnName"></param>
+        /// <returns>true if delete success</returns>
         public static bool DeleteRowById(int id,string table,string idColumnName)
         {
             DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
@@ -237,6 +244,15 @@ namespace FlyPack
             string sql = $"DELETE * FROM {table} WHERE {idColumnName}={id}";
            return  helper.WriteData(sql)==1;
         }
+        /// <summary>
+        /// update one files by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="table"></param>
+        /// <param name="idColumnName"></param>
+        /// <param name="replaceValue"></param>
+        /// <param name="replacedColumName"></param>
+        /// <returns>true if update success</returns>
         public static bool UpdateColumnById(int id, string table, string idColumnName,string replaceValue, string replacedColumName)
         {
             DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);

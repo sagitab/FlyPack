@@ -10,6 +10,13 @@ namespace FlyPack
 {
    public class DalOrderUsers
     {
+        /// <summary>
+        /// get order data table by user type and if they new or old
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="userid"></param>
+        /// <param name="newOrOld"></param>
+        /// <returns>order data table by user type</returns>
         public static DataTable GetOrders(int type, string userid,string newOrOld)
         {
             switch (type)
