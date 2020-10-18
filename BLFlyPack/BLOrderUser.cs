@@ -81,5 +81,42 @@ namespace BLFlyPack
 
             return (from object row in orderTable.Rows select new BlOrder((DataRow)row)).ToList();
         }
+        public virtual DataTable DeliveriesTable()
+        {
+            DataTable t = null;
+            try
+            {
+                t = DalUser.DeliveriesTable();
+            }
+            catch
+            {
+                return null;
+            }
+            return t;
+        }
+        public virtual string GetNumOfActiveCustomers()
+        {
+            try
+            {
+                return DalOrder.NumOfActiveCustomers("");
+            }
+            catch
+            {
+                return "";
+            }
+
+        }
+        public virtual int GetNumOfOrders()
+        {
+            try
+            {
+                return DalOrder.NumOfOrders("");
+            }
+            catch
+            {
+                return -1;
+            }
+
+        }
     }
 }

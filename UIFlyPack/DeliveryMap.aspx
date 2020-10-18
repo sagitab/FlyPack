@@ -1,27 +1,50 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="DeliveryMap.aspx.cs" Inherits="UIFlyPack.DeliveryMap" %>
 
 <%@ Import Namespace="BLFlyPack" %>
+<%@ Import Namespace="System.Web.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+ 
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <span class="Header" >Deliveries Map</span>
     <div id="map"></div>
-    <%--<script>
+    <br/>
+    <input type="button" onclick="showMap" value="Show map"/>
+    <asp:Button runat="server" CssClass="BSearch" ID="Button1" Text="Update Map" OnClick="Page_Load"/>
+    <asp:Label runat="server" CssClass="ErrorMSG" ID="errorMSG"></asp:Label>
+    <asp:HiddenField runat="server" ID="shopJson" Value="asdfdasfas"/>
+    <script>
+        
+    </script>
+    <script>
+        <% %>
         var map;
         var points = [];
-       var shops = JSON.parse(`<%=Json.Serialize(Shops.AsReadOnly())%>`);
-        var customersAddresses = JSON.parse(`<%=Json.Serialize(CustomersAddresses.AsReadOnly())%>`);
-        console.log(shops);
+      
+        <%--    var customersAddresses = JSON.parse(`<%=Json.Serialize(CustomersAddresses.AsReadOnly())%>`);--%>
+      
 
+        function showMap() {
+            debugger;
+            var hiddenField = document.getElementById('ContentPlaceHolder1_shopJson');
+            var JsonString = hiddenField.value;
+            console.log(JsonString);
+            var shops = []; 
+            shops = JSON.parse(JsonString);
+            var shopName1 = shops[0].ShopName;
+            console.log(shopName1);
+            console.log(shops);
+            debugger;
+        }
 
-        function initMap() {
+        <%-- function initMap() {
             var mapOptions = {
                 zoom: 8,
                 center: new google.maps.LatLng(0, 0)
             }
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
-            var DeliverLocation = <% =new Point(((BLUser) Session["user"]).location) %>;
+            var DeliverLocation = <% =new Point(((BlUser) Session["user"]).Location) %>;
             console.log(DeliverLocation);
             var startPoint = new google.maps.Marker({
                 map: map,
@@ -43,6 +66,15 @@
         }
         document.body.onload = function () {
             initMap();
+        }--%>
+        document.body.onload = function () {
+            debugger;
+            var hiddenField = document.getElementById('ContentPlaceHolder1_shopJson');
+            var JsonString = hiddenField.value;
+            console.log(JsonString);
+            var shops = JSON.parse(JsonString);
+            debugger;
+            console.log(shops);
         }
         function CenterPoint() {
             debugger;
@@ -72,5 +104,5 @@
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfNHGvBm3VSe6XZ9oVKrYfW4YqyJJq9v4&callback=initMap">
-    </script>--%>
+    </script>
 </asp:Content>

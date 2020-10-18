@@ -15,6 +15,7 @@ namespace BLFlyPack
         /// constructor
         /// </summary>
         /// <param name="pass"></param>
+        
         public BlShopManager(string pass):base(pass)
         {
             ShopId = this.GetShopId();
@@ -42,7 +43,15 @@ namespace BLFlyPack
         /// <returns></returns>
         public override string GetNumOfActiveCustomers()
         {
-             return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetShopId()})");
+            try
+            {
+                return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetShopId()})");
+            }
+            catch
+            {
+                return "";
+            }
+           
         }
         /// <summary>
         /// get  Deliveries Table that order from the shop manager shop
@@ -50,7 +59,15 @@ namespace BLFlyPack
         /// <returns> Deliveries Table</returns>
         public override DataTable DeliveriesTable()
         {
-            return DalUser.DeliveriesTableByShop(ShopId);
+            try
+            {
+                return DalUser.DeliveriesTableByShop(ShopId);
+            }
+            catch
+            {
+                return null;
+            }
+          
         }
         /// <summary>
         /// get Customers Table that order from the shop manager shop
@@ -69,6 +86,29 @@ namespace BLFlyPack
         {
             return DalUser.CustomersSearchByShop(ShopId, condition);
         }
-
+        /// <summary>
+        /// Get Shop Id
+        /// </summary>
+        /// <returns>Shop Id</returns>
+        public int GetShopId()
+        {
+            return DalUser.GetShopId(this.UserId);
+        }
+        /// <summary>
+        /// Get Num Of Orders
+        /// </summary>
+        /// <returns>Num Of Orders</returns>
+        public int GetNumOfOrders()
+        {
+            try
+            {
+                return DalOrder.NumOfOrders(Type == 1 ? $"WHERE([Orders].[ShopID] = {GetShopId()})" : "");
+            }
+            catch
+            {
+                return -1;
+            }
+          
+        }
     }
 }

@@ -184,7 +184,8 @@ ul {
 #map {
     width: 50%;
     height: 40vh;
-    margin: 0% auto;
+    margin: 5% auto  ;
+    margin-bottom: 5%;
 }
 .UnvalidTextBox {
     position: relative;

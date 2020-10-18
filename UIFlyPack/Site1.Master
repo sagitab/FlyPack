@@ -76,6 +76,9 @@
             <li>
                   <a href="ViewOrders.aspx">View orders</a>
             </li>
+            <li>
+                <a href="DeliveryMap.aspx">Orders Map</a>
+            </li>
               <li>
                 <asp:Label ID="UserString3"  runat="server" Text=""></asp:Label>
             </li>

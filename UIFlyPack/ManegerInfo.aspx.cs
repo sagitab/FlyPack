@@ -6,13 +6,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Web.Helpers;
+using  System.Web.Helpers.AntiXsrf;
 namespace UIFlyPack
 {
     public partial class ManagerInfo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BlUser user = (BlUser)Session["user"];
+            
+            BlOrderUser user = (BlOrderUser)Session["user"];
             if (Page.IsPostBack) return;
             //get data 
             DataTable customers = user.CustomersTable();

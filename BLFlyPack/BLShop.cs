@@ -44,7 +44,7 @@ namespace BLFlyPack
             Id = int.Parse(row["ID"].ToString());
             ShopName = row["ShopName"].ToString();
             ShopManagerId= row["ShopManagerID"].ToString();
-            Location = new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()) );
+            Location = GetPosition();
         }
         /// <summary>
         /// get all the shop in DB

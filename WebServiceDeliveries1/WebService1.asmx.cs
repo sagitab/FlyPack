@@ -21,11 +21,11 @@ namespace WebServiceDeliveries1
     public class WebService1 : System.Web.Services.WebService
     {
         
-        [WebMethod]
-        public int GetStatus( int OrderId)
-        {
-            return BlOrder.GetOrderStatus(OrderId);
-        }
+        //[WebMethod]
+        //public int GetStatus( )
+        //{
+        //    return BlOrder.GetOrderStatus();
+        //}
         //[WebMethod]
         //public bool IsOrderIDExist(string OrderTableName,string OrderIdName,string Id )
         //{

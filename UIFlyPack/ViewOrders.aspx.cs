@@ -227,7 +227,7 @@ namespace UIFlyPack
 
         protected void SearchOrderB_Click(object sender, EventArgs e)
         {
-            BlUser user = (BlUser)Session["user"];
+            BlOrderUser user = (BlOrderUser)Session["user"];
             //get input values
             string searchBys = SearchBy.Items[SearchBy.SelectedIndex].Value;
             string condition = "";
@@ -299,7 +299,8 @@ namespace UIFlyPack
                 //get the shop object 
                 BlShop shop = BlShop.GetShopById(order.ShopId);
                 //get the Id of the closest and . delivery  
-                string matchDeliveryId = BlUser.GetMatchesDeliveryId(shop.Location);
+                Deliver deliver = (Deliver)Session["user"];
+                string matchDeliveryId = deliver.GetMatchesDeliveryId(shop.Location);
                 bool success = order.UpdateReadyTime(readyTime)&& order.UpdateDelivery(matchDeliveryId)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;//update deliver and ready time in DB
                 if (!success)
                 {
