@@ -19,8 +19,8 @@ namespace UIFlyPack
     public partial class DeliveryMap : System.Web.UI.Page
     {
         //ScriptingJsonSerializationSection
-        public List<BlShop> Shops = null;
-        public List<BlCustomersAddress> CustomersAddresses = null;
+        public string Shops = "";
+        public string Customers = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["user"] = new Deliver("shlakot1");
@@ -32,114 +32,141 @@ namespace UIFlyPack
             List<BlShop> shops = new List<BlShop>();
             List<BlCustomersAddress> customersAddresses = new List<BlCustomersAddress>();
             //full road lists
+
             foreach (BlOrder order in orders)
             {
                 shops.Add(BlShop.GetShopById(order.ShopId));
-                Point customerAddress = null;
-                customerAddress = order.Location != null ? new Point(order.Location) : new Point(BlUser.UserById(order.CustomerId).Location);
+                Point customerAddress = order.Location != null ? new Point(order.Location) : new Point(BlUser.UserById(order.CustomerId).Location);
                 customersAddresses.Add(new BlCustomersAddress(customerAddress, order.NumOfFloor, user.GetName()));
             }
 
-            if (orders.Count==0) { errorMSG.Text = "there is no orders";return; }
-            if (orders.Count>2)//to change to orders.Count>1!!!!!!!!!!!!!####$$$$$$$$########@@@@@@@*********#########&&&&&&&&&&$$$$$$$$$$^^^^^^^^^^%%%%%%%%%**********
+            if (orders.Count == 0) { errorMSG.Text = "there is no orders"; return; }
+            else
             {
+                errorMSG.Text = "";
+            }
+            if (orders.Count > 1)//to change to orders.Count>1!!!!!!!!!!!!!####$$$$$$$$########@@@@@@@*********#########&&&&&&&&&&$$$$$$$$$$^^^^^^^^^^%%%%%%%%%**********
+            {
+                //List<BlShop> sameShops = BlShop.isHaveSameShop(shops);
+                //bool isHaveSameShop = sameShops.Count > 0;
+                //if (isHaveSameShop)
+                //{
+                    
+                //}
+                bool isAllSameShop = BlShop.isAllSameShop(shops);
                 //calculate shorter way to deliver 
-                //set vars
-                List<BlShop> copyShops = new List<BlShop>(shops);
-                List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
-                List<BlOrder> copyOrders = new List<BlOrder>(orders);
-                List<BlShop> orderShops = new List<BlShop>();
-                List<BlCustomersAddress> orderCustomersAddresses = new List<BlCustomersAddress>();
-                int minIndex = 0;
-                Point locationNow = user.Location;
-                List<int> orderShopIndex;
-                List<double> readyTimes = new List<double>();
-                List<double> arriveTimes = new List<double>();
-                int lateTimes = 0;
-                //loop the shop and find the best shop 
-                
-                for (int i = 0; i < shops.Count; i++)
-                {
-
-                    minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
-                    orderShopIndex = locationNow.MinimumDistanceShopsList(copyShops, 0);//set a list of the index of the shop order by distance ( the first is the closest)
-
-                    //to add shop and customer
-                    //OrderShops[i] = CopyShops[minIndex];
-                    //OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
-                    ////calculate Times
-                    //DateTime ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
-                    //DateTime ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
-                    //DateTime ArriveTime = CopyOrders[minIndex].AriveTime;
-                    //DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
-                    //if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop, ReadyTimes, ArriveTimes))
-                    //{
-                    // for orderShopIndex to select the shortest distance shop that the deliver deliver the pack on time
-                    foreach (var index in orderShopIndex)
-                    {
-                        //to add shop and customer
-                        orderShops[i] = copyShops[index];
-                        orderCustomersAddresses[i] = copyCustomersAddresses[index];
-                        //calculate Times
-                        DateTime arriveTimeCustomer = DateTime.Now.AddMinutes(locationNow.ArriveTimeCustomer(copyCustomersAddresses, copyShops, index));
-                        DateTime arriveTimeShop = DateTime.Now.AddMinutes(locationNow.ArriveTimeShop(copyCustomersAddresses, copyShops, index));
-                        DateTime arriveTime = copyOrders[index].ArriveTime;
-                        DateTime readyTime = copyOrders[index].ReadyTime;
-                        if (!IsLate(arriveTimeCustomer, arriveTime, readyTime, arriveTimeShop, readyTimes, arriveTimes))
-                        {
-                            break;//out the loop (the shop and the match customer address already added
-                        }
-                        else
-                        {
-                            //remove because index not good
-                            copyShops.RemoveAt(index);
-                            copyOrders.RemoveAt(index);
-                            copyCustomersAddresses.RemoveAt(index);
-                            //update late times
-                            lateTimes++;
-                        }
-                    }
-
-
-                    //update locationNow
-                    locationNow = new Point(orderCustomersAddresses[i].Location);
-                }
-                if (lateTimes == shops.Count)
-                {
-                    //if the best way is the shortest way
-                    List<BlShop> bestWayShops = new List<BlShop>();
-                    List<BlCustomersAddress> bestWayCustomers = new List<BlCustomersAddress>();
-                    List<BlShop> cShops = new List<BlShop>(shops);
-                    for (int i = 0; i < shops.Count; i++)
-                    {
-                        orderShopIndex = locationNow.MinimumDistanceShopsList(cShops, 0);
-                        int bestIndex = GetBestShopIndex(readyTimes, arriveTimes, orderShopIndex);//get the best index by all the parameters
-                        bestWayShops[i] = copyShops[bestIndex];
-                        bestWayCustomers[i] = copyCustomersAddresses[bestIndex];
-                        cShops.RemoveAt(bestIndex);
-                    }
-                    //update the global vars
-                    Shops = bestWayShops;
-                    CustomersAddresses = bestWayCustomers;
-                }
-                else
-                {
-                    //update the global vars
-                    Shops = orderShops;
-                    CustomersAddresses = orderCustomersAddresses;
-                }
+                GetBestWayLists(isAllSameShop, shops, customersAddresses, orders, user.Location);
             }
             else
             {
                 //update the global vars
-                Shops = shops;
-                CustomersAddresses = customersAddresses;
+                Shops = Json.Encode(shops);
+                Customers = Json.Encode(customersAddresses);
             }
-
-            shopJson.Value = Json.Encode(Shops);
-            //Json.Write(Shops);
+          
         }
 
+        //public static List<T> CastList<T>(List<object> list)
+        //{
+        //    List<T> retList=new List<T>();
+        //    foreach (var obj in list)
+        //    {
+        //        if (obj is T Tvalue)
+        //        {
+        //            retList.Add(Tvalue);
+        //        }
+        //    }
+        //    return retList;
+        //}
+        public  void GetBestWayLists(bool isAllSameShop,List<BlShop> shops,List<BlCustomersAddress> customersAddresses, List<BlOrder> orders, Point locationNow)
+        {
+            //set vars
+            List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
+            List<BlOrder> copyOrders = new List<BlOrder>(orders);
+            List<BlShop> orderShops = new List<BlShop>();
+            List<BlCustomersAddress> orderCustomersAddresses = new List<BlCustomersAddress>();
+            int minIndex = 0;
+            List<int> IndexsOrderByDistance;
+            List<double> readyTimes = new List<double>();
+            List<double> arriveTimes = new List<double>();
+            int lateTimes = 0;
+            List<BlShop> copyShops = new List<BlShop>(shops);
+            for (int i = 0; i < shops.Count; i++)
+            {
+                //minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
+                IndexsOrderByDistance = isAllSameShop ? locationNow.MinimumDistanceCustomerList(copyShops, copyCustomersAddresses ,0) : locationNow.MinimumDistanceList(copyShops, copyCustomersAddresses,0);
+              //set a list of the index of the shop order by distance ( the first is the closest)
+                //to add shop and customer
+                //OrderShops[i] = CopyShops[minIndex];
+                //OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
+                ////calculate Times
+                //DateTime ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                //DateTime ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
+                //DateTime ArriveTime = CopyOrders[minIndex].AriveTime;
+                //DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
+                //if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop, ReadyTimes, ArriveTimes))
+                //
+
+                // for orderShopIndex to select the shortest distance shop that the deliver deliver the pack on time
+
+                foreach (var index in IndexsOrderByDistance)
+                {
+                    //to add shop and customer
+                    int realIndex = index - lateTimes;
+                    orderShops.Add(copyShops[realIndex]);
+                    orderCustomersAddresses.Add(copyCustomersAddresses[realIndex]);
+                    //orderShops[i] = copyShops[index];
+                    //orderCustomersAddresses[i] = copyCustomersAddresses[index];
+                    //calculate Times
+                    DateTime arriveTimeCustomer = DateTime.Now.AddMinutes(locationNow.ArriveTimeCustomer(copyCustomersAddresses, copyShops, realIndex));
+                    DateTime arriveTimeShop = DateTime.Now.AddMinutes(locationNow.ArriveTimeShop(copyCustomersAddresses, copyShops, realIndex));
+                    DateTime arriveTime = copyOrders[realIndex].ArriveTime;
+                    DateTime readyTime = copyOrders[realIndex].ReadyTime;
+                    if (!IsLate(arriveTimeCustomer, arriveTime, readyTime, arriveTimeShop, readyTimes, arriveTimes))
+                    {
+                        break;//out the loop (the shop and the match customer address already added
+                    }
+                    else
+                    {
+                        //remove because index not good
+                        copyShops.RemoveAt(realIndex);
+                        copyOrders.RemoveAt(realIndex);
+                        copyCustomersAddresses.RemoveAt(realIndex);
+                        //update late times
+                        lateTimes++;
+                    }
+                }
+                //update locationNow
+                locationNow = new Point(orderCustomersAddresses[i].Location);
+            }
+            if (lateTimes == shops.Count)
+            {
+                //if all late the best way is the shortest way
+                List<BlShop> bestWayShops = new List<BlShop>();
+                List<BlCustomersAddress> bestWayCustomers = new List<BlCustomersAddress>();
+                List<BlShop> cShops = new List<BlShop>(shops);
+                List<BlCustomersAddress> cCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
+                for (int i = 0; i < shops.Count; i++)
+                {
+                    IndexsOrderByDistance = locationNow.MinimumDistanceList(cShops, cCustomersAddresses, 0);
+                    int bestIndex = GetBestShopIndex(readyTimes, arriveTimes, IndexsOrderByDistance);//get the best index by all the parameters
+                    bestWayShops.Add(cShops[bestIndex]);
+                    bestWayCustomers.Add(cCustomersAddresses[bestIndex]);
+                    cShops.RemoveAt(bestIndex);
+                    cCustomersAddresses.RemoveAt(bestIndex);
+                }
+                //update the global vars
+                Shops = Json.Encode(bestWayShops);
+                Customers = Json.Encode(bestWayCustomers);
+
+            }
+            else
+            {
+                //update the global vars
+                Shops = Json.Encode(orderShops);
+                Customers = Json.Encode(orderCustomersAddresses);
+            }
+        }
         //public static void Calculate(List<BlCustomersAddress> CustomersAddresses, List<BlShop> shops)
         //{
 
@@ -241,5 +268,9 @@ namespace UIFlyPack
         //{
 
         //}
+        protected void updateMap_OnClick(object sender, EventArgs e)
+        {
+            IsUpdated.Value = "0";//update the hidden field value
+        }
     }
 }

@@ -90,8 +90,11 @@
     <Content Include="Img\BGimg.jpg" />
     <Content Include="Img\BLogIn.jpg" />
     <Content Include="Img\droneIMG.jpg" />
+    <Content Include="Img\flagIcon.png" />
+    <Content Include="Img\houseIcon.png" />
     <Content Include="Img\Logo.svg" />
     <Content Include="Img\redFlag.png" />
+    <Content Include="Img\shopIcon.png" />
     <Content Include="LogIn.aspx" />
     <Content Include="ManegerInfo.aspx" />
     <Content Include="OrderNow.aspx" />

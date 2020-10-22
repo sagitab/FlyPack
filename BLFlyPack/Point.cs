@@ -74,16 +74,26 @@ namespace BLFlyPack
         /// <summary>
         /// return the index of the closest shop from list
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="Shops"></param>
         /// <param name="startIndex"></param>
         /// <returns>the index of the closest shop</returns>
-        public int MinimumDistanceShops(List<BlShop> points, int startIndex)
+        public int MinimumDistance(List<BlShop> Shops,List<BlCustomersAddress> customersAddresses, int startIndex)
         {
             int minIndex = startIndex;
-            for (var index = startIndex; index < points.Count; index++)
+            for (var index = startIndex; index < Shops.Count&&  index < customersAddresses.Count; index++)
             {
-                var point = points[index];
-                if (this.Distance(point.Location) < Distance(points[minIndex].Location))
+                var Shop = Shops[index].Location;
+                var customerAddress = customersAddresses[index].Location;
+              
+
+                var minIndexShop = Shops[minIndex].Location;
+                var minIndexCustomerAddress = Shops[minIndex].Location;
+               
+             
+
+                double distance = this.Distance(Shop) + Shop.Distance(customerAddress),minDistance= Distance(minIndexShop)+ minIndexShop.Distance(minIndexCustomerAddress);
+
+                if (distance < minDistance)
                 {
                     minIndex = index;
                 }
@@ -94,42 +104,66 @@ namespace BLFlyPack
         /// <summary>
         /// return a shop list order by distance
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="shops"></param>
         /// <param name="startIndex"></param>
         /// <returns></returns>
-        public List<int> MinimumDistanceShopsList(List<BlShop> points, int startIndex)
+        public List<int> MinimumDistanceList(List<BlShop> shops, List<BlCustomersAddress> customersAddresses, int startIndex)
         {
-            List<BlShop> copy = new List<BlShop>(points);
+            //List<BlShop> shopsCopy= new List<BlShop>(shops); List<BlCustomersAddress> customersAddressesCopy=new List<BlCustomersAddress>(customersAddresses);
             List<int> orderShops = new List<int>();
-            for (var index = startIndex; index < points.Count; index++)
+            for (var index = startIndex; index < shops.Count&& index < customersAddresses.Count; index++)
             {
-                var minIndex = MinimumDistanceShops(copy, 0);
+                var minIndex = MinimumDistance(shops, customersAddresses, index);
                 orderShops.Add(minIndex);
-                copy.RemoveAt(minIndex);
+              
             }
-
             return orderShops;
         }
-    //    /// <summary>
-    //    /// 
-    //    /// </summary>
-    //    /// <param name="points"></param>
-    //    /// <param name="startIndex"></param>
-    //    /// <returns></returns>
-    //public int MinimumDistanceCustomers(List<BlCustomersAddress> points, int startIndex)
-    //    {
-    //        int minIndex = startIndex;
-    //        for (var index = startIndex; index < points.Count; index++)
-    //        {
-    //            var point = points[index];
-    //            if (this.Distance(point.Location) < Distance(points[minIndex].Location))
-    //            {
-    //                minIndex = index;
-    //            }
-    //        }
+        public List<int> MinimumDistanceCustomerList(List<BlShop> shops, List<BlCustomersAddress> customersAddresses, int startIndex)
+        {
+            //List<BlCustomersAddress> customersAddressesCopy = new List<BlCustomersAddress>(customersAddresses);
+            List<int> orderRetList = new List<int>();
+            for ( var i=startIndex ; i <customersAddresses.Count; i++)
+            {
+                var minIndex = shops[i].Location.MinimumDistanceCustomer(customersAddresses, i);
+                orderRetList.Add(minIndex);
+            }
+            return orderRetList;
+        }
+        public int MinimumDistanceCustomer(List<BlCustomersAddress> points, int startIndex)
+        {
+            int minIndex = startIndex;
+            for (var index = startIndex; index < points.Count; index++)
+            {
+                var point = points[index].Location;
+                if (this.Distance(point) < Distance(points[minIndex].Location))
+                {
+                    minIndex = index;
+                }
+            }
 
-    //        return minIndex;
-    //    }
+            return minIndex;
+        }
+        //    /// <summary>
+        //    /// 
+        //    /// </summary>
+        //    /// <param name="points"></param>
+        //    /// <param name="startIndex"></param>
+        //    /// <returns></returns>
+        //public int MinimumDistanceCustomers(List<BlCustomersAddress> points, int startIndex)
+        //    {
+        //        int minIndex = startIndex;
+        //        for (var index = startIndex; index < points.Count; index++)
+        //        {
+        //            var point = points[index];
+        //            if (this.Distance(point.Location) < Distance(points[minIndex].Location))
+        //            {
+        //                minIndex = index;
+        //            }
+        //        }
+
+        //        return minIndex;
+        //    }
 
 
         /// <summary>
@@ -186,7 +220,6 @@ namespace BLFlyPack
                 arriveTime += startCopy.ArriveTime( customersAddresses[i], shops[i]);
                 startCopy = customersAddresses[i].Location;
             }
-
             return arriveTime;
         }
         /// <summary>
@@ -216,5 +249,18 @@ namespace BLFlyPack
             }
             return arriveTime;
         }
+        //public List<int> MinimumDistanceCustomersList(List<BlCustomersAddress> points, int startIndex)
+        //{
+        //    List<BlCustomersAddress> copy = new List<BlCustomersAddress>(points);
+        //    List<int> orderShops = new List<int>();
+        //    for (var index = startIndex; index < points.Count; index++)
+        //    {
+        //        var minIndex = MinimumDistanceShops(copy, 0);
+        //        orderShops.Add(minIndex);
+        //        copy.RemoveAt(minIndex);
+        //    }
+
+        //    return orderShops;
+        //}
     }
 }
