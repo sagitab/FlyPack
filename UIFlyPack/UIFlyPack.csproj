@@ -93,6 +93,8 @@
     <Content Include="Img\flagIcon.png" />
     <Content Include="Img\houseIcon.png" />
     <Content Include="Img\Logo.svg" />
+    <Content Include="Img\packageLogIn.png" />
+    <Content Include="Img\recycling-symbol.png" />
     <Content Include="Img\redFlag.png" />
     <Content Include="Img\shopIcon.png" />
     <Content Include="LogIn.aspx" />

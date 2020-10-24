@@ -5,9 +5,9 @@
       background-color: black;
       color: white;
   }
-  /*.Header {
-      color: #069ea6;
-  }*/
+  .Header {
+      color: #03c1ae;
+  }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

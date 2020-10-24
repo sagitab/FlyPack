@@ -19,7 +19,7 @@ namespace UIFlyPack
         {
             //get input values
             string name = Name.Text;
-            string pass = Pass.Value.ToString();
+            string pass = Pass.Text;
             if(name!=""&&pass!="")
             {
                 BlUser user = null;
@@ -48,6 +48,12 @@ namespace UIFlyPack
             {
                 massage.Text = "password field or name field is empty ";//fail massage
             }
+        }
+
+        protected void CleanB_Click(object sender, ImageClickEventArgs e)
+        {
+            Name.Text = "";
+            Pass.Text = "";
         }
     }
 }

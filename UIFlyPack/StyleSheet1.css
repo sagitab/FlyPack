@@ -122,12 +122,13 @@ ul {
     height: 10vh;
 }
 #LogInDiv {
-    background-color: black;
-    width: 15%;
+    width: 20%;
     padding-right: 0px;
-    margin: 5% auto;
-    height: 35vh;
+    margin: 0% auto;
+    height: 48vh;
     border-radius: 1.5vh;
+    background-image: url('Img/packageLogIn.png');
+    background-repeat: no-repeat;
 }
 .Header {
     font-size: 2.6em;
@@ -135,8 +136,8 @@ ul {
     color: dodgerblue;
 }
 #DroneLogIn {
-    margin: 0px 40% -0.3% 42.5%;
-    width: 15%;
+    margin: 0px 0% -0.4% 28.3%;
+    width: 43%;
 }
 .content-table {
     border-collapse: collapse;
@@ -207,7 +208,7 @@ ul {
     align-items: center;
 }
 .RegDiv {
-    background-color: #01193a;
+    background-color: #07162f;
     width: 30%;
     padding-right: 0px;
     margin: 5% auto;
@@ -243,4 +244,33 @@ ul {
     height: 50vh;
     border-radius: 1.5vh;
     align-items: center;
+}
+@keyframes spin {
+    0% {
+        transform: translate(20em,20em) rotate(10deg);
+    }
+
+    25% {
+        transform: translate(18em, 18em) rotate(20deg);
+    }
+
+    50% {
+        transform: translate(16em, 16em) rotate(0deg);
+    }
+
+    75% {
+        transform: translate(14em, 14em) rotate(-10deg);
+    }
+
+    100% {
+        transform: translate(15rem,15em) rotate(0deg);
+    }
+}
+
+.spin-animation {
+    animation: spin 2s linear forwards;
+}
+#ContentPlaceHolder1_CleanB {
+    float: right;
+    width: 25%;
 }
