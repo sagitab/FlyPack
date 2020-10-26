@@ -90,10 +90,14 @@
     <Content Include="Img\BGimg.jpg" />
     <Content Include="Img\BLogIn.jpg" />
     <Content Include="Img\droneIMG.jpg" />
+    <Content Include="Img\DroneImgIcon.jpg" />
+    <Content Include="Img\DroneLogo.png" />
     <Content Include="Img\flagIcon.png" />
+    <Content Include="Img\FlyPackDrone.png" />
     <Content Include="Img\houseIcon.png" />
     <Content Include="Img\Logo.svg" />
     <Content Include="Img\packageLogIn.png" />
+    <Content Include="Img\PackageLogInDiv.png" />
     <Content Include="Img\recycling-symbol.png" />
     <Content Include="Img\redFlag.png" />
     <Content Include="Img\shopIcon.png" />

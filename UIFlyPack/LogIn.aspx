@@ -11,9 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="Move">
-
-   
-    <img src="Img/droneIMG.jpg" id="DroneLogIn"  />
+        <asp:Image runat="server" ImageUrl="Img/FlyPackDrone.png" ID="DroneLogIn" />
     <div id="LogInDiv" >
         <ul class="addList" style="margin: 0vh 35%">
             <li>
@@ -45,7 +43,7 @@
             document.getElementById('Move').classList.remove('spin-animation')
             setTimeout(function () {
                 document.getElementById('Move').classList.add('spin-animation')
-            }, 500)
+            }, 0)
 
         }
     </script>

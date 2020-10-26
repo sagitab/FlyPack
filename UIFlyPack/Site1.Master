@@ -19,7 +19,7 @@
                 <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />
             </li>
              <li>
-                 <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
+                 <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="OnClick" CssClass="logo" />
                
             </li>
              <li>
@@ -33,7 +33,7 @@
                 <asp:Button runat="server" ID="logout1" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch" />
             </li>
              <li>
-                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
+                  <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="OnClick" CssClass="logo" />
             </li>
              <li>
                   <a href="OrderNow.aspx">Order Now</a>
@@ -52,7 +52,7 @@
                 <asp:Button runat="server" ID="logout2" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
+                  <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="OnClick" CssClass="logo" />
             </li>
             <li>
                   <a href="ViewOrders.aspx">View orders</a>
@@ -71,7 +71,7 @@
                 <asp:Button runat="server" ID="logout3" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
+                  <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="OnClick" CssClass="logo" />
             </li>
             <li>
                   <a href="ViewOrders.aspx">View orders</a>
@@ -90,7 +90,7 @@
                 <asp:Button runat="server" ID="logout4" OnClick="LogOut1_Click" Text="logOut"  CssClass="BSearch"/>
             </li>
              <li>
-                  <asp:ImageButton runat="server"  ImageUrl="Img/Logo.svg" OnClick="OnClick" CssClass="logo" />
+                  <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="OnClick" CssClass="logo" />
             </li>
              <li>
                   <a href="Register.aspx?Type=3">Add Delivery</a>

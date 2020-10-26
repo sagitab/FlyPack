@@ -20,12 +20,27 @@ namespace WebServiceDeliveries1
     // [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
-        
+       
+        [WebMethod]
+        public List<BlUser> GetUserList(string ShopManagerPassword)
+        {
+            BlShopManager shopManager = new BlShopManager(ShopManagerPassword);
+           return shopManager.CustomersList();
+        }
         //[WebMethod]
-        //public int GetStatus( )
+        //public int GetNumOfAvilableDeliveries()
+        //{
+          
+        //}
+        //mast do functions
+        //[WebMethod]
+        //public int GetStatus()
         //{
         //    return BlOrder.GetOrderStatus();
         //}
+
+
+
         //[WebMethod]
         //public bool IsOrderIDExist(string OrderTableName,string OrderIdName,string Id )
         //{

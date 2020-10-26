@@ -122,12 +122,12 @@ ul {
     height: 10vh;
 }
 #LogInDiv {
-    width: 20%;
+    width: 22%;
     padding-right: 0px;
     margin: 0% auto;
-    height: 48vh;
+    height: 40vh;
     border-radius: 1.5vh;
-    background-image: url('Img/packageLogIn.png');
+    background-image: url('Img/PackageLogInDiv.png');
     background-repeat: no-repeat;
 }
 .Header {
@@ -135,8 +135,8 @@ ul {
     font-family: lobster;
     color: dodgerblue;
 }
-#DroneLogIn {
-    margin: 0px 0% -0.4% 28.3%;
+#ContentPlaceHolder1_DroneLogIn {
+    margin: 5% 0% -0.6% 28.3%;
     width: 43%;
 }
 .content-table {
@@ -247,30 +247,36 @@ ul {
 }
 @keyframes spin {
     0% {
-        transform: translate(20em,20em) rotate(10deg);
+        transform: translateX(-25%) rotate(10deg);
     }
 
     25% {
-        transform: translate(18em, 18em) rotate(20deg);
+        transform: translateX(-60%) rotate(20deg);
     }
 
     50% {
-        transform: translate(16em, 16em) rotate(0deg);
+        transform: translateX(-10%) rotate(-10deg);
     }
 
     75% {
-        transform: translate(14em, 14em) rotate(-10deg);
+        transform: translateX(30%) rotate(-20deg);
     }
 
     100% {
-        transform: translate(15rem,15em) rotate(0deg);
+        transform: translate(5%) rotate(0deg);
     }
 }
 
 .spin-animation {
-    animation: spin 2s linear forwards;
+    animation: spin 2s ease-out forwards;
 }
 #ContentPlaceHolder1_CleanB {
     float: right;
     width: 25%;
+    margin-right:3%;
+    position:relative;
+    bottom:5%;
 }
+/*#Move {
+    transform: translateX(-25%);
+}*/

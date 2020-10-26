@@ -75,7 +75,34 @@ namespace BLFlyPack
         /// <returns>Customers Table</returns>
         public override DataTable CustomersTable()
         {
-            return DalUser.CustomersTableByShop(ShopId);
+            DataTable CustomersTable = null;
+            try
+            {
+               return DalUser.CustomersTableByShop(ShopId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public List<BlUser> CustomersList()
+        {
+            DataTable CustomersTable = null;
+            try
+            {
+                CustomersTable= DalUser.CustomersTableByShop(ShopId);
+            }
+            catch
+            {
+                return null;
+            }
+            if (CustomersTable.Rows.Count == 0) return null;
+            List<BlUser> customers = new List<BlUser>();
+            foreach (DataRow row in CustomersTable.Rows)
+            {
+                customers.Add(BlUser.UserByRow(row));
+            }
+            return customers;
         }
         /// <summary>
         /// get Customers Table that order from the shop manager shop and search value
