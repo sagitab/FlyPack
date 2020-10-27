@@ -51,6 +51,7 @@
     <Compile Include="BLUser.cs" />
     <Compile Include="BLShop.cs" />
     <Compile Include="BlShopManager.cs" />
+    <Compile Include="ArriveTimeToCustomerHome.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlyPack\DalFlyPack.csproj">

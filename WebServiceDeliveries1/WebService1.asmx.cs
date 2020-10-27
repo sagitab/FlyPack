@@ -27,11 +27,11 @@ namespace WebServiceDeliveries1
             BlShopManager shopManager = new BlShopManager(ShopManagerPassword);
            return shopManager.CustomersList();
         }
-        //[WebMethod]
-        //public int GetNumOfAvilableDeliveries()
-        //{
-          
-        //}
+        [WebMethod]
+        public int GetNumOfAvailableDeliveries()
+        {
+            return Deliver.NumOfAvailableDeliveries();
+        }
         //mast do functions
         //[WebMethod]
         //public int GetStatus()

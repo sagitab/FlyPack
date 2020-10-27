@@ -10,7 +10,7 @@ namespace BLFlyPack
     public class BlUser
     {
 
-        public string UserId { get; }
+        public string UserId { get; set; }
         public int Type { get; }
         public string Email { get; set; }
         public string Phone { get; set; }

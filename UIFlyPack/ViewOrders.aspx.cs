@@ -272,13 +272,21 @@ namespace UIFlyPack
             int status = order.GetOrderStatus();
             if (e.CommandName == "updateArrivalTime"/*&& status==3*/)
             {
+                if (!(Session["user"] is  Deliver))
+                {
+                    Response.Redirect("HomePage.aspx");
+                    return;
+                }
+                Response.Redirect("DeliveryMap.aspx");
                 DateTime exitTime = DateTime.Now;
-                DateTime araivelTime = exitTime.AddMinutes(20);//need to calculate how match time with GetDistanceToCustomerHome()
-                bool success = order.UpdateArrivalTime(araivelTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrivel time and order status 
+                double distanceToCustomerHome = ArriveTimeToCustomerHome.Distance;
+                double minutes = distanceToCustomerHome / 10;
+                DateTime arrivalTime = exitTime.AddMinutes(5+ minutes);//need to calculate how match time with GetDistanceToCustomerHome()
+                bool success = order.UpdateArrivalTime(arrivalTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrivel time and order status 
                 if (!success)
                 {
+                    Response.Redirect("ViewOrders.aspx");
                     ErMSG.Text = "fail to start order ";//massage error
-
                 }
                 else
                 {
@@ -287,6 +295,7 @@ namespace UIFlyPack
                     //myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
                     //myButton.Text = "Order started";
                     //myButton.CommandName = "started";
+                    ErMSG.Text = "fail to start order ";//massage error
                     UpOrders((BlUser)Session["user"], "");//update table
                 }
             }
@@ -334,6 +343,46 @@ namespace UIFlyPack
             }
         }
 
+        //public  void GetBestWayLists(Deliver deliver)
+        //{
+        //    List<BlOrder> orders = deliver.GetOrdersListByTime();
+        //    //set the road lists
+        //    List<BlShop> shops = new List<BlShop>();
+        //    List<BlCustomersAddress> customersAddresses = new List<BlCustomersAddress>();
+        //    //full road lists
+        //    foreach (BlOrder order in orders)
+        //    {
+        //        shops.Add(BlShop.GetShopById(order.ShopId));
+        //        Point customerAddress = order.Location != null ? new Point(order.Location) : new Point(BlUser.UserById(order.CustomerId).Location);
+        //        customersAddresses.Add(new BlCustomersAddress(customerAddress, order.NumOfFloor, deliver.GetName()));
+        //    }
+
+        //    if (orders.Count == 0) { ErMSG.Text = "there is no orders"; return; }
+        //    else
+        //    {
+        //        ErMSG.Text = "";
+        //    }
+        //    if (orders.Count > 1)//to change to orders.Count>1!!!!!!!!!!!!!####$$$$$$$$########@@@@@@@*********#########&&&&&&&&&&$$$$$$$$$$^^^^^^^^^^%%%%%%%%%**********
+        //    {
+        //        //List<BlShop> sameShops = BlShop.isHaveSameShop(shops);
+        //        //bool isHaveSameShop = sameShops.Count > 0;
+        //        //if (isHaveSameShop)
+        //        //{
+
+        //        //}
+        //        bool isAllSameShop = BlShop.isAllSameShop(shops);
+        //        //calculate shorter way to deliver 
+        //       DeliveryMap.GetBestWayLists(isAllSameShop, shops, customersAddresses, orders, deliver.Location);
+        //    }
+        //    else
+        //    {
+        //        //update the global vars
+        //        Shops = Json.Encode(shops);
+        //        Customers = Json.Encode(customersAddresses);
+        //    }
+            
+           
+        //}
         //protected void OrderTable_RowDataBound(object sender, GridViewRowEventArgs e)
         //{
         //    //GridViewRow row = e.Row;

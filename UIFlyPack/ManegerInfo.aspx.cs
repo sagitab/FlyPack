@@ -15,14 +15,32 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             
-            BlOrderUser user = (BlOrderUser)Session["user"];
+            BlUser user = (BlUser)Session["user"];
+            BlOrderUser orderUser = null;
+            if (user is BlOrderUser User)
+            {
+                orderUser  = User;
+
+            }
+            if (user is BlShopManager shopManager)
+            {
+                orderUser = shopManager;
+
+            }
+
+            if (orderUser==null)
+            {
+                Response.Redirect("HomePage.aspx");
+                return;
+                
+            }
             if (Page.IsPostBack) return;
             //get data 
-            DataTable customers = user.CustomersTable();
-            DataTable deliveries = user.DeliveriesTable();
+            DataTable customers = orderUser.CustomersTable();
+            DataTable deliveries = orderUser.DeliveriesTable();
             ErDelivery.Text = !BindTable(deliveries, DeliveriesTable) ? "fail show deliveries table" : "";//error massage
             ErCustomer.Text = !BindTable(customers, CustomersTable) ? "fail show customers table" : "";//error massage
-            NumOfOrders.Text ="Number of orders- "+ user.GetNumOfOrders()+"Number of customers that order- "+user.GetNumOfActiveCustomers();//set the NumOfOrders information
+            NumOfOrders.Text ="Number of orders- "+ orderUser.GetNumOfOrders()+"Number of customers that order- "+orderUser.GetNumOfActiveCustomers();//set the NumOfOrders information
         }
 
         protected void SearchCustomerB_Click(object sender, EventArgs e)

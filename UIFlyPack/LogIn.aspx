@@ -3,8 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         body {
-            background-image: none;
-            background-color: #28679b;
+            background-image: url(Img/skyBG.jpg);
             background-size: 100% 100%;
         }
     </style>
@@ -40,10 +39,11 @@
          </div>
     <script>
         document.body.onload = function MoveDrone() {
-            document.getElementById('Move').classList.remove('spin-animation')
-            setTimeout(function () {
-                document.getElementById('Move').classList.add('spin-animation')
-            }, 0)
+            document.getElementById('Move').classList.remove('spin-animation');
+            setTimeout(function() {
+                    document.getElementById('Move').classList.add('spin-animation');
+                },
+                0);
 
         }
     </script>

@@ -111,6 +111,10 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber");
         }
+        public static DataTable DeliveriesList()
+        {
+            return DalHelper.Select($"SELECT Users.ID, Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) ");
+        }
         public static DataTable DeliveriesTableByShop(int shopId)
         {
             return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {shopId}) AND (Users.ID<>'111111111')) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");

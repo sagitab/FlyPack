@@ -26,6 +26,23 @@ namespace BLFlyPack
                     select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
         }
 
+        public static  Deliver GetDeliver(DataRow row)
+        {
+            string ID = row["ID"].ToString();
+            string FirstName = row["FirstName"].ToString();
+           string LastName = row["LastName"].ToString();
+           string Email = row["Email"].ToString();
+           return new Deliver(FirstName,LastName,Email, ID);
+        }
+
+        public Deliver(string FirstName, string LastName, string Email, string ID) : base("111111111")
+        {
+            UserId = ID;
+            this.Email = Email;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+        }
+
         /// <summary>
         /// get Delivery Id By Point
         /// </summary>
@@ -93,7 +110,6 @@ namespace BLFlyPack
         {
             Point startPoint = new Point(Location);
             double totalDistance = 0.0;
-
             for (int index = 0; index < shops.Count; index++)
             {
                 Point shop = shops[index].Location;
@@ -101,15 +117,28 @@ namespace BLFlyPack
                 totalDistance += startPoint.Distance(shop) + shop.Distance(customer);
                 startPoint = new Point(customer);
             }
-
             return totalDistance;
         }
 
+        public static int NumOfAvailableDeliveries()
+        {
+            int Cnt = 0;
+            DataTable Delivers = DalUser.DeliveriesList();
+            List<Deliver> delivers= (from DataRow row in Delivers.Rows select GetDeliver(row)).ToList();
+            foreach (Deliver deliver in delivers)
+            {
+                if (deliver.GetNumOfDeliveryOrders()<6)
+                {
+                    Cnt++;
+                }
+            }
+            return Cnt;
+        }
         //public void CalculateBestWay(List<BlShop> shops, List<BlCustomersAddress> customersAddresses,int i,int nextIndex)
         //{
         //    if ()
         //    {
-                
+
         //    }
         //}
     }

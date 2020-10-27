@@ -15,7 +15,6 @@ using System.Web.Helpers.Resources;
 
 namespace UIFlyPack
 {
-
     public partial class DeliveryMap : System.Web.UI.Page
     {
         //ScriptingJsonSerializationSection
@@ -55,15 +54,20 @@ namespace UIFlyPack
                 //}
                 bool isAllSameShop = BlShop.isAllSameShop(shops);
                 //calculate shorter way to deliver 
-                GetBestWayLists(isAllSameShop, shops, customersAddresses, orders, user.Location);
+                GetBestWayLists(isAllSameShop, shops, customersAddresses, orders,(Deliver) user);
             }
             else
             {
-                //update the global vars
+                //update the Page vars
                 Shops = Json.Encode(shops);
                 Customers = Json.Encode(customersAddresses);
+                //update the global vars
+                Deliver deliver = (Deliver) user;
+                double minutes = deliver.GetDistanceToCustomerHome(shops,customersAddresses);
+                ArriveTimeToCustomerHome.Distance = minutes;
+               
             }
-          
+
         }
 
         //public static List<T> CastList<T>(List<object> list)
@@ -78,7 +82,7 @@ namespace UIFlyPack
         //    }
         //    return retList;
         //}
-        public  void GetBestWayLists(bool isAllSameShop,List<BlShop> shops,List<BlCustomersAddress> customersAddresses, List<BlOrder> orders, Point locationNow)
+        public   void GetBestWayLists(bool isAllSameShop,List<BlShop> shops,List<BlCustomersAddress> customersAddresses, List<BlOrder> orders, Deliver deliver)
         {
             //set vars
             List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
@@ -91,6 +95,7 @@ namespace UIFlyPack
             List<double> arriveTimes = new List<double>();
             int lateTimes = 0;
             List<BlShop> copyShops = new List<BlShop>(shops);
+            Point locationNow=deliver.Location;
             for (int i = 0; i < shops.Count; i++)
             {
                 //minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
@@ -155,16 +160,22 @@ namespace UIFlyPack
                     cShops.RemoveAt(bestIndex);
                     cCustomersAddresses.RemoveAt(bestIndex);
                 }
-                //update the global vars
+                //update the Page vars
                 Shops = Json.Encode(bestWayShops);
                 Customers = Json.Encode(bestWayCustomers);
-
+                //update the global vars
+                
+                ArriveTimeToCustomerHome.Shops = bestWayShops;
+                ArriveTimeToCustomerHome.customersAddresses = bestWayCustomers;
             }
             else
             {
-                //update the global vars
+                //update the Page vars
                 Shops = Json.Encode(orderShops);
                 Customers = Json.Encode(orderCustomersAddresses);
+                //update the global vars
+                ArriveTimeToCustomerHome.Shops = orderShops;
+                ArriveTimeToCustomerHome.customersAddresses = orderCustomersAddresses;
             }
         }
         //public static void Calculate(List<BlCustomersAddress> CustomersAddresses, List<BlShop> shops)
