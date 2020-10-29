@@ -13,6 +13,11 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             this.UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
+            //if (!Page.IsPostBack)
+            //{
+            //    WhichAnimation.Value = "0";
+            //}
+          
         }
 
         protected void LogInB_Click(object sender, EventArgs e)
@@ -37,23 +42,32 @@ namespace UIFlyPack
                 {
                     user = user.Type == 1 ? (BlUser) new BlShopManager(pass) : new BlOrderUser(pass);//choose the right constructor by type
                     Session["user"] = user;
+                    WhichAnimation.Value = "2";
+                    ////ClientScript.RegisterStartupScript(GetType(), "Javascript", "javascript:MoveDrone(); ", true);
+                    //ScriptManager.RegisterStartupScript( Page,GetType(), "Javascript", "javascript:MoveDrone();", true);
+                    Response.Redirect("LogIn.aspx");
+                    System.Threading.Thread.Sleep(3000);
                     Response.Redirect("HomePage.aspx");
                 }
                 else
                 {
+                    WhichAnimation.Value = "3";
                     massage.Text = "User name or password incorrect";//fail massage
                 }
             }
             else
             {
+                WhichAnimation.Value = "3";
                 massage.Text = "password field or name field is empty ";//fail massage
             }
+
         }
 
         protected void CleanB_Click(object sender, ImageClickEventArgs e)
         {
             Name.Text = "";
             Pass.Text = "";
+            WhichAnimation.Value = "1";
         }
     }
 }

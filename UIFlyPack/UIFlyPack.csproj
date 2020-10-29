@@ -87,6 +87,7 @@
     <Content Include="DeliveryMap.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
+    <Content Include="Img\angryDrone.png" />
     <Content Include="Img\BGimg.jpg" />
     <Content Include="Img\BLogIn.jpg" />
     <Content Include="Img\droneIMG.jpg" />

@@ -15,8 +15,10 @@
      <form id="form1" runat="server">
     <div id="UnConected" runat="server" >
         <ul class="inner_main_menu">
-            <li  style="float: right">
-                <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />
+            <li  style="float: right; margin-right: 2%;">
+                <a href="LogIn.aspx" >Log In</a>
+               
+               <%-- <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />--%>
             </li>
              <li>
                  <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="OnClick" CssClass="logo" />

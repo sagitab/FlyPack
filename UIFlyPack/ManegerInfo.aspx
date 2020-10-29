@@ -15,9 +15,10 @@
         </Columns>
     </asp:GridView>
         </li>
+        <li> <span class="Header">Search customer</span></li>
         <li style="margin-left: 17.5vh;">
             <div class="RowDiv"><asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
-       
+      
                 <select  id="SearchBy" name="D1" style="height: 2.5em;"  runat="server" class="Select" >
                     <option value="ID" >ID</option>
                     <option value="LastName" >Last name</option>

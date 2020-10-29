@@ -35,13 +35,13 @@
         </li>
         <li>
             <asp:TextBox ID="LName" runat="server" CssClass="TextBox"></asp:TextBox>
-            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="LNameValidator" on runat="server" ControlToValidate="LName" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="LNameValidator"  runat="server" ControlToValidate="LName" ErrorMessage="Name need to be 2 until 10 tabs" SetFocusOnError="True" ValidationExpression="^.{2,10}$"></asp:RegularExpressionValidator>
         </li>
         <li>
             <span >Password</span>
         </li>
         <li>
-            <asp:TextBox ID="pass" runat="server" CssClass="TextBox" TextMode="Password"  ></asp:TextBox>
+            <asp:TextBox ID="pass" runat="server" CssClass="TextBox" TextMode="Password"  Text="00000000" ></asp:TextBox>
             <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="passValidator" runat="server" ControlToValidate="pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True" ValidationExpression="^.{8}$"></asp:RegularExpressionValidator>
             <asp:RequiredFieldValidator runat="server" ID="PassNotEmpty" CssClass="ErrorMSG" ControlToValidate="pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True"></asp:RequiredFieldValidator>
         </li>

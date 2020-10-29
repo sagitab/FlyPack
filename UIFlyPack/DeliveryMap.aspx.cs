@@ -22,6 +22,18 @@ namespace UIFlyPack
         public string Customers = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                try
+                {
+                    OrderStartedSucces.InnerHtml = Request.QueryString.Get("text");
+                }
+                catch 
+                {
+                    OrderStartedSucces.InnerHtml = "";
+                }
+              
+            }
             Session["user"] = new Deliver("shlakot1");
             BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
             if (!(user is Deliver)) return;
@@ -64,7 +76,7 @@ namespace UIFlyPack
                 //update the global vars
                 Deliver deliver = (Deliver) user;
                 double minutes = deliver.GetDistanceToCustomerHome(shops,customersAddresses);
-                ArriveTimeToCustomerHome.Distance = minutes;
+                GlobalVariable.Distance = minutes;
                
             }
 
@@ -164,9 +176,9 @@ namespace UIFlyPack
                 Shops = Json.Encode(bestWayShops);
                 Customers = Json.Encode(bestWayCustomers);
                 //update the global vars
-                
-                ArriveTimeToCustomerHome.Shops = bestWayShops;
-                ArriveTimeToCustomerHome.customersAddresses = bestWayCustomers;
+                double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
+                GlobalVariable.Distance = minutes;
+
             }
             else
             {
@@ -174,8 +186,9 @@ namespace UIFlyPack
                 Shops = Json.Encode(orderShops);
                 Customers = Json.Encode(orderCustomersAddresses);
                 //update the global vars
-                ArriveTimeToCustomerHome.Shops = orderShops;
-                ArriveTimeToCustomerHome.customersAddresses = orderCustomersAddresses;
+                double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
+                GlobalVariable.Distance = minutes;
+
             }
         }
         //public static void Calculate(List<BlCustomersAddress> CustomersAddresses, List<BlShop> shops)

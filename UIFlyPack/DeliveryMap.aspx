@@ -7,6 +7,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <span class="Header" >Deliveries Map</span>
+    <span class="Header" id="OrderStartedSucces" runat="server"></span>
     <div id="map"></div>
     <br/>
    <%-- <input type="button" onclick="showMap" value="Show map" id="showMapB"/>--%>

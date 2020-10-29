@@ -58,7 +58,9 @@ namespace UIFlyPack
                 //}
 
             }
+            pass.Text = "00000000";
             Validate();
+           
         }
 
         public double GetLat(string LatLng)
@@ -86,7 +88,7 @@ namespace UIFlyPack
         {
 
             bool validators = Page.IsValid;
-            if (validators && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Text != "" && Phone.Text != "" && ID.Text != "")
+            if (validators && Name.Text != "" && LName.Text != "" && Email.Text != "" && pass.Text != "" && Phone.Text != "" && ID.Text != ""&&pass.Text!="00000000")
             {
                 //get input values
                 string id = ID.Text;

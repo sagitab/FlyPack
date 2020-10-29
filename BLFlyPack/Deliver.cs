@@ -35,6 +35,11 @@ namespace BLFlyPack
            return new Deliver(FirstName,LastName,Email, ID);
         }
 
+        public static Deliver GetDeliverById(string Id)
+        {
+           DataRow row= DalUser.GetUserById(Id);
+           return GetDeliver(row);
+        }
         public Deliver(string FirstName, string LastName, string Email, string ID) : base("111111111")
         {
             UserId = ID;
@@ -68,15 +73,13 @@ namespace BLFlyPack
         /// </summary>
         /// <param name="points"></param>
         /// <returns>delivery id</returns>
-        public string GetMatchDeliveryIdByPoints(List<Point> points)
+        public static string GetMatchDeliveryIdByPoints(List<Point> points)
         {
             int index = 0;
-            while (index + 1 <= points.Count && GetNumOfDeliveryOrders() >= 6
-            ) //continue loop if delivery orders is full
+            while (index + 1 <= points.Count && GetDeliverById(GetDeliveryIdByPoint(points[index])).GetNumOfDeliveryOrders() >= 6) //continue loop if delivery orders is full
             {
                 index++;
             }
-
             return index + 1 > points.Count ? "" : GetDeliveryIdByPoint(points[index]);
         }
 

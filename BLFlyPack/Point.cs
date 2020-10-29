@@ -48,8 +48,8 @@ namespace BLFlyPack
         /// <returns></returns>
         public double Time(Point point)
         {
-            const int speed = 10;
-            return Distance(point) / speed;
+            
+            return Distance(point) / GlobalVariable.Speed;
         }
         /// <summary>
         /// return the point index that has the minimum distance from start point

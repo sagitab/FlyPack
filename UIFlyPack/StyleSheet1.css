@@ -125,7 +125,7 @@ ul {
     width: 22%;
     padding-right: 0px;
     margin: 0% auto;
-    height: 40vh;
+    height: 42vh;
     border-radius: 1.5vh;
     background-image: url('Img/PackageLogInDiv.png');
     background-repeat: no-repeat;
@@ -206,6 +206,7 @@ ul {
 .RowDiv {
     display: flex;
     align-items: center;
+    margin-left: 7%;
 }
 .RegDiv {
     background-color: #07162f;
@@ -267,16 +268,52 @@ ul {
     }
 }
 
+@keyframes spinRight {
+    0% {
+        transform: translateX(20%) rotate(10deg)
+    }
+    100% {
+        transform: translate(30%) rotate(20deg);
+    }
+}
+@keyframes angryDrone {
+    0% {
+        transform: translateX(25%) rotate(10deg);
+    }
+
+    25% {
+        transform: translateX(60%) rotate(20deg);
+    }
+
+    50% {
+        transform: translateX(10%) rotate(-10deg);
+    }
+
+    75% {
+        transform: translateX(-20%) rotate(-20deg);
+    }
+
+    100% {
+        transform: translate(-5%) rotate(0deg);
+    }
+}
+.angryDrone-animation {
+    animation: angryDrone 2s ease-out forwards;
+}
+.spinRight-animation {
+    animation: spinRight 2s ease-out forwards;
+}
 .spin-animation {
     animation: spin 2s ease-out forwards;
 }
-#ContentPlaceHolder1_CleanB {
-    float: right;
-    width: 25%;
-    margin-right:3%;
-    position:relative;
-    bottom:5%;
-}
-/*#Move {
+
+    #ContentPlaceHolder1_CleanB {
+        float: right;
+        width: 25%;
+        margin-right: 3%;
+        position: relative;
+        bottom: 5%;
+    }
+    /*#Move {
     transform: translateX(-25%);
 }*/

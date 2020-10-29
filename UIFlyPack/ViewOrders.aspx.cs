@@ -1,12 +1,10 @@
 ﻿using BLFlyPack;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Net.Mime;
 
 namespace UIFlyPack
 {
@@ -15,7 +13,7 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["user"] = (BlUser)new BlShopManager("12345678");//del
-            BlUser user = (BlUser)Session["user"]; 
+            BlUser user = (BlUser)Session["user"];
             if (!Page.IsPostBack)
             {
                 //BlOrderUser orderUser=new BlOrderUser(user.Password);
@@ -26,8 +24,8 @@ namespace UIFlyPack
                     orders = blOrderUser.GetOrders(true, "");//get orders table
                 }
 
-              
-                if (orders!=null)
+
+                if (orders != null)
                 {
                     DataColumnCollection columns = orders.Columns;
                     foreach (DataColumn column in columns)
@@ -50,41 +48,45 @@ namespace UIFlyPack
                     }
                 }
 
-               
-            
+
+
                 int type = user.Type;
                 switch (type)//add command fields by user type
                 {
                     case 4:
-                    {
-                        CommandField cf = new CommandField
                         {
-                            ButtonType = ButtonType.Button, DeleteText = "cancel", ShowDeleteButton = true
-                        };
+                            CommandField cf = new CommandField
+                            {
+                                ButtonType = ButtonType.Button,
+                                DeleteText = "cancel",
+                                ShowDeleteButton = true
+                            };
 
-                        OrderTable.Columns.Add(cf);
-                        break;
-                    }
+                            OrderTable.Columns.Add(cf);
+                            break;
+                        }
                     case 3:
-                    {
-                        ButtonField b = new ButtonField
                         {
-                            Text = "Start order", ButtonType = ButtonType.Button, CommandName = "updateArrivalTime"
-                        };
-                        OrderTable.Columns.Add(b);
-                        break;
-                    }
+                            ButtonField b = new ButtonField
+                            {
+                                Text = "Start order",
+                                ButtonType = ButtonType.Button,
+                                CommandName = "updateArrivalTime"
+                            };
+                            OrderTable.Columns.Add(b);
+                            break;
+                        }
                     case 1:
-                    {
-                        ButtonField b = new ButtonField
                         {
-                            Text = "product ready to delivered",
-                            ButtonType = ButtonType.Button,
-                            CommandName = "updateReadyTime"
-                        };
-                        OrderTable.Columns.Add(b);
-                        break;
-                    }
+                            ButtonField b = new ButtonField
+                            {
+                                Text = "product ready to delivered",
+                                ButtonType = ButtonType.Button,
+                                CommandName = "updateReadyTime"
+                            };
+                            OrderTable.Columns.Add(b);
+                            break;
+                        }
                 }
 
                 //BoundField b = new BoundField();
@@ -120,35 +122,35 @@ namespace UIFlyPack
             {
 
                 case 3:
-                {
-                    for (int i = 0; i < length; i++)
                     {
-                        GridViewRow row = OrderTable.Rows[i];
-                        TableCell cell = row.Cells[1];
-                        if (cell.Text != "delivery take care your order") continue;
-                        Button myButton = null;
-                        myButton = (Button)row.Cells[row.Cells.Count-1].Controls[0];
-                        myButton.Text = "Order Finished";
-                        myButton.CommandName = "finish";
-                    }
+                        for (int i = 0; i < length; i++)
+                        {
+                            GridViewRow row = OrderTable.Rows[i];
+                            TableCell cell = row.Cells[1];
+                            if (cell.Text != "delivery take care your order") continue;
+                            Button myButton = null;
+                            myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                            myButton.Text = "Order Finished";
+                            myButton.CommandName = "finish";
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case 1:
-                {
-                    
-                    for (int i = 0; i < length; i++)
                     {
-                        GridViewRow row = OrderTable.Rows[i];
-                        TableCell cell = row.Cells[1];
-                        if (cell.Text != "shipping time selected") continue;
-                        var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
-                        myButton.Text = "Ready time selected";
-                        myButton.CommandName = "";
-                    }
 
-                    break;
-                }
+                        for (int i = 0; i < length; i++)
+                        {
+                            GridViewRow row = OrderTable.Rows[i];
+                            TableCell cell = row.Cells[1];
+                            if (cell.Text != "shipping time selected") continue;
+                            var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                            myButton.Text = "Ready time selected";
+                            myButton.CommandName = "";
+                        }
+
+                        break;
+                    }
             }
 
         }
@@ -167,9 +169,9 @@ namespace UIFlyPack
                     }
                     catch (Exception e)
                     {
-                        ErMSG.Text = "fail"+e.Message;
+                        ErMSG.Text = "fail" + e.Message;
                     }
-                   
+
                     break;
                 default:
                     OrderTable.Columns[OrderTable.Columns.Count - 1].Visible = false;
@@ -206,12 +208,12 @@ namespace UIFlyPack
             int index = e.RowIndex;
             DataTable orders = (DataTable)OrderTable.DataSource;
             int orderId = (int)orders.Rows[index]["ID"];
-            BlOrder order=new BlOrder(BlOrder.GetOrderById(orderId));
+            BlOrder order = new BlOrder(BlOrder.GetOrderById(orderId));
             int status = order.GetOrderStatus();//get order status by id
             bool success;
             try
             {
-                success = status != -1 &&status < 4 && order.DeleteOrder() ;//delete and chwck if status is good
+                success = status != -1 && status < 4 && order.DeleteOrder();//delete and chwck if status is good
             }
             catch (Exception exception)
             {
@@ -238,15 +240,15 @@ namespace UIFlyPack
                 case "ArrivalTime":
                     condition = $"AND (Orders.{searchBys}=#{value}#)";
                     break;
-                case "OrderStutus" when int.TryParse(value,out var status):
+                case "OrderStutus" when int.TryParse(value, out var status):
                     condition = $"AND (Orders.OrderStutus={status})";
                     break;
                 case "OrderStutus":
-                {
-                    Dictionary<int, string> stautus = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
-                    condition = $"AND (Orders.OrderStutus={stautus.FirstOrDefault(x => x.Value == value).Key})";
-                    break;
-                }
+                    {
+                        Dictionary<int, string> stautus = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
+                        condition = $"AND (Orders.OrderStutus={stautus.FirstOrDefault(x => x.Value == value).Key})";
+                        break;
+                    }
                 case "FirstName" when user.Type != 3:
                     condition = $"AND (Users_1.{searchBys}='{value}')";
                     break;
@@ -272,17 +274,17 @@ namespace UIFlyPack
             int status = order.GetOrderStatus();
             if (e.CommandName == "updateArrivalTime"/*&& status==3*/)
             {
-                if (!(Session["user"] is  Deliver))
+                if (!(Session["user"] is Deliver))
                 {
                     Response.Redirect("HomePage.aspx");
                     return;
                 }
-                Response.Redirect("DeliveryMap.aspx");
+                Response.Redirect("DeliveryMap.aspx?text='order started seccesfuly'");
                 DateTime exitTime = DateTime.Now;
-                double distanceToCustomerHome = ArriveTimeToCustomerHome.Distance;
-                double minutes = distanceToCustomerHome / 10;
-                DateTime arrivalTime = exitTime.AddMinutes(5+ minutes);//need to calculate how match time with GetDistanceToCustomerHome()
-                bool success = order.UpdateArrivalTime(arrivalTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrivel time and order status 
+                double distanceToCustomerHome = GlobalVariable.Distance;
+                double minutes = distanceToCustomerHome / GlobalVariable.Speed;
+                DateTime arrivalTime = exitTime.AddMinutes(5 + minutes);//add 5 minute of insure 
+                bool success = order.UpdateArrivalTime(arrivalTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrive time and order status 
                 if (!success)
                 {
                     Response.Redirect("ViewOrders.aspx");
@@ -303,14 +305,14 @@ namespace UIFlyPack
             {
 
                 DateTime readyTime = DateTime.Now;
-               
+
                 //get the order object 
                 //get the shop object 
                 BlShop shop = BlShop.GetShopById(order.ShopId);
                 //get the Id of the closest and . delivery  
                 Deliver deliver = (Deliver)Session["user"];
                 string matchDeliveryId = deliver.GetMatchesDeliveryId(shop.Location);
-                bool success = order.UpdateReadyTime(readyTime)&& order.UpdateDelivery(matchDeliveryId)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;//update deliver and ready time in DB
+                bool success = order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;//update deliver and ready time in DB
                 if (!success)
                 {
                     ErMSG.Text = "fail to update ready time";//massage error
@@ -338,8 +340,8 @@ namespace UIFlyPack
                     ErMSG.Text = "fail to update status";//massage error
                 }
 
-             
-               
+
+
             }
         }
 
@@ -380,8 +382,8 @@ namespace UIFlyPack
         //        Shops = Json.Encode(shops);
         //        Customers = Json.Encode(customersAddresses);
         //    }
-            
-           
+
+
         //}
         //protected void OrderTable_RowDataBound(object sender, GridViewRowEventArgs e)
         //{
