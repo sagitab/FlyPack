@@ -5,16 +5,13 @@
       background-color: black;
       color: white;
   }
-  .Header {
-      color: #03c1ae;
-  }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="RegDiv">
     <ul class="addList" >
         <li>
-            <span class="Header" id="PageHeader"  runat="server">Register</span>
+            <span class="UnderLineHeader" id="PageHeader"  runat="server">Register</span>
         </li>
         <li>
             <span >ID</span>

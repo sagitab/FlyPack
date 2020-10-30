@@ -1,11 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="AddShop.aspx.cs" Inherits="UIFlyPack.AddShop" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+  <%--  <style>
+    
+    </style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="AddShopDiv">
     <ul class="addList" >
         <li>
-            <span class="Header" >Add shop</span>
+            <span class="UnderLineHeader" >Add shop</span>
         </li>
          <li>
              <span  >Shop name</span>

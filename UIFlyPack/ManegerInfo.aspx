@@ -1,9 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ManegerInfo.aspx.cs" Inherits="UIFlyPack.ManagerInfo" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+  <%--  <style>
+        </style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul>
-         <li >
+         <li>
  <asp:GridView ID="DeliveriesTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" >
         <Columns>
             
@@ -15,8 +17,9 @@
         </Columns>
     </asp:GridView>
         </li>
-        <li> <span class="Header">Search customer</span></li>
-        <li style="margin-left: 17.5vh;">
+        <li> <span class="UnderLineHeader" style=" margin-left: 15%; margin-right: 1%;">Search customer</span> </li>
+        
+        <li>
             <div class="RowDiv"><asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
       
                 <select  id="SearchBy" name="D1" style="height: 2.5em;"  runat="server" class="Select" >
@@ -41,8 +44,6 @@
             <asp:BoundField DataField="PhoneNumber" HeaderText="Phone number" />
             <asp:BoundField DataField="Email" HeaderText="Email" />
             <asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />
-            
-          
         </Columns>
     </asp:GridView>
         

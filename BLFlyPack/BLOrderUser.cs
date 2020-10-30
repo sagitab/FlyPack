@@ -20,6 +20,11 @@ namespace BLFlyPack
         {
             //Orders= call dal
         }
+
+        public BlOrderUser(string pass, string Username) : base(pass,Username)
+        {
+
+        }
         //public BLOrderUser(BLUser user)
         //{
 

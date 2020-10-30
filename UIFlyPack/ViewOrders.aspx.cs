@@ -12,7 +12,7 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["user"] = (BlUser)new BlShopManager("12345678");//del
+          /*  Session["user"] = (BlUser)new BlShopManager("12345678");*///del
             BlUser user = (BlUser)Session["user"];
             if (!Page.IsPostBack)
             {
@@ -162,7 +162,11 @@ namespace UIFlyPack
             switch (NewOrOld.Items[index].Value)//get order table by selected option
             {
                 case "N":
-                    OrderTable.Columns[OrderTable.Columns.Count - 1].Visible = true;
+                    int numOfColums = OrderTable.Columns.Count;
+                    if (numOfColums>0)
+                    {
+                        OrderTable.Columns[numOfColums - 1].Visible = true;
+                    }
                     try
                     {
                         orders = orderUser.GetOrders(true, condition);

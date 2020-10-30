@@ -27,10 +27,10 @@ namespace UIFlyPack
             string pass = Pass.Text;
             if(name!=""&&pass!="")
             {
-                BlUser user = null;
+                BlOrderUser user = null;
                 try
                 {
-                    user = new BlUser(pass,name);//create new user by pass
+                    user = new BlOrderUser(pass,name);//create new user by pass
                 }
                 catch (Exception exception)
                 {
@@ -40,7 +40,7 @@ namespace UIFlyPack
                 bool isExist = Page.IsValid && user.Type!=0;//check if all validators are valid and user is exist
                 if (isExist)
                 {
-                    user = user.Type == 1 ? (BlUser) new BlShopManager(pass) : new BlOrderUser(pass);//choose the right constructor by type
+                    user = user.Type == 1 ? (BlOrderUser) new BlShopManager(pass) : new BlOrderUser(pass);//choose the right constructor by type
                     Session["user"] = user;
                     WhichAnimation.Value = "2";
                     ////ClientScript.RegisterStartupScript(GetType(), "Javascript", "javascript:MoveDrone(); ", true);
