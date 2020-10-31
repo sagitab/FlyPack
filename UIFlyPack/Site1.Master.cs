@@ -42,10 +42,10 @@ namespace UIFlyPack
             UnConected.Visible = false;
         }
 
-        protected void LogIn1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("LogIn.aspx");
-        }
+        //protected void LogIn1_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("LogIn.aspx");
+        //}
 
         protected void LogOut1_Click(object sender, EventArgs e)
         {
@@ -53,7 +53,7 @@ namespace UIFlyPack
             Response.Redirect("HomePage.aspx");
         }
 
-        protected void OnClick(object sender, ImageClickEventArgs e)
+        protected void LogoB_OnClick(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("HomePage.aspx");
         }

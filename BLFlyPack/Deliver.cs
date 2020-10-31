@@ -25,7 +25,11 @@ namespace BLFlyPack
             return (from DataRow row in deliverersLocations.Rows
                     select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
         }
-
+        /// <summary>
+        /// return Deliver from data row
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns>Deliver</returns>
         public static  Deliver GetDeliver(DataRow row)
         {
             string ID = row["ID"].ToString();
@@ -34,12 +38,23 @@ namespace BLFlyPack
            string Email = row["Email"].ToString();
            return new Deliver(FirstName,LastName,Email, ID);
         }
-
+        /// <summary>
+        /// return Deliver by id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Deliver</returns>
         public static Deliver GetDeliverById(string Id)
         {
            DataRow row= DalUser.GetUserById(Id);
            return GetDeliver(row);
         }
+        /// <summary>
+        /// create Deliver by first name ,last name ,email amd id.
+        /// </summary>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <param name="Email"></param>
+        /// <param name="ID"></param>
         public Deliver(string FirstName, string LastName, string Email, string ID) : base("111111111")
         {
             UserId = ID;
@@ -76,7 +91,7 @@ namespace BLFlyPack
         public static string GetMatchDeliveryIdByPoints(List<Point> points)
         {
             int index = 0;
-            while (index + 1 <= points.Count && GetDeliverById(GetDeliveryIdByPoint(points[index])).GetNumOfDeliveryOrders() >= 6) //continue loop if delivery orders is full
+            while (index + 1 <= points.Count && GetDeliverById(GetDeliveryIdByPoint(points[index])).GetNumOfDeliveryOrders() >= GlobalVariable.MaxOrderForDeliver) //continue loop if delivery orders is full
             {
                 index++;
             }
@@ -122,7 +137,10 @@ namespace BLFlyPack
             }
             return totalDistance;
         }
-
+        /// <summary>
+        /// get the number of available  deliveries
+        /// </summary>
+        /// <returns> Num Of Available Deliveries</returns>
         public static int NumOfAvailableDeliveries()
         {
             int Cnt = 0;
@@ -130,7 +148,7 @@ namespace BLFlyPack
             List<Deliver> delivers= (from DataRow row in Delivers.Rows select GetDeliver(row)).ToList();
             foreach (Deliver deliver in delivers)
             {
-                if (deliver.GetNumOfDeliveryOrders()<6)
+                if (deliver.GetNumOfDeliveryOrders()<GlobalVariable.MaxOrderForDeliver)
                 {
                     Cnt++;
                 }

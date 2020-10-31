@@ -42,7 +42,7 @@ namespace UIFlyPack
                 }
                 catch (Exception exception)
                 {
-                    MSG.Text = "fail to add shop " + exception.Message;
+                    MSG.Text = "fail to add shop " + exception.Message;//ex massage
                 }
 
                 if (shop == null || shop.Id == -1)//if id=-1 of shop is null add shop fail

@@ -85,12 +85,21 @@ namespace BLFlyPack
             return new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()));
         }
 
+        public override int GetHashCode()
+        {
+            return this.Id;
+        }
+
         public override bool Equals(object obj)
         {
             BlShop shop = (BlShop)obj;
-            return shop != null && shop.Id == this.Id;
+            return shop != null && shop.GetHashCode() == this.GetHashCode();
         }
-
+        /// <summary>
+        /// return true if all the shop in the list is same
+        /// </summary>
+        /// <param name="shops"></param>
+        /// <returns>bool</returns>
         public static bool isAllSameShop(List<BlShop> shops)
         {
             BlShop firstShop = shops[0];
@@ -103,6 +112,11 @@ namespace BLFlyPack
             }
             return true;
         }
+        /// <summary>
+        /// return a list of shops that appear more than once in the list
+        /// </summary>
+        /// <param name="shops"></param>
+        /// <returns>List of Shops> </returns>
         public static List<BlShop> isHaveSameShop(List<BlShop> shops)
         {
             List < BlShop > sameShops=new List<BlShop>();

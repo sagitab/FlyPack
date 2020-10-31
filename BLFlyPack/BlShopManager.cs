@@ -85,6 +85,10 @@ namespace BLFlyPack
                 return null;
             }
         }
+        /// <summary>
+        /// return list of customer that order from this shop
+        /// </summary>
+        /// <returns>list of customer</returns>
         public List<BlUser> CustomersList()
         {
             DataTable CustomersTable = null;
@@ -125,7 +129,7 @@ namespace BLFlyPack
         /// Get Num Of Orders
         /// </summary>
         /// <returns>Num Of Orders</returns>
-        public int GetNumOfOrders()
+        public override int GetNumOfOrders()
         {
             try
             {

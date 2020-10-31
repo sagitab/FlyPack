@@ -283,15 +283,18 @@ namespace UIFlyPack
                     Response.Redirect("HomePage.aspx");
                     return;
                 }
-                Response.Redirect("DeliveryMap.aspx?text='order started seccesfuly'");
+                Response.Redirect("DeliveryMap.aspx?text='order started seccesfuly'");// go to DeliveryMap.aspx to calculate the best way
                 DateTime exitTime = DateTime.Now;
+                //get global vars
                 double distanceToCustomerHome = GlobalVariable.Distance;
-                double minutes = distanceToCustomerHome / GlobalVariable.Speed;
+                int speed= GlobalVariable.Speed;
+                //calculate minutes
+                double minutes = distanceToCustomerHome / speed;
                 DateTime arrivalTime = exitTime.AddMinutes(5 + minutes);//add 5 minute of insure 
                 bool success = order.UpdateArrivalTime(arrivalTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrive time and order status 
                 if (!success)
                 {
-                    Response.Redirect("ViewOrders.aspx");
+                    Response.Redirect("ViewOrders.aspx");//go back to  page when there is a error
                     ErMSG.Text = "fail to start order ";//massage error
                 }
                 else

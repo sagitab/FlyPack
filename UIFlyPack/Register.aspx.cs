@@ -62,28 +62,6 @@ namespace UIFlyPack
             Validate();
            
         }
-
-        public double GetLat(string LatLng)
-        {
-            string lat = "";
-            for (int i = 0; i < LatLng.Length && LatLng[i] != ','; i++)
-            {
-                lat += LatLng[i];
-            }
-
-            return double.Parse(lat);
-        }
-        public double GetLng(string LatLng)
-        {
-            string lng = "";
-            int start = LatLng.IndexOf(',');
-            for (int i = start + 1; i < LatLng.Length; i++)
-            {
-                lng += LatLng[i];
-            }
-
-            return double.Parse(lng);
-        }
         protected void regB_Click(object sender, EventArgs e)
         {
 
@@ -107,8 +85,8 @@ namespace UIFlyPack
                       MSG.Text = "fail register "+exception.Message;//error massage
                 }
                 string latLng = this.LatLng.Value.ToString();
-                double lat = GetLat(latLng);
-                double lng = GetLng(latLng);
+                double lat =OrderNow.GetLat(latLng);
+                double lng = OrderNow.GetLng(latLng);
                 if (passCheck)
                 {
 

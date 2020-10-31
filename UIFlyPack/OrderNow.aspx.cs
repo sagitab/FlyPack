@@ -31,7 +31,7 @@ namespace UIFlyPack
             Validate();
 
         }
-        public double GetLat(string LatLng)
+        public static double GetLat(string LatLng)
         {
             string lat = "";
             for (int i = 0; i < LatLng.Length && LatLng[i] != ','; i++)//get the number from the start  until the ','
@@ -41,7 +41,7 @@ namespace UIFlyPack
 
             return double.Parse(lat);
         }
-        public double GetLng(string LatLng)
+        public static double GetLng(string LatLng)
         {
             string lng = "";
             int start = LatLng.IndexOf(',');

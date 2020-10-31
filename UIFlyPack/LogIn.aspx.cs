@@ -34,7 +34,7 @@ namespace UIFlyPack
                 }
                 catch (Exception exception)
                 {
-                    massage.Text = "Fail to log in "+exception.Message;
+                    massage.Text = "Fail to log in "+exception.Message;//ex massage
                     return;
                 }
                 bool isExist = Page.IsValid && user.Type!=0;//check if all validators are valid and user is exist
@@ -42,21 +42,24 @@ namespace UIFlyPack
                 {
                     user = user.Type == 1 ? (BlOrderUser) new BlShopManager(pass) : new BlOrderUser(pass);//choose the right constructor by type
                     Session["user"] = user;
+                    //set animation
                     WhichAnimation.Value = "2";
                     ////ClientScript.RegisterStartupScript(GetType(), "Javascript", "javascript:MoveDrone(); ", true);
                     //ScriptManager.RegisterStartupScript( Page,GetType(), "Javascript", "javascript:MoveDrone();", true);
-                    Response.Redirect("LogIn.aspx");
-                    System.Threading.Thread.Sleep(3000);
-                    Response.Redirect("HomePage.aspx");
+                    //Response.Redirect("LogIn.aspx");
+                /*    System.Threading.Thread.Sleep(3000);*///sleep for 3 seconds
+                    //Response.Redirect("HomePage.aspx");
                 }
                 else
                 {
+                    //set animation
                     WhichAnimation.Value = "3";
                     massage.Text = "User name or password incorrect";//fail massage
                 }
             }
             else
             {
+                //set animation
                 WhichAnimation.Value = "3";
                 massage.Text = "password field or name field is empty ";//fail massage
             }
@@ -65,8 +68,10 @@ namespace UIFlyPack
 
         protected void CleanB_Click(object sender, ImageClickEventArgs e)
         {
+            //clean the tex box values
             Name.Text = "";
             Pass.Text = "";
+            //set animation
             WhichAnimation.Value = "1";
         }
     }

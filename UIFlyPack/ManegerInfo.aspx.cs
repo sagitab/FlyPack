@@ -20,9 +20,9 @@ namespace UIFlyPack
             {
                 orderUser = (BlOrderUser)Session["user"];
             }
-            catch (Exception exception)
+            catch 
             {
-                Console.WriteLine(exception.Message);
+                Response.Redirect("HomePage.aspx");
                 return;
             }
            
@@ -42,7 +42,6 @@ namespace UIFlyPack
             {
                 Response.Redirect("HomePage.aspx");
                 return;
-                
             }
             if (Page.IsPostBack) return;
             //get data 

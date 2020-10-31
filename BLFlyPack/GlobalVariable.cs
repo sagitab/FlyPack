@@ -13,5 +13,10 @@ namespace BLFlyPack
         {
             get { return 10; }
         }
+
+        public static int MaxOrderForDeliver//The maximum number of orders a deliver can make in one round
+        {
+            get { return 6; }
+        }
     }
 }
