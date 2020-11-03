@@ -57,12 +57,12 @@
             <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="EmailValidator" runat="server" ControlToValidate="Email" ErrorMessage="Unvalid email" SetFocusOnError="True" ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"></asp:RegularExpressionValidator>
         </li>
         <li>
-            <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
+            <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG"></asp:Label>
         </li>
     </ul>
     <span  style=" margin: 0 20% 2% 35%;" id="instractor" runat="server"> Type your address or click on the map to add address </span>
     <div id="map"></div>
-    <ul class="addList" style="margin: 0px 50% ">
+    <ul class="addList" <%--style="margin: 0px 50% "--%>>
         <li>
             <input id="address" type="text" value="Israel Tel Aviv" class="TextBox" name="10" />
         </li>
@@ -73,7 +73,7 @@
             <span id="massage"></span>
         </li>
         <li style="margin-right: 150px">
-            <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="BSearch" OnClientClick=" return BtnClick()" CausesValidation="True" />
+            <asp:Button ID="regB" runat="server" Text="Register" OnClick="regB_Click" CssClass="LargeButton" OnClientClick=" return BtnClick()" CausesValidation="True" />
         </li>
     </ul>
     <asp:HiddenField runat="server" ID="LatLng" Value="1,1" />

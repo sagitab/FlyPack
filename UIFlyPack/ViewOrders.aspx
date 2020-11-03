@@ -11,8 +11,8 @@
         
         </li>--%>
        <li>
-           <div class="RowDiv" style="margin-left: 15%;">
-               <span class="UnderLineHeader"style="margin-bottom: 1%; margin-right: 1%;"  >Search Orders</span>
+           <div class="RowDiv" style="margin-left: 15%;margin-top: 5.75%;">
+               <span class="UnderLineHeader"style="margin-bottom: 1%; margin-right: 1%; margin-top: 0%" >Search Orders</span>
                <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
     
                <select id="SearchBy" name="D1" style="" runat="server" class="Select">

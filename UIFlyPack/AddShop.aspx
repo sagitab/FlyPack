@@ -24,11 +24,11 @@
             <asp:DropDownList ID="ShopMSelect" runat="server" CssClass="Select">
             </asp:DropDownList>
         </li>
-         <li>           
-             <asp:Button ID="AddShop1" runat="server" Text="Add shop" CssClass="BSearch" OnClick="AddShop_Click" />
+         <li>
+             <asp:Button ID="AddShop1" runat="server" Text="Add shop" CssClass="LargeButton" OnClick="AddShop_Click" />
         </li>
         <li>           
-             <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
+             <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG"></asp:Label>
         </li>
     </ul>
     </div>

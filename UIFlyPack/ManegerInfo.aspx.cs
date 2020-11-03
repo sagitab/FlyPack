@@ -49,7 +49,9 @@ namespace UIFlyPack
             DataTable deliveries = orderUser.DeliveriesTable();
             ErDelivery.Text = !BindTable(deliveries, DeliveriesTable) ? "fail show deliveries table" : "";//error massage
             ErCustomer.Text = !BindTable(customers, CustomersTable) ? "fail show customers table" : "";//error massage
-            NumOfOrders.Text ="Number of orders- "+ orderUser.GetNumOfOrders()+ "<br/>Number of customers that order- " + orderUser.GetNumOfActiveCustomers();//set the NumOfOrders information
+            //set the labels information
+            NumOfOrders.Text ="Number of orders- "+ orderUser.GetNumOfOrders();
+            NumOfCustomers.Text="Number of customers that order - " + orderUser.GetNumOfActiveCustomers();
         }
 
         protected void SearchCustomerB_Click(object sender, EventArgs e)

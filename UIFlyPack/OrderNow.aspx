@@ -43,7 +43,7 @@
             <asp:RangeValidator ID="NumOfFloorValidator" CssClass="ErrorMSG" SetFocusOnError="True" runat="server" ErrorMessage="Enter floor between 0 to 120" Type="Integer" MaximumValue="120" MinimumValue="0" ControlToValidate="NumOfFloor"></asp:RangeValidator>
         </li>
          <li>
-             <asp:Button runat="server" ID="OrderB" OnClick="OrderB_Click" CssClass="BSearch" Text="Order" />
+             <asp:Button runat="server" ID="OrderB" OnClick="OrderB_Click" CssClass="LargeButton" Text="Order" />
         </li>
         <li>          
             

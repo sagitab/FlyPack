@@ -28,7 +28,7 @@
                     <asp:RegularExpressionValidator CssClass="ErrorMSG" ID="passValidator" runat="server" ControlToValidate="Pass" ErrorMessage="Password need to be 8 tabs" SetFocusOnError="True" ValidationExpression="^.{8}$"></asp:RegularExpressionValidator>
                 </li>
                 <li>
-                    <asp:Button runat="server" ID="LogInB" OnClick="LogInB_Click" CssClass="BSearch" Text="Log In" />
+                    <asp:Button runat="server" ID="LogInB" OnClick="LogInB_Click" CssClass="LargeButton" Text="Log In" />
                 </li>
                 <li>
                     <asp:Label runat="server" ID="massage" CssClass="ErrorMSG"></asp:Label>

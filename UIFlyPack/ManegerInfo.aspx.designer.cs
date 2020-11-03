@@ -78,6 +78,15 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.GridView CustomersTable;
 
         /// <summary>
+        /// NumOfCustomers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NumOfCustomers;
+
+        /// <summary>
         /// NumOfOrders control.
         /// </summary>
         /// <remarks>

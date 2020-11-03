@@ -1,13 +1,65 @@
-﻿body {
+﻿* {
     margin: 0;
     padding: 0;
-    height: 100%;
+    box-sizing: border-box;
+}
+body {
     font-size: 1.5em;
-    background-image: url('Img/BGimg.jpg');
+    background-image: url('Img/drone-sun-set2.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
     font-family: poppins-300;
+    color: dodgerblue;
+    line-height: 1.7;
+}
+.headerPic {
+    animation-name: ShowHeaders;
+    animation-duration: 2s;
+    transform: translate(-15%);
+}
+@keyframes ShowHeaders {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+
+    }
+    80% {
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-15%);
+    }
+    }
+.centerDiv {
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+.Headers {
+    text-transform: uppercase;
+}
+.logoHeader {
+    display: block;
+    position: absolute;
+    letter-spacing: 0px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.logoHeaderSub {
+    display: block;
+    letter-spacing: 30px;
+    font-size: 60px;
+    font-weight: 400;
+}
+.HomePageHeader {
+     background-image: url('Img/drone-sun-set1.jpg');
+    background-size: cover;
+    background-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 65%, 0 100%);
+    height: 95vh;
 }
 .TextBox {
     position: relative;
@@ -62,7 +114,37 @@
     background-color: dodgerblue;
     font-family: serif;
     float: left;
+    transition: all .2s;
 }
+    .BSearch:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.28);
+    }
+    .BSearch:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.28);
+    }
+    /*.BSearch::after {
+        width: 100%;
+        height: 100%;
+        border-radius: 0.2em;
+        z-index: -1;
+        content: "";
+        background-color: dodgerblue;
+        transition: all .5s;
+    }
+.BSearch:hover:after {
+    opacity: 0;
+    transform: scale(5);
+}
+
+.BSearch-bg {
+    background-color: dodgerblue;
+    color: black;
+}
+.BSearch-bg::after {
+    background-color: dodgerblue;
+}*/
 .addList {
     display: inline-grid;
     margin: 5vh 35%
@@ -218,9 +300,10 @@ ul {
     width: 30%;
     padding-right: 0px;
     margin: 5% auto;
-    height: 126vh;
+    height: 176vh;/*216 when there is map*/
     border-radius: 1.5vh;
     align-items: center;
+    opacity: 0.88;
 }
 #UserString, #UserString2, #UserString3, #UserString4 {
     color: #069ea6;
@@ -241,15 +324,17 @@ ul {
     height: 80vh;
     border-radius: 1.5vh;
     align-items: center;
+    opacity: 0.88;
 }
 #AddShopDiv {
     background-color: #01193a;
     width: 30%;
     padding-right: 0px;
     margin: 5% auto;
-    height: 50vh;
+    height:68vh;
     border-radius: 1.5vh;
     align-items: center;
+    opacity: 0.88;
 }
 @keyframes spin {
     0% {
@@ -319,6 +404,267 @@ ul {
         position: relative;
         bottom: 5%;
     }
+.NumInfo {
+    background-color: #01193a;
+    padding: 20px 40px;
+    margin: 5% auto;
+    border-radius: 40px;
+}
+.container {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    width: 180px;
+    height: 60px;
+    position: absolute;
+}
+
+.LargeButton {
+    width: 10vh;
+    height: 4vh;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #91C9FF;
+    outline: none;
+    transition: 1s ease-in-out;
+    background-color: dodgerblue;
+    border-radius: 10px;
+    margin: 5% auto;
+    font-size: 1em;
+}
+
+svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    fill: none;
+    stroke: #fff;
+    stroke-dasharray: 150 480;
+    stroke-dashoffset: 150;
+    transition: 1s ease-in-out;
+}
+
+.LargeButton:hover {
+    transition: 1s ease-in-out;
+    background: black;
+    color: dodgerblue;
+}
+
+.LargeButton:hover svg {
+    stroke-dashoffset: -480;
+}
+
+.LargeButton span {
+    color: black;
+    font-size: 18px;
+    font-weight: 100;
+}
     /*#Move {
     transform: translateX(-25%);
+}
+.LargeButton {
+    position: relative;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: "Source Code Pro";
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 30px;
+    color: white;
+    background-color: darkblue;
+    box-shadow: rgba(0,0,0,0.28) 2px 2px 22px;
+    border-radius: 4px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+    LargeButton:focus {
+        outline-color: transparent;
+        box-shadow: rgba(0,0,0,0.28) 2px 2px 22px;
+    }
+
+    .right::after, LargeButton::after {
+        content: "";
+        display: block;
+        position: absolute;
+        white-space: nowrap;
+        padding: 40px 40px;
+        pointer-events: none;
+    }
+
+    LargeButton::after {
+        font-weight: 200;
+        top: -30px;
+        left: -20px;
+    }
+
+.right, .left {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.right {
+    left: 66%;
+}
+
+.left {
+    right: 66%;
+}
+
+.right::after {
+    top: -30px;
+    left: calc(-66% - 20px);
+    background-color: darkblue;
+    color: transparent;
+    transition: transform .4s ease-out;
+    transform: translate(0, -90%) rotate(0deg)
+}
+
+LargeButton:hover .right::after {
+    transform: translate(0, -47%) rotate(0deg)
+}
+
+LargeButton .right:hover::after {
+    transform: translate(0, -50%) rotate(-7deg)
+}
+
+LargeButton .left:hover ~ .right::after {
+    transform: translate(0, -50%) rotate(7deg)
+}
+
+
+LargeButton::before {
+    content: '';
+    pointer-events: none;
+    opacity: .6;
+    background: radial-gradient(circle at 20% 35%, transparent 0, transparent 2px,darkblue 3px, white 4px, transparent 4px), radial-gradient(circle at 75% 44%, transparent 0, transparent 2px, black 3px, dodgerblue 4px, transparent 4px), radial-gradient(circle at 46% 52%, transparent 0, transparent 4px, black 5px, black 6px, transparent 6px);
+    width: 100%;
+    height: 300%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    animation: bubbles 5s linear infinite both;
+}
+
+@keyframes bubbles {
+    from {
+        transform: translate(0);
+    }
+
+    to {
+        transform: translate(0, -66.666%);
+    }
+}*//*#Move {
+    transform: translateX(-25%);
+}
+.LargeButton {
+    position: relative;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: "Source Code Pro";
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 30px;
+    color: white;
+    background-color: darkblue;
+    box-shadow: rgba(0,0,0,0.28) 2px 2px 22px;
+    border-radius: 4px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+    LargeButton:focus {
+        outline-color: transparent;
+        box-shadow: rgba(0,0,0,0.28) 2px 2px 22px;
+    }
+
+    .right::after, LargeButton::after {
+        content: "";
+        display: block;
+        position: absolute;
+        white-space: nowrap;
+        padding: 40px 40px;
+        pointer-events: none;
+    }
+
+    LargeButton::after {
+        font-weight: 200;
+        top: -30px;
+        left: -20px;
+    }
+
+.right, .left {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.right {
+    left: 66%;
+}
+
+.left {
+    right: 66%;
+}
+
+.right::after {
+    top: -30px;
+    left: calc(-66% - 20px);
+    background-color: darkblue;
+    color: transparent;
+    transition: transform .4s ease-out;
+    transform: translate(0, -90%) rotate(0deg)
+}
+
+LargeButton:hover .right::after {
+    transform: translate(0, -47%) rotate(0deg)
+}
+
+LargeButton .right:hover::after {
+    transform: translate(0, -50%) rotate(-7deg)
+}
+
+LargeButton .left:hover ~ .right::after {
+    transform: translate(0, -50%) rotate(7deg)
+}
+
+
+LargeButton::before {
+    content: '';
+    pointer-events: none;
+    opacity: .6;
+    background: radial-gradient(circle at 20% 35%, transparent 0, transparent 2px,darkblue 3px, white 4px, transparent 4px), radial-gradient(circle at 75% 44%, transparent 0, transparent 2px, black 3px, dodgerblue 4px, transparent 4px), radial-gradient(circle at 46% 52%, transparent 0, transparent 4px, black 5px, black 6px, transparent 6px);
+    width: 100%;
+    height: 300%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    animation: bubbles 5s linear infinite both;
+}
+
+@keyframes bubbles {
+    from {
+        transform: translate(0);
+    }
+
+    to {
+        transform: translate(0, -66.666%);
+    }
 }*/
+

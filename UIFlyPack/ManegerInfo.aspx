@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ManegerInfo.aspx.cs" Inherits="UIFlyPack.ManagerInfo" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  <%--  <style>
-        </style>--%>
+    <style>
+        .ErrorMSG {
+            margin-left: 2%;
+        }
+         
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul>
@@ -28,11 +32,9 @@
                     <option value="FirstName" >First name</option>
                 </select>
         
-                <asp:Button ID="SearchCustomerB" runat="server" Text="search" OnClick="SearchCustomerB_Click" CssClass="BSearch"  /></div>
-        </li>
-
-        <li style="margin: 0% 30% 2% 0%;">
-            <asp:Label ID="ErCustomer" runat="server" Text=""></asp:Label>
+                <asp:Button ID="SearchCustomerB" runat="server" Text="search" OnClick="SearchCustomerB_Click" CssClass="BSearch"  />
+            <asp:Label ID="ErCustomer" runat="server" Text="" CssClass="ErrorMSG"></asp:Label>
+            </div>
         </li>
         <li style="margin: 0% 30% 2% 0%;">
             <asp:Label ID="ErDelivery" runat="server" Text=""></asp:Label>
@@ -50,8 +52,13 @@
             <%--<li>
             <span>Num of orders</span>
         </li>--%>
-            <li>
-            <asp:Label ID="NumOfOrders" runat="server" Text=""></asp:Label>
-        </li>
+       
+            <li style="margin: 0 35%">
+                <div style="display: inline-grid">
+                    <asp:Label ID="NumOfCustomers" runat="server" Text=""  CssClass="NumInfo"></asp:Label>
+                    <asp:Label ID="NumOfOrders" runat="server" Text="" CssClass="NumInfo"></asp:Label>
+                </div>
+            </li>
+      
     </ul>
 </asp:Content>

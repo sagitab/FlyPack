@@ -33,7 +33,7 @@ namespace UIFlyPack
             //get input values
             string shopName = ShopName.Text;
             string shopManagerId = ShopMSelect.SelectedValue;
-            if (Page.IsValid)//if all validator is valid
+            if (Page.IsValid&& ShopName.Text!="")//if all validator is valid
             {
                 BlShop shop = null;
                 try
@@ -53,6 +53,10 @@ namespace UIFlyPack
                 {
                     MSG.Text = "shop added seccsessfully!!!";
                 }
+            }
+            else
+            {
+                MSG.Text = "Please type all details";
             }
             ShopName.CssClass = ShopNameValidator.IsValid ? "TextBox" : "TextBoxUnValidValue";//convert the the bob style by the validator
 
