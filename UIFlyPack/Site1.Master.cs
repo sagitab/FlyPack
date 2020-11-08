@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Query.Dynamic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLFlyPack;
@@ -16,9 +17,14 @@ namespace UIFlyPack
             if (user == null) return;
             var type = user.Type;
             var des = $"Ahoy! {user.ToString()}!";
+          //const  int ShopManager = GlobalVariable.ShopManager;
+          //if (type==GlobalVariable.ShopManager)
+          //{
+              
+          //}
             switch (type)//display the right nave bar
             {
-                case 1:
+                case  1:
                     //sh
                     ShopMenager.Visible = true;
                     UserString2.Text = des;

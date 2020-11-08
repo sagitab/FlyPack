@@ -21,7 +21,7 @@
                <%-- <asp:Button runat="server" ID="LogIn1" OnClick="LogIn1_Click" Text="Log In" CssClass="BSearch"  />--%>
             </li>
              <li>
-                 <asp:ImageButton runat="server" ID="LogoB"  ImageUrl="Img/DroneLogo.png" OnClick="LogoB_OnClick" CssClass="logo" />
+                 <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="LogoB_OnClick" CssClass="logo" />
                
             </li>
              <li>

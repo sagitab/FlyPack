@@ -88,6 +88,20 @@ namespace UIFlyPack
                 {
                     BlOrder order = new BlOrder(user.UserId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor);//add order
                     MSG.Text = order.OrderId != -1 ? "order successes!!" : "order failed :(";//fail/success massage
+                    BlOrderUser customer=new BlOrderUser(order.CustomerId);
+                    bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
+                        $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
+                    if (!isEmailSent)
+                    {
+                        //take care if email dont send
+                    }
+                    BlOrderUser shopManager = new BlOrderUser(order.CustomerId);
+                    bool isEmailSentToM = Register.sendEmail(shopManager.Email, " Fly pack please update when your products will be ready to be delivered",
+                        $"Hi,{shopManager} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
+                    if (!isEmailSentToM)
+                    {
+                        //take care if email dont send
+                    }
                 }
                 catch (Exception exception)
                 {

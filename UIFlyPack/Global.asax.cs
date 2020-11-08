@@ -14,6 +14,7 @@ namespace UIFlyPack
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            //Application[""]=
             System.IO.Directory.SetCurrentDirectory(Server.MapPath("~/"));
             string connectionString = WebConfigurationManager.AppSettings["Path"];
             General.SetPath(connectionString); 
@@ -21,7 +22,8 @@ namespace UIFlyPack
 
         protected void Session_Start(object sender, EventArgs e)
         {
-
+            GlobalVariable.ShopManager = 1;
+            GlobalVariable.UnVerifyEmail=new Dictionary<string, string>();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

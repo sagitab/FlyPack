@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ViewOrders.aspx.cs" Inherits="UIFlyPack.ViewOrders" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .ErrorMSG {
+            margin-left: 2%;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul style="display: inline">
@@ -22,9 +27,10 @@
                    <option value="FirstName">Delivery name</option>
                </select>
        
-               <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" CssClass="BSearch" />
+               <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" CssClass="BSearch"  />
                <asp:DropDownList ID="NewOrOld" CssClass="Select" runat="server" OnSelectedIndexChanged="NewOrOld_Click" AutoPostBack="true">
                </asp:DropDownList>
+               <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG" ></asp:Label>
            </div>
        </li>
 
@@ -34,11 +40,7 @@
             </asp:GridView>
         </li>
         <li>
-            <asp:Label ID="ErMSG" runat="server" Text=""></asp:Label>
-        </li>
-        <li>
-            <asp:Label ID="MSG" runat="server" Text=""></asp:Label>
-
+            <asp:Label ID="ErMSG" runat="server" Text="" CssClass="BigErrorMSG"></asp:Label>
         </li>
     </ul>
 

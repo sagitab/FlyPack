@@ -306,6 +306,7 @@ namespace UIFlyPack
                     //myButton.CommandName = "started";
                     ErMSG.Text = "fail to start order ";//massage error
                     UpOrders((BlUser)Session["user"], "");//update table
+                  
                 }
             }
             else if (e.CommandName == "updateReadyTime" /*&& status == 2*/)
@@ -333,14 +334,29 @@ namespace UIFlyPack
                     myButton.Text = "Product Ready";
                     myButton.CommandName = "Ready";
                     UpOrders((BlUser)Session["user"], "");//update table
+                    BlUser userToSendMailTo = BlUser.UserById(order.DeliveryId);
+                    bool isEmailSent = Register.sendEmail(userToSendMailTo.Email, " Fly pack you have a new order to deliver",
+                        $"Hi,{userToSendMailTo} please accept your order .Have a nice day,The Fly Pack Team");
+                    if (!isEmailSent)
+                    {
+                        //take care if email dont send
+                    }
                 }
             }
             else if (e.CommandName == "finish")
             {
                 if (status == 4/*&&BlOrder.UpdateStatus(status + 1, orderId)*/)//update order status
                 {
+                    BlUser customer =  BlUser.UserById(order.CustomerId);
                     NewOrOld.SelectedIndex = 1;//to see that the orders turn to old one
-                    UpOrders((BlUser)Session["user"], "");//update table
+                    UpOrders(customer, "");//update table
+                    //send email to customer
+                    bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
+                        $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
+                    if (!isEmailSent)
+                    { 
+                        //take care if email dont send
+                    }
                 }
                 else
                 {

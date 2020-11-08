@@ -9,9 +9,12 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+   
+        <asp:Label ID="seccessMSG" runat="server" Text="" CssClass="Header"></asp:Label>
+   
     <div id="Move">
         <asp:Image runat="server" ImageUrl="Img/FlyPackDrone.png" ID="DroneLogIn" />
-        <div id="LogInDiv">
+        <div id="LogInDiv" >
             <ul class="addList" style="margin: 0vh 35%">
                 <li>
                     <span class="Header">User Name </span>
@@ -51,7 +54,11 @@
                     break;
                 case "2":
                     MoveDiv.classList.remove('spinRight-animation');
-                    setTimeout(function () { MoveDiv.classList.add('spinRight-animation'); }, 100);
+                    MoveDiv.classList.add('spinRight-animation')
+                            .bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd",
+                                function () {
+                                    window.location.replace("HomePage.aspx");
+                                });
                     break;
                 case "3":
                     var DroneImage = document.getElementById('ContentPlaceHolder1_DroneLogIn');

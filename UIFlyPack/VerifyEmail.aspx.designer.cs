@@ -11,44 +11,35 @@ namespace UIFlyPack
 {
 
 
-    public partial class ViewOrders
+    public partial class VerifyEmail
     {
 
         /// <summary>
-        /// serchedValue control.
+        /// verifyCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox serchedValue;
+        protected global::System.Web.UI.WebControls.TextBox verifyCode;
 
         /// <summary>
-        /// SearchBy control.
+        /// verifyCodeValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect SearchBy;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator verifyCodeValidator;
 
         /// <summary>
-        /// SearchOrderB control.
+        /// verifyB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchOrderB;
-
-        /// <summary>
-        /// NewOrOld control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList NewOrOld;
+        protected global::System.Web.UI.WebControls.Button verifyB;
 
         /// <summary>
         /// MSG control.
@@ -58,23 +49,5 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label MSG;
-
-        /// <summary>
-        /// OrderTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView OrderTable;
-
-        /// <summary>
-        /// ErMSG control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErMSG;
     }
 }

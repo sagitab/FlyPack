@@ -24,6 +24,7 @@ namespace UIFlyPack
         {
             if (!Page.IsPostBack)
             {
+             
                 try
                 {
                     OrderStartedSucces.InnerHtml = Request.QueryString.Get("text");
@@ -36,6 +37,18 @@ namespace UIFlyPack
             }
             Session["user"] = new Deliver("shlakot1");
             BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
+            //to check if user verify email!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //try
+            //{
+            //    string verifyCode = GlobalVariable.UnVerifyEmail[user.UserId];
+            //    Response.Redirect("VerifyEmail.aspx");
+            //}
+            //catch
+            //{
+
+            //}
+          
+          
             if (!(user is Deliver)) return;
             //get the new orders of the deliver
             List<BlOrder> orders = user.GetOrdersListByTime();

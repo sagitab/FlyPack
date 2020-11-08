@@ -106,8 +106,10 @@
     <Content Include="LogIn.aspx" />
     <Content Include="ManegerInfo.aspx" />
     <Content Include="OrderNow.aspx" />
+    <Content Include="Product.ascx" />
     <Content Include="Register.aspx" />
     <Content Include="StyleSheet1.css" />
+    <Content Include="VerifyEmail.aspx" />
     <Content Include="ViewOrders.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -157,6 +159,13 @@
     <Compile Include="OrderNow.aspx.designer.cs">
       <DependentUpon>OrderNow.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Product.ascx.cs">
+      <DependentUpon>Product.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Product.ascx.designer.cs">
+      <DependentUpon>Product.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -171,6 +180,13 @@
     </Compile>
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="VerifyEmail.aspx.cs">
+      <DependentUpon>VerifyEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerifyEmail.aspx.designer.cs">
+      <DependentUpon>VerifyEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewOrders.aspx.cs">
       <DependentUpon>ViewOrders.aspx</DependentUpon>

@@ -3,7 +3,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="OrdeNowDiv">
-    <ul class="addList" style="margin: 5vh 44%;">
+        <div class="middleDiv">
+             <ul class="addList" style="margin: 5vh 44%;">
         <li>
             <span class="Header" >Place your order</span>
         </li>
@@ -51,6 +52,8 @@
             
         </li>
         </ul>
+        </div>
+   
     </div>
     <asp:HiddenField runat="server" ID="LatLng" Value="1,1" />
 </asp:Content>

@@ -2,17 +2,23 @@
 <%@ Import Namespace="BLFlyPack" %>
 <%@ Import Namespace="System.Web.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
- 
+ <style>
+     .LargeButton {
+         position: absolute;
+         left: 48%;
+         margin-top: 0;
+     }
+ </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <span class="Header" >Deliveries Map</span>
+    <span class="Header" style="position: absolute; left: 40%;bottom: 78%;font-size: 4em;" >Deliveries Map</span>
     <span class="Header" id="OrderStartedSucces" runat="server"></span>
     <div id="map"></div>
     <br/>
    <%-- <input type="button" onclick="showMap" value="Show map" id="showMapB"/>--%>
-    <asp:Button runat="server" CssClass="BSearch" ID="updateMap" Text="Update Map" OnClick="updateMap_OnClick"/>
-    <asp:Label runat="server" CssClass="ErrorMSG" ID="errorMSG"></asp:Label>
+    <asp:Button runat="server" CssClass="LargeButton" ID="updateMap" Text="Update Map"  OnClick="updateMap_OnClick"/>
+    <asp:Label runat="server" CssClass="BigErrorMSG" ID="errorMSG"></asp:Label>
     <asp:HiddenField runat="server" ID="IsUpdated" Value="-1" />
     <script>
         var map;

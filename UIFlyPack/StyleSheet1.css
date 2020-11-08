@@ -173,7 +173,13 @@ span {
     font-size: 2em;
     font-family: poppins-500;
 }
-
+.middleDiv {
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
+    justify-content: center;
+    align-items: center;
+}
 ul {
     list-style-type: none;
     text-align: left;
@@ -185,6 +191,7 @@ ul {
     width: 100%;
     background-color: black;
     height: 10vh;
+    z-index: 1000;
 }
 .nave li {
     width: 100%;
@@ -260,6 +267,15 @@ ul {
         float: left;
         margin:0px 35%;
     }
+.BigErrorMSG {
+    color: #770D0B;
+    font-family: poppins-500;
+    font-size: 8em;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 10%;
+}
 .Select {
     color: black;
     background-color: dodgerblue;
@@ -272,8 +288,8 @@ ul {
 #map {
     width: 50%;
     height: 40vh;
-    margin: 5% auto  ;
-    margin-bottom: 5%;
+    margin: 5% auto;
+    margin-top: 10%;
 }
 .UnvalidTextBox {
     position: relative;
@@ -304,6 +320,17 @@ ul {
     border-radius: 1.5vh;
     align-items: center;
     opacity: 0.88;
+}
+.verifyEmailDiv {
+    background-color: #07162f;
+    width: 30%;
+    padding-right: 0px;
+    margin: 5% auto;
+    height: 50vh; /*216 when there is map*/
+    border-radius: 1.5vh;
+    align-items: center;
+    opacity: 0.88;
+    position: relative;
 }
 #UserString, #UserString2, #UserString3, #UserString4 {
     color: #069ea6;
@@ -360,10 +387,10 @@ ul {
 
 @keyframes spinRight {
     0% {
-        transform: translateX(20%) rotate(10deg)
+        transform: translateX(40%) rotate(10deg)
     }
     100% {
-        transform: translate(30%) rotate(20deg);
+        transform: translate(70%) rotate(20deg);
     }
 }
 @keyframes angryDrone {

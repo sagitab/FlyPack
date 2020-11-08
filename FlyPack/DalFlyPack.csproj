@@ -50,6 +50,8 @@
     <Compile Include="DalShop.cs" />
     <Compile Include="DalUser.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="OrderDetails.cs" />
+    <Compile Include="ProductDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
