@@ -10,17 +10,17 @@ namespace FlyPack
 {
    public class ProductDal
     {
-        public static DataTable GetAllProducts()
+        public static DataTable GetAllProducts(string condition)
         {
-            return DalHelper.AllFromTable("Products");
+            return DalHelper.Select("SELECT * FROM Products "+condition);
         }
-        public static DataTable GetAllProductsOfShop(int shopId)
+        public static DataTable GetAllProductsOfShop(int shopId,string condition)
         {
-            return DalHelper.AllWhere("Products", "ShopID", shopId);
+            return DalHelper.Select($"SELECT * FROM Products WHERE ShopID = {shopId} "+ condition);
         }
-        public static DataTable GetAllProductsOrderByPrice()
+        public static DataTable GetAllProductsOrderByPrice(string condition)
         {
-            return DalHelper.Select("SELECT * FROM Products GROUP BY Price");
+            return DalHelper.Select("SELECT * FROM Products GROUP BY Price "+condition);
         }
         public static DataTable SearchProductsByPrice(double price)
         {
@@ -30,9 +30,9 @@ namespace FlyPack
         {
             return DalHelper.Select($"SELECT * FROM Products WHERE  Description='{name}'");
         }
-        public static DataTable GetAllProductsOrderByName()
+        public static DataTable GetAllProductsOrderByName(string condition)
         {
-            return DalHelper.Select("SELECT * FROM Products GROUP BY Description");
+            return DalHelper.Select("SELECT * FROM Products GROUP BY Description "+condition);
         }
     }
 }

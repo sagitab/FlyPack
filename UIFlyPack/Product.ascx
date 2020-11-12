@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Product.ascx.cs" Inherits="UIFlyPack.Product" %>
+<asp:Label runat="server" ID="MSG"></asp:Label>
 <div class="ProductDiv">
     <asp:DataList id="ProductsList"
                   CellPadding="20"
@@ -7,18 +8,21 @@
                   RepeatLayout="Table"
                   RepeatColumns="4"
                   runat="server"
-                  CssClass="store">
+                  CssClass="store"
+                 OnItemCommand="ProductsList_OnItemCommand" >
         <ItemTemplate>
             <div class="Product">
                 <asp:Image id="ProductPic" AlternateText="Product picture" 
-                           ImageUrl='<%#: "../Images/GameBackgrounds/"+DataBinder.Eval(Container.DataItem, "Background") %>'
+                           ImageUrl='<%# "../ProductsImg/"+Eval("ImageUrl") %>'
                            runat="server" CssClass="ProductPics"/>
                 <div class="ProductInfo">
-                    <span class="productName"><%#: DataBinder.Eval(Container.DataItem, "GenresString") %></span>
-                    <span class="productPrice"><%#: DataBinder.Eval(Container.DataItem, "GenresString") %></span>
+                    <asp:Label runat="server" ID="productName" Text='<%#  Eval("Description")  %>'></asp:Label>
+                    <asp:Label runat="server" ID="productPrice" Text='<%#Eval( "Price") %>'></asp:Label>
+              <%--      <span class="productName"></span>
+                    <span class="productPrice">''</span>--%>
                 </div>
                 <div class="ProductBDiv">
-                    <button class="ProductB"><%#: DataBinder.Eval(Container.DataItem, "Price", "${0}") %></button>
+                 <asp:Button runat="server" CommandName="AddToCart" CssClass="BSearch"/>
                 </div>
             </div>
         </ItemTemplate>

@@ -16,8 +16,9 @@ namespace BLFlyPack
         public int ShopID { get; set; }
         public int OrderID { get; set; }
         public int ShopProductCode { get; set; }
+        public string ImageUrl { get; set; } /*name in DB Image*/
 
-        public BLProduct(int id, double price, string description, int shopId, int orderId, int shopProductCode)
+        public BLProduct(int id, double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
         {
             Id = id;//update DB?
             Price = price;
@@ -25,6 +26,7 @@ namespace BLFlyPack
             ShopID = shopId;
             OrderID = orderId;
             ShopProductCode = shopProductCode;
+            ImageUrl = imageUrl;
         }
 
         public BLProduct(DataRow row)
@@ -35,25 +37,36 @@ namespace BLFlyPack
             ShopID = int.Parse(row["ShopID"].ToString());
             OrderID = int.Parse(row["OrderID"].ToString());
             ShopProductCode = int.Parse(row["ShopProductCode"].ToString());
+            ImageUrl = row["Image"].ToString();
         }
-        public static List<BLProduct> GetAllProducts()
+        public static List<BLProduct> GetAllProducts(string condition)
         {
-            DataTable products = ProductDal.GetAllProducts();
-            return (from object rowProduct in products.Rows select new BLProduct((DataRow) rowProduct)).ToList();
-        }
-        public static List<BLProduct> GetAllProductsByPrice(bool isUpOrDown, string condition)
-        {
-            DataTable products = ProductDal.GetAllProducts();
+            DataTable products = ProductDal.GetAllProducts(condition);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
-        public static List<BLProduct> GetAllProductsByName(bool isUpOrDown, string condition)
+
+        public static List<BLProduct> GetAllProductsByShopId(int shopId,string condition)
         {
-            DataTable products = ProductDal.GetAllProducts();
+            DataTable products = null;
+            products = ProductDal.GetAllProductsOfShop(shopId,condition);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
-        public static List<BLProduct> ProductsSearch(string condition)
+        public static List<BLProduct> GetAllProductsByPrice(bool isUp, string condition)
         {
-            DataTable products = ProductDal.GetAllProducts();
+            DataTable products = null;
+            products = ProductDal.GetAllProductsOrderByPrice(isUp ? "DESC" : "ASC");
+            return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
+        }
+        public static List<BLProduct> GetAllProductsByName(bool isUp, string condition)
+        {
+            DataTable products = null;
+            products = ProductDal.GetAllProductsOrderByName(isUp ? "DESC" : "ASC");
+            return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
+        }
+        public static List<BLProduct> ProductsSearch(bool IsByPrice, string searchVal, string condition)
+        {
+            DataTable products = null;
+            products = IsByPrice ? ProductDal.SearchProductsByPrice(double.Parse(searchVal)) : ProductDal.SearchProductsByName(searchVal);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
 
