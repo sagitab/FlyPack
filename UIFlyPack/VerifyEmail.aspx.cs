@@ -45,7 +45,7 @@ namespace UIFlyPack
             string RealVerifyCode;
             try
             {
-                RealVerifyCode =GlobalVariable.UnVerifyEmail[user.UserId];
+                RealVerifyCode = ((Dictionary<string, string>)Application["UnVerifyEmail"])[user.UserId];
             }
             catch 
             {

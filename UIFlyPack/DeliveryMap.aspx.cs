@@ -24,31 +24,43 @@ namespace UIFlyPack
         {
             if (!Page.IsPostBack)
             {
-             
+
                 try
                 {
                     OrderStartedSucces.InnerHtml = Request.QueryString.Get("text");
                 }
-                catch 
+                catch
                 {
                     OrderStartedSucces.InnerHtml = "";
                 }
-              
-            }
-            Session["user"] = new Deliver("shlakot1");
-            BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
-            //to check if user verify email!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //try
-            //{
-            //    string verifyCode = GlobalVariable.UnVerifyEmail[user.UserId];
-            //    Response.Redirect("VerifyEmail.aspx");
-            //}
-            //catch
-            //{
 
-            //}
-          
-          
+            }
+            //Session["user"] = new Deliver("shlakot1");
+            //BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
+            //GlobalVariable.UnVerifyEmail.Add(user.UserId, "111111");
+            BlOrderUser user = /*(BlOrderUser)Session["user"];*/ (BlOrderUser)Session["user"];
+            //to check if user verify email!!!!!!!!!!!!!!!!!!!!!!!!!!
+            try
+            {
+                Dictionary<string, string> VerifyEmail = ((Dictionary<string, string>) Application["UnVerifyEmail"]);
+                if (VerifyEmail!=null)
+                {
+                    string verifyCode = VerifyEmail[user.UserId];
+                    Response.Redirect("VerifyEmail.aspx");
+                    return;
+                }
+                else
+                {
+                    errorMSG.Text = "VerifyEmail null";
+                }
+            
+            }
+            catch
+            {
+
+            }
+
+
             if (!(user is Deliver)) return;
             //get the new orders of the deliver
             List<BlOrder> orders = user.GetOrdersListByTime();
@@ -75,11 +87,11 @@ namespace UIFlyPack
                 //bool isHaveSameShop = sameShops.Count > 0;
                 //if (isHaveSameShop)
                 //{
-                    
+
                 //}
                 bool isAllSameShop = BlShop.isAllSameShop(shops);
                 //calculate shorter way to deliver 
-                GetBestWayLists(isAllSameShop, shops, customersAddresses, orders,(Deliver) user);
+                GetBestWayLists(isAllSameShop, shops, customersAddresses, orders, (Deliver)user);
             }
             else
             {
@@ -87,10 +99,10 @@ namespace UIFlyPack
                 Shops = Json.Encode(shops);
                 Customers = Json.Encode(customersAddresses);
                 //update the global vars
-                Deliver deliver = (Deliver) user;
-                double minutes = deliver.GetDistanceToCustomerHome(shops,customersAddresses);
+                Deliver deliver = (Deliver)user;
+                double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
                 GlobalVariable.Distance = minutes;
-               
+
             }
 
         }
@@ -107,7 +119,7 @@ namespace UIFlyPack
         //    }
         //    return retList;
         //}
-        public   void GetBestWayLists(bool isAllSameShop,List<BlShop> shops,List<BlCustomersAddress> customersAddresses, List<BlOrder> orders, Deliver deliver)
+        public void GetBestWayLists(bool isAllSameShop, List<BlShop> shops, List<BlCustomersAddress> customersAddresses, List<BlOrder> orders, Deliver deliver)
         {
             //set vars
             List<BlCustomersAddress> copyCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
@@ -120,12 +132,12 @@ namespace UIFlyPack
             List<double> arriveTimes = new List<double>();
             int lateTimes = 0;
             List<BlShop> copyShops = new List<BlShop>(shops);
-            Point locationNow=deliver.Location;
+            Point locationNow = deliver.Location;
             for (int i = 0; i < shops.Count; i++)
             {
                 //minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
-                IndexsOrderByDistance = isAllSameShop ? locationNow.MinimumDistanceCustomerList(copyShops, copyCustomersAddresses ,0) : locationNow.MinimumDistanceList(copyShops, copyCustomersAddresses,0);
-              //set a list of the index of the shop order by distance ( the first is the closest)
+                IndexsOrderByDistance = isAllSameShop ? locationNow.MinimumDistanceCustomerList(copyShops, copyCustomersAddresses, 0) : locationNow.MinimumDistanceList(copyShops, copyCustomersAddresses, 0);
+                //set a list of the index of the shop order by distance ( the first is the closest)
                 //to add shop and customer
                 //OrderShops[i] = CopyShops[minIndex];
                 //OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];

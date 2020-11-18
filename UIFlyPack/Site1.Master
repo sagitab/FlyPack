@@ -38,13 +38,17 @@
                   <asp:ImageButton runat="server"  ImageUrl="Img/DroneLogo.png" OnClick="LogoB_OnClick"  CssClass="logo" />
             </li>
              <li>
-                  <a href="OrderNow.aspx">Order Now</a>
+                  <a href="Store.aspx">Store</a>
             </li>
               <li>
                   <a href="ViewOrders.aspx">View Orders</a>
             </li>
+            
                 <li>
                 <asp:Label ID="UserString"  runat="server" Text=""></asp:Label>
+            </li>
+            <li >
+                <asp:ImageButton runat="server"  ImageUrl="Img/shopping-cart%20(1).png" OnClick="OnClick"  CssClass="ShopingCartIcon" />
             </li>
         </ul>
     </div>

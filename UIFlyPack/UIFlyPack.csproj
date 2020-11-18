@@ -89,6 +89,7 @@
     <Content Include="HomePage.aspx" />
     <Content Include="Img\angryDrone.png" />
     <Content Include="Img\BGimg.jpg" />
+    <Content Include="Img\delete.png" />
     <Content Include="Img\drone-sun-set1.jpg" />
     <Content Include="Img\drone-sun-set2.jpg" />
     <Content Include="Img\DroneLogo.png" />
@@ -102,12 +103,14 @@
     <Content Include="Img\recycling-symbol.png" />
     <Content Include="Img\redFlag.png" />
     <Content Include="Img\shopIcon.png" />
+    <Content Include="Img\shopping-cart %281%29.png" />
     <Content Include="Img\skyBG.jpg" />
     <Content Include="LogIn.aspx" />
     <Content Include="ManegerInfo.aspx" />
     <Content Include="OrderNow.aspx" />
     <Content Include="Product.ascx" />
     <Content Include="Register.aspx" />
+    <Content Include="ShopingCart.aspx" />
     <Content Include="Store.aspx" />
     <Content Include="StyleSheet1.css" />
     <Content Include="VerifyEmail.aspx" />
@@ -174,6 +177,13 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShopingCart.aspx.cs">
+      <DependentUpon>ShopingCart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShopingCart.aspx.designer.cs">
+      <DependentUpon>ShopingCart.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>

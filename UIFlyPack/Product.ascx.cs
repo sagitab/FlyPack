@@ -10,112 +10,111 @@ namespace UIFlyPack
 {
     public partial class Product : System.Web.UI.UserControl
     {
+        private List<BLProduct> _productsList;
+        public List<BLProduct> ProductsCollections
+        {
+            get => _productsList;
+            set
+            {
+                _productsList = value;
+                UpdateData(value);
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            try
             {
-                if (!UpdateData(BLProduct.GetAllProducts("")))
+                if (!Page.IsPostBack)
                 {
-                    MSG.Text = "there is no products"; //error msg
+                    if (!UpdateData(BLProduct.GetAllProducts("")))
+                    {
+                        MSG.Text = "there is no products"; //error msg
+                    }
+                }
+                else
+                {
+                    UpdateData((List<BLProduct>)Session["products"]);
                 }
             }
-            else
+            catch (Exception exception)
             {
-                UpdateData((List<BLProduct>)Session["products"]);
+                Console.WriteLine(exception);
+                throw;
             }
+          
         }
 
         public bool UpdateData(List<BLProduct> products)
         {
             if (products == null || products.Count == 0)
             {
+                ProductsList.DataSource = products;
+                Session["products"] = products;
+                ProductsList.DataBind();
+                MSG.Text = "there is no products"; //error msg
                 return false;
             }
             ProductsList.DataSource = products;
             Session["products"] = products;
             ProductsList.DataBind();
+            MSG.Text = "";
             return true;
-        }
-
-
-
-        public static string setOrderBy(int orderBy)
-        {
-            string[] OrderByArr = { "Price DESC", "Price ACS", "Description DESC", "Description ACS", "ID" };
-            return " ORDER BY " + OrderByArr[orderBy - 1];
-        }
-        public static List<BLProduct> Search(string SearchVal, int shopId, bool isSearchName, int orderBy)
-        {
-
-
-            string condition = "";
-            List<BLProduct> products = null;
-            if (shopId == -1)
-            {
-                if (isSearchName)
-                {
-                    condition = $"WHERE Description='{SearchVal}'";
-                }
-                else
-                {
-                    condition = "WHERE Price=" + SearchVal;
-                }
-                condition += setOrderBy(orderBy);
-                products = BLProduct.GetAllProducts(condition);
-            }
-            else
-            {
-                if (isSearchName)
-                {
-                    condition = $"AND Description='{SearchVal}'";
-                }
-                else
-                {
-                    condition = "AND Price=" + SearchVal;
-                }
-                condition += setOrderBy(orderBy);
-                products = BLProduct.GetAllProductsByShopId(shopId, condition);
-            }
-
-            if (products == null || products.Count == 0)
-            {
-                return null;
-            }
-
-            return products;
-        }
-        public static int SumArr(int[] arr)
-        {
-            int sum = 0;
-            foreach (var t in arr)
-            {
-                sum += t;
-            }
-            return sum;
         }
         protected void ProductsList_OnItemCommand(object source, DataListCommandEventArgs e)
         {
-
             if (e.CommandName == "AddToCart")
             {
                 const int maxOfProductPerOrder = 6;
                 BLProduct product = ((List<BLProduct>)Session["products"])[e.Item.ItemIndex];
                 try
                 {
-                    List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
+                    //(List<BLProduct>)
+                    List <BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
                     int[] productAmounts = (int[])Session["productAmount"];
-                    if (productsCart.Count == maxOfProductPerOrder || SumArr(productAmounts) == maxOfProductPerOrder)
+                    if (productsCart==null)
                     {
-                        MSG.Text = "You can order up to 6 product";
+                        productsCart=new List<BLProduct>();
                     }
-                    if (productsCart.Contains(product))
+                    if (productAmounts == null)
                     {
-                        productAmounts[productsCart.IndexOf(product)]++;
+                        productAmounts = new int[6];
+                    }
+                    if (productsCart.Count == maxOfProductPerOrder || BLProduct.SumArr(productAmounts) == maxOfProductPerOrder)
+                    {
+                        addToCartMsg.Text = "You can order up to 6 product";
                     }
                     else
                     {
-                        productsCart.Add(product);
+                        
+                        int indexOfProduct = BLProduct.IndexOfProduct(productsCart, product);
+                        if (indexOfProduct != -1)
+                        {
+                            productAmounts[indexOfProduct]++;
+                            Session["productsCart"] = productsCart;
+                            Session["productAmount"] = productAmounts;
+                            addToCartMsg.Text = "product amount updated!!";
+                        }
+                        else
+                        {
+                            productsCart.Add(product);
+                            if (Session["numOfProducts"] == null)
+                            {
+                                productAmounts[0] = 1;
+                                Session["numOfProducts"] = 1;
+                            }
+                            else
+                            {
+                                int numOfProducts = (int)Session["numOfProducts"];
+                                productAmounts[numOfProducts] = 1;
+                                Session["numOfProducts"] = numOfProducts + 1;
+                            }
+                            Session["productAmount"] = productAmounts;
+                            Session["productsCart"] = productsCart;
+                            addToCartMsg.Text = "product added to cart!!";
+                        }
                     }
+
+                  
 
                 }
                 catch
@@ -127,5 +126,19 @@ namespace UIFlyPack
                 }
             }
         }
+
+        //protected void OnClick(object sender, EventArgs e)
+        //{
+        //    BLProduct product = ((List<BLProduct>)Session["products"])[e.];
+        //}
+
+        //protected void ProductsList_OnItemDataBound(object sender, DataListItemEventArgs e)
+        //{
+        //    //BLProduct product = ((List<BLProduct>)Session["products"])[e.Item.ItemIndex];
+        //    //if (e.GetType() is  Button)
+        //    //{
+        //    //    e.
+        //    //}
+        //}
     }
 }

@@ -10,12 +10,13 @@ namespace UIFlyPack
 {
     public partial class Store : System.Web.UI.Page
     {
+        public string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!Page.IsPostBack)
             {
                 //set data source
-                string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
+              
                 productOrder.DataSource = OrderByArr;
                 //// Bind the data to the control.
                 //productOrder.DataTextField = "Key";
@@ -34,12 +35,15 @@ namespace UIFlyPack
 
                 // Set the default selected item, if desired.
                 Shops.SelectedIndex = 0;
+                List<BLProduct> products = BLProduct.GetAllProducts("");
+                Session["products"] = products;
+                //Products.ProductsCollections = products;
+             
             }
         }
 
         protected void SearchProductB_OnClick(object sender, EventArgs e)
         {
-
             string searchValue = serchedValue.Text;
             if (searchValue != "")
             {
@@ -51,7 +55,7 @@ namespace UIFlyPack
                 }
                 catch
                 {
-                    orderBy = 5;
+                    orderBy = 4;
                 }
                 try
                 {
@@ -65,14 +69,15 @@ namespace UIFlyPack
 
                 try
                 {
-                    bool IsSearchName = (SearchBy.Items[SearchBy.SelectedIndex].ToString() == "Description");
-                    List<BLProduct> products = Product.Search(searchValue, shopId, IsSearchName, orderBy);
-                    Session["products"] = products;
+                    string ch = SearchBy.Items[SearchBy.SelectedIndex].ToString();
+                    bool IsSearchName = (ch == "Product name");
+                    List<BLProduct> products = BLProduct.Search(searchValue, shopId, IsSearchName, orderBy);
+                    Products.ProductsCollections = products;
                     MSG.Text = "";
                 }
                 catch (Exception exception)
                 {
-                    MSG.Text = "please select by what you want to search "+ exception.Message;
+                    MSG.Text = "please select by what you want to search " + exception.Message;
                 }
 
             }
@@ -83,21 +88,35 @@ namespace UIFlyPack
 
         }
 
+        public  int TurnOrderByToInt(string stringOrderBy)
+        {
+            for (var index = 0; index < OrderByArr.Length; index++)
+            {
+                var value = OrderByArr[index];
+                if (stringOrderBy == value.ToString())
+                {
+                    return index;
+                }
+            }
+
+            return 4;
+        }
         protected void productOrder_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            int orderBy = int.Parse(productOrder.SelectedValue);
+            string stringOrderBy = productOrder.SelectedValue;
+            int orderBy = TurnOrderByToInt(stringOrderBy);
             int shopId = int.Parse(Shops.SelectedValue);
-            string condition = "ORDER BY " + Product.setOrderBy(orderBy);
+            string condition = BLProduct.setOrderBy(orderBy);
             List<BLProduct> products = null;
             if (shopId == -1)
             {
                 products = BLProduct.GetAllProducts(condition);
-                Session["products"] = products;
+                Products.ProductsCollections = products;
             }
             else
             {
                 products = BLProduct.GetAllProductsByShopId(shopId, condition);
-                Session["products"] = products;
+                Products.ProductsCollections = products;
             }
 
 
@@ -107,8 +126,16 @@ namespace UIFlyPack
         {
             int shopId = int.Parse(Shops.SelectedValue);
             List<BLProduct> products = BLProduct.GetAllProductsByShopId(shopId, "");
-            Session["products"] = products;
-            //update!!!!!!
+            if (products != null && products.Count > 0)
+            {
+                Products.ProductsCollections = products;
+            }
+            else
+            {
+                Products.ProductsCollections = null;
+                
+            }
+
         }
     }
 }

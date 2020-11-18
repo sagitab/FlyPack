@@ -17,14 +17,14 @@ namespace UIFlyPack
             if (user == null) return;
             var type = user.Type;
             var des = $"Ahoy! {user.ToString()}!";
-          //const  int ShopManager = GlobalVariable.ShopManager;
-          //if (type==GlobalVariable.ShopManager)
-          //{
-              
-          //}
+            //const  int ShopManager = GlobalVariable.ShopManager;
+            //if (type==GlobalVariable.ShopManager)
+            //{
+
+            //}
             switch (type)//display the right nave bar
             {
-                case  1:
+                case 1:
                     //sh
                     ShopMenager.Visible = true;
                     UserString2.Text = des;
@@ -62,6 +62,11 @@ namespace UIFlyPack
         protected void LogoB_OnClick(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("HomePage.aspx");
+        }
+
+        protected void OnClick(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("ShopingCart.aspx");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace UIFlyPack
 {
 
 
-    public partial class Product
+    public partial class ShoppingCart
     {
 
         /// <summary>
@@ -24,21 +24,21 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.Label MSG;
 
         /// <summary>
-        /// ProductsList control.
+        /// ProductsCart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList ProductsList;
+        protected global::System.Web.UI.WebControls.DataList ProductsCart;
 
         /// <summary>
-        /// addToCartMsg control.
+        /// OrderNow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label addToCartMsg;
+        protected global::System.Web.UI.WebControls.Button OrderNow;
     }
 }

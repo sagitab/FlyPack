@@ -69,6 +69,80 @@ namespace BLFlyPack
             products = IsByPrice ? ProductDal.SearchProductsByPrice(double.Parse(searchVal)) : ProductDal.SearchProductsByName(searchVal);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
+        public static string setOrderBy(int orderBy)
+        {
+            string[] OrderByArr = { "Price DESC", "Price ASC", "Description DESC", "Description ASC", "ID" };
+            return " ORDER BY " + OrderByArr[orderBy];
+        }
+        public static List<BLProduct> Search(string SearchVal, int shopId, bool isSearchName, int orderBy)
+        {
 
+
+            string condition = "";
+            List<BLProduct> products = null;
+            if (shopId == -1)
+            {
+                if (isSearchName)
+                {
+                    condition = $"WHERE Description='{SearchVal}'";
+                }
+                else
+                {
+                    condition = "WHERE Price=" + SearchVal;
+                }
+                condition += setOrderBy(orderBy);
+                products = BLProduct.GetAllProducts(condition);
+            }
+            else
+            {
+                if (isSearchName)
+                {
+                    condition = $"AND Description='{SearchVal}'";
+                }
+                else
+                {
+                    condition = "AND Price=" + SearchVal;
+                }
+                condition += setOrderBy(orderBy);
+                products = BLProduct.GetAllProductsByShopId(shopId, condition);
+            }
+
+            if (products == null || products.Count == 0)
+            {
+                return null;
+            }
+
+            return products;
+        }
+        public static int SumArr(int[] arr)
+        {
+            int sum = 0;
+            foreach (var t in arr)
+            {
+                sum += t;
+            }
+            return sum;
+        }
+
+        public static void Delete(int[] amounts,int index)
+        {
+            //int temp;
+            for (int i = index; i < amounts.Length-1; i++)
+            {
+                amounts[i] = amounts[i + 1];
+            }
+        }
+        public static int IndexOfProduct(List<BLProduct> products,BLProduct product)
+        {
+            for (var index = 0; index < products.Count; index++)
+            {
+                var p = products[index];
+                if (p.Id == product.Id)
+                {
+                    return index;
+                }
+            }
+            return -1;
+        }
     }
 }

@@ -171,36 +171,47 @@ namespace UIFlyPack
                     //create a verify code
                     string verifyCode = GenerateRandomCode();
                     //send verify code to email to verify the email
-                    bool isEmailSent = sendEmail(email, " Fly pack please verify your email address.",
-                        $"Almost done,{name}! To complete your  sign up, we just need to verify your email address: {email}.<br/> Verification code: {verifyCode}<br/> Once verified, you can start order products.<br/>You’re receiving this email because you recently created a new Fly Pack account or added a new email address.<br/> If this wasn’t you, please ignore this email.<br/>Thanks,<br/>The Fly Pack Team");
-                    if (!isEmailSent)
-                    {
-                        MSG.Text = "unvalidated email address";//error massage
-                    }
-                    else
-                    {
-                        BlOrderUser currentUser = (BlOrderUser) Session["user"];
-                        bool isCustomer = (currentUser != null && currentUser.Type == 4);
-                        if (isCustomer)
-                        {
-                            Session["user"] = new BlOrderUser(user.Password);
-                        }
-                    
-                        try
-                        {
-                            GlobalVariable.UnVerifyEmail.Add(user.UserId, verifyCode);
-                        }
-                        catch 
-                        {
-                            GlobalVariable.UnVerifyEmail = new Dictionary<string, string> {{user.UserId, verifyCode}};
-                        }
+                    //bool isEmailSent = sendEmail(email, " Fly pack please verify your email address.",
+                    //    $"Almost done,{name}! To complete your  sign up, we just need to verify your email address: {email}.<br/> Verification code: {verifyCode}<br/> Once verified, you can start order products.<br/>You’re receiving this email because you recently created a new Fly Pack account or added a new email address.<br/> If this wasn’t you, please ignore this email.<br/>Thanks,<br/>The Fly Pack Team");
 
-                        if (isCustomer)
-                        {
-                            Response.Redirect("VerifyEmail.aspx");
-                        }
-                        
+                    //if (!isEmailSent)
+                    //{
+                    //    MSG.Text = "unvalidated email address";//error massage
+                    //}
+                    //else
+                    //{
+                    MSG.Text = " email sent, code- " + verifyCode;// email to del
+                    BlOrderUser currentUser = (BlOrderUser)Session["user"];
+                    bool isCustomer = (currentUser != null && currentUser.Type == 4);
+                    if (isCustomer)
+                    {
+                        Session["user"] = new BlOrderUser(user.Password);
                     }
+
+                    try
+                    {
+                        Dictionary<string, string> emailVerify = ((Dictionary<string, string>)Application["UnVerifyEmail"]);
+                        emailVerify?.Add(user.UserId, verifyCode);
+                    }
+                    catch
+                    {
+                        Application["UnVerifyEmail"] = new Dictionary<string, string> { { user.UserId, verifyCode } };
+                    }
+                    //try
+                    //{
+                    //    GlobalVariable.UnVerifyEmail.Add(user.UserId, verifyCode);
+                    //}
+                    //catch
+                    //{
+                    //    GlobalVariable.UnVerifyEmail = new Dictionary<string, string> { { user.UserId, verifyCode } };
+                    //}
+
+                    if (isCustomer)
+                    {
+                        Response.Redirect("VerifyEmail.aspx");
+                    }
+
+                    //}
                 }
                 else
                 {
