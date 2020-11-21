@@ -14,8 +14,8 @@ namespace BLFlyPack
         public int orderId { get; set; }
         public int productId { get; set; }
         public int amount { get; set; }
-        public int price { get; set; }
-        public BLOrderDetails(int orderId, int productId, int amount, int price)
+        public double price { get; set; }
+        public BLOrderDetails(int orderId, int productId, int amount, double price)
         {
             this.Id = OrderDetails.AddDetail(orderId, productId, amount, price);
             this.orderId = orderId;
@@ -48,6 +48,12 @@ namespace BLFlyPack
         {
             DataTable details = OrderDetails.GetDetailsOfOrder(orderId);
             return (from DataRow row in details.Rows select new BLOrderDetails((DataRow) row)).ToList();
+        }
+
+        public static bool UpdateOrderDetails(List<BLProduct> products,int orderId,int[] amounts)
+        {
+            List<BLOrderDetails> OrderDetails=(from product in products select new BLOrderDetails(orderId, product.Id, amounts[(int) products.IndexOf(product)], product.Price)).ToList();
+            return OrderDetails.All(OrderDetail => OrderDetail?.Id != -1);
         }
 
     }

@@ -16,19 +16,29 @@ namespace UIFlyPack
             if (!Page.IsPostBack)
             {
                 Update(productsCart);
-                //Update(BLProduct.GetAllProducts(""));//to del
             }
             OrderNow.Visible = productsCart?.Count > 0;
         }
 
+        public void UpdateSumCart(List<BLProduct> productsCart)
+        {
+            int[] productAmounts = (int[])Session["productAmount"];
+            int numOfProducts = BLProduct.SumArr(productAmounts);
+            NumOfProducts.Text = "Num Of Products-" + numOfProducts;
+            double totalPrice = BLProduct.TotalPrice(productsCart, productAmounts);
+            TotalPrice.Text = "Total Price-" + totalPrice;
+        }
         public void Update(List<BLProduct> products)
         {
             ProductsCart.DataSource = products;
             Session["productsCart"] = products;
             ProductsCart.DataBind();
+            UpdateSumCart(products);
             if (products == null || products.Count == 0)
             {
                 MSG.Text = "there is no products"; //error msg
+                NumOfProducts.Text = "";
+                TotalPrice.Text = "";
                 return;
             }
             MSG.Text = "";
@@ -42,6 +52,10 @@ namespace UIFlyPack
                 int DeleteIndex = e.Item.ItemIndex;
                 productsCart.RemoveAt(DeleteIndex);
                 int[] amounts = (int[])Session["productAmount"];
+                //update num of products
+                int numOfProducts = (int)Session["numOfProducts"];
+                Session["numOfProducts"] = numOfProducts -1;
+                //update amounts arr
                 BLProduct.Delete(amounts, DeleteIndex);
                 Session["productAmount"] = amounts;
                 Update(productsCart);
@@ -59,6 +73,19 @@ namespace UIFlyPack
             }
             Label l = (Label)e.Item.FindControl("amount");//ContentPlaceHolder1_ProductsCart_amount_0
             l.Text = "" + amount;
+        }
+
+        protected void OrderNow_OnClick(object sender, EventArgs e)
+        {
+            List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
+            BLProduct product = productsCart[0];
+            int shopId = BLProduct.GetShopIdByProductId(product.Id);
+            Response.Redirect("OrderNow.aspx?shopId=" + shopId);
+        }
+
+        protected void XButton_OnClick(object sender, ImageClickEventArgs e)
+        {
+            shoppingCartPanel.Visible = false;
         }
     }
 }

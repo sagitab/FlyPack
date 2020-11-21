@@ -48,7 +48,7 @@
                 <asp:Label ID="UserString"  runat="server" Text=""></asp:Label>
             </li>
             <li >
-                <asp:ImageButton runat="server"  ImageUrl="Img/shopping-cart%20(1).png" OnClick="OnClick"  CssClass="ShopingCartIcon" />
+                <asp:ImageButton runat="server"  ImageUrl="Img/shopping-cart%20(1).png" OnClick="shoppingCartB_OnClick" ID="shoppingCartB"  CssClass="ShopingCartIcon" />
             </li>
         </ul>
     </div>
@@ -119,6 +119,41 @@
         </ul>
     </div>
    
+    <asp:Panel runat="server" CssClass="shoppingCart" ID="shoppingCartPanel" Visible="False">
+        <asp:Label runat="server" ID="MSG" CssClass="BigErrorMSG"></asp:Label>
+        <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="XButton_OnClick" ID="XButton"/>
+    <div class="ProductDiv">
+        <asp:DataList ID="ProductsCart" CellPadding="20" CellSpacing="30" RepeatDirection="Horizontal" RepeatLayout="Table" RepeatColumns="1" runat="server"  OnItemCommand="ProductsCart_OnItemCommand" OnItemDataBound="ProductsCart_OnItemDataBound" >
+            <ItemTemplate>
+                <div class="Product">
+                    <asp:Image id="ProductPic" AlternateText="Product picture" 
+                               ImageUrl='<%# "../ProductsImg/"+Eval("ImageUrl") %>'
+                               runat="server" CssClass="ProductPics"/>
+                    <div class="ProductInfo">
+                        <ul style="margin-top: 6vh;">
+                            <li style=" margin-left: 7vh;"> <asp:Label runat="server"  ID="productName" Text='<%#  Eval("Description")  %>'></asp:Label></li>
+                            <li style=" margin-left: 11vh; display: contents;">
+                                 <asp:Label runat="server" ID="productPrice" Text='<%#Eval( "Price","${0}") %>'></asp:Label>
+                                <br/>
+                                <asp:Label runat="server" ID="amount" Text="" CssClass="Header" ></asp:Label>
+                                <div class="ProductBDiv">
+                                    <asp:LinkButton runat="server"  CommandName="Remove"   CssClass="ProductB"><img src="Img/delete.png" class="garbageImg" /></asp:LinkButton>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </ItemTemplate>
+        </asp:DataList>
+    </div>
+        <div class="SumOrder" style="">
+            <asp:Label runat="server" Text="" CssClass="Header" ID="NumOfProducts"></asp:Label>
+            <asp:Label runat="server" Text="" CssClass="Header" ID="TotalPrice"></asp:Label>
+        </div>
+       
+    <asp:Button runat="server" ID="OrderNow" Visible="False" CssClass="LargeButton" Text="Order now!!!" OnClick="OrderNow_OnClick"/>
+    </asp:Panel>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>

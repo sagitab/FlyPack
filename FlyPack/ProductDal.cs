@@ -34,5 +34,10 @@ namespace FlyPack
         {
             return DalHelper.Select("SELECT * FROM Products GROUP BY Description "+condition);
         }
+
+        public static DataTable GetShopIdByProductId(int productId)
+        {
+            return DalHelper.Select("SELECT ShopID FROM Products WHERE ID="+productId);
+        }
     }
 }

@@ -2,34 +2,58 @@
 <%@ Register src="Product.ascx" tagName="Products" tagPrefix="FlyPackControls" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-       .ProductB {
-           margin: 0.3em 4vh;
-           margin-left: 10vh;
-           padding-bottom: 6vh;
-           position: absolute;
-           left: 72%;
-           top: 19%;
-           background-color: black;
-       }
+        /*.shoppingCart .ProductB {
+            margin: 4vh 45.5%;
+            margin-left: 10vh;
+            padding-bottom: 8vh;
+            position: absolute;
+            left: 72%;
+            top: -2%;
+            background-color: black;
+        }
       
-       .Product {
-           padding-left: 5vh;
-           width: 160%;
-           position: relative;
-       }
-       .ProductPics {
-           padding: 3vh 3vh;
-       }
-       .Header {
-           margin: 3vh;
-           position: absolute;
-           left: 70%;
-           top: 20%;
-       }
+        .shoppingCart .Product {
+            padding-left: 5vh;
+            width: 160%;
+            position: relative;
+            display: inline-flex;
+            float: left;
+            transform: translate(-46vh, 18px);
+        }
+        .shoppingCart .ProductPics {
+            padding: 3vh 3vh;
+        }
+        .shoppingCart .Header {
+            margin: 3vh;
+            position: absolute;
+            left: 70%;
+            top: 20%;
+        }
+        .shoppingCart .LargeButton {
+            margin: 4vh 45.85%;
+        }
+        .SumOrder {
+            float: left;
+            transform: translate(34vh, 0vh);
+        }
+        .SumOrder .Header {
+            padding: 3vh;
+            margin-bottom: 2vh;
+        }
+        .SumOrder span {
+            padding: 3vh;
+            left: auto;
+            margin: auto;
+            transform: translate(-20vh, -1vh);
+            position: inherit;
+        }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Label runat="server" ID="MSG" CssClass="BigErrorMSG"></asp:Label>
+   
+    <asp:Panel runat="server" CssClass="shoppingCart" ID="shoppingCartPanel">
+        <asp:Label runat="server" ID="MSG" CssClass="BigErrorMSG"></asp:Label>
+        <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="XButton_OnClick" ID="XButton"/>
     <div class="ProductDiv">
         <asp:DataList ID="ProductsCart" CellPadding="20" CellSpacing="30" RepeatDirection="Horizontal" RepeatLayout="Table" RepeatColumns="1" runat="server"  OnItemCommand="ProductsCart_OnItemCommand" OnItemDataBound="ProductsCart_OnItemDataBound" >
             <ItemTemplate>
@@ -54,5 +78,11 @@
             </ItemTemplate>
         </asp:DataList>
     </div>
-    <asp:Button runat="server" ID="OrderNow" Visible="False" CssClass="LargeButton" Text="Order now!!!"/>
+        <div class="SumOrder" style="">
+            <asp:Label runat="server" Text="" CssClass="Header" ID="NumOfProducts"></asp:Label>
+            <asp:Label runat="server" Text="" CssClass="Header" ID="TotalPrice"></asp:Label>
+        </div>
+       
+    <asp:Button runat="server" ID="OrderNow" Visible="False" CssClass="LargeButton" Text="Order now!!!" OnClick="OrderNow_OnClick"/>
+    </asp:Panel>
 </asp:Content>

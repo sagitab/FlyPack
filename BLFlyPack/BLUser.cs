@@ -9,6 +9,13 @@ namespace BLFlyPack
 {
     public class BlUser
     {
+        public static  int Customer => 4;
+
+        public static int Delivery => 3;
+
+        public static int SystemManager => 2;
+
+        public static int ShopManager => 1;
 
         public string UserId { get; set; }
         public int Type { get; }

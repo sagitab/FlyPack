@@ -15,6 +15,15 @@ namespace UIFlyPack
     {
 
         /// <summary>
+        /// shoppingCartPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel shoppingCartPanel;
+
+        /// <summary>
         /// MSG control.
         /// </summary>
         /// <remarks>
@@ -24,6 +33,15 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.Label MSG;
 
         /// <summary>
+        /// XButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton XButton;
+
+        /// <summary>
         /// ProductsCart control.
         /// </summary>
         /// <remarks>
@@ -31,6 +49,24 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataList ProductsCart;
+
+        /// <summary>
+        /// NumOfProducts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NumOfProducts;
+
+        /// <summary>
+        /// TotalPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TotalPrice;
 
         /// <summary>
         /// OrderNow control.

@@ -105,6 +105,7 @@
     <Content Include="Img\shopIcon.png" />
     <Content Include="Img\shopping-cart %281%29.png" />
     <Content Include="Img\skyBG.jpg" />
+    <Content Include="Img\x-button.png" />
     <Content Include="LogIn.aspx" />
     <Content Include="ManegerInfo.aspx" />
     <Content Include="OrderNow.aspx" />

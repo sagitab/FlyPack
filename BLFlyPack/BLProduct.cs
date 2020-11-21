@@ -116,6 +116,10 @@ namespace BLFlyPack
         }
         public static int SumArr(int[] arr)
         {
+            if (arr==null)
+            {
+                return 0;
+            }
             int sum = 0;
             foreach (var t in arr)
             {
@@ -143,6 +147,28 @@ namespace BLFlyPack
                 }
             }
             return -1;
+        }
+        public static int GetShopIdByProductId(int productId)
+        {
+            return int.Parse(ProductDal.GetShopIdByProductId(productId).Rows[0]["ShopID"].ToString()) ;
+        }
+
+        public static double TotalPrice(List<BLProduct> products, int[] amounts)
+        {
+            if (products!=null)
+            {
+                return products.Select((product, i) => product.Price * amounts[i]).Sum();
+            }
+            else
+            {
+                return 0;
+            }
+           
+        }
+
+        public override string ToString()
+        {
+            return this.Description + "<br/> $" + this.Price;
         }
     }
 }

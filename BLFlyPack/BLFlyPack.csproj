@@ -48,6 +48,7 @@
     <Compile Include="BLProduct.cs" />
     <Compile Include="Deliver.cs" />
     <Compile Include="General.cs" />
+    <Compile Include="BLOrderDetail.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLUser.cs" />

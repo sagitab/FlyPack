@@ -11,16 +11,20 @@ namespace FlyPack
     {
         public static int AddDetail(int orderId, int productId, int amount,double price)
         {
-            return DalHelper.Insert($"INSERT INTO OrderDetails(OrderID,ProductID,Amount,Price) VALUES({orderId},{productId},{amount},{price},) ");
+            return DalHelper.Insert($"INSERT INTO OrderDetails(OrderID,ProductID,Amount,Price) VALUES({orderId},{productId},{amount},{price}) ");
         }
 
         public static DataTable GetDetailsOfOrder(int orderId)
         {
             return DalHelper.AllWhere("OrderDetails", "OrderID",orderId);
         }
-        public static bool UpdateAmount(int Id, int amount)
+        public static bool UpdateAmount(int id, int amount)
         {
-            return DalHelper.UpdateColumnById(Id, "OrderDetails", "ID", "" + amount, "Amount");
+            return DalHelper.UpdateColumnById(id, "OrderDetails", "ID", "" + amount, "Amount");
+        }
+        public static DataTable GetProductListByOrderId(int orderId)
+        {
+            return DalHelper.Select("SELECT Products.*, OrderDetails.Amount, OrderDetails.Price AS DetailPrice FROM Products INNER JOIN OrderDetails ON Products.ID = OrderDetails.ProductID WHERE [OrderDetails].[OrderID]=" + orderId);
         }
     }
 }

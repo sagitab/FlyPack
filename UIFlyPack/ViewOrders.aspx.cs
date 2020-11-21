@@ -12,7 +12,7 @@ namespace UIFlyPack
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-          /*  Session["user"] = (BlUser)new BlShopManager("12345678");*///del
+            /*  Session["user"] = (BlUser)new BlShopManager("12345678");*///del
             BlUser user = (BlUser)Session["user"];
             if (!Page.IsPostBack)
             {
@@ -48,8 +48,6 @@ namespace UIFlyPack
                     }
                 }
 
-
-
                 int type = user.Type;
                 switch (type)//add command fields by user type
                 {
@@ -63,6 +61,13 @@ namespace UIFlyPack
                             };
 
                             OrderTable.Columns.Add(cf);
+                            ButtonField b = new ButtonField
+                            {
+                                Text = "Show order details",
+                                ButtonType = ButtonType.Button,
+                                CommandName = "ShowOrderDetails"
+                            };
+                            OrderTable.Columns.Add(b);
                             break;
                         }
                     case 3:
@@ -163,7 +168,7 @@ namespace UIFlyPack
             {
                 case "N":
                     int numOfColums = OrderTable.Columns.Count;
-                    if (numOfColums>0)
+                    if (numOfColums > 0)
                     {
                         OrderTable.Columns[numOfColums - 1].Visible = true;
                     }
@@ -287,7 +292,7 @@ namespace UIFlyPack
                 DateTime exitTime = DateTime.Now;
                 //get global vars
                 double distanceToCustomerHome = GlobalVariable.Distance;
-                int speed= GlobalVariable.Speed;
+                int speed = GlobalVariable.Speed;
                 //calculate minutes
                 double minutes = distanceToCustomerHome / speed;
                 DateTime arrivalTime = exitTime.AddMinutes(5 + minutes);//add 5 minute of insure 
@@ -306,7 +311,7 @@ namespace UIFlyPack
                     //myButton.CommandName = "started";
                     ErMSG.Text = "fail to start order ";//massage error
                     UpOrders((BlUser)Session["user"], "");//update table
-                  
+
                 }
             }
             else if (e.CommandName == "updateReadyTime" /*&& status == 2*/)
@@ -347,14 +352,14 @@ namespace UIFlyPack
             {
                 if (status == 4/*&&BlOrder.UpdateStatus(status + 1, orderId)*/)//update order status
                 {
-                    BlUser customer =  BlUser.UserById(order.CustomerId);
+                    BlUser customer = BlUser.UserById(order.CustomerId);
                     NewOrOld.SelectedIndex = 1;//to see that the orders turn to old one
                     UpOrders(customer, "");//update table
                     //send email to customer
                     bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
                         $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
                     if (!isEmailSent)
-                    { 
+                    {
                         //take care if email dont send
                     }
                 }
@@ -366,8 +371,34 @@ namespace UIFlyPack
 
 
             }
+            else if (e.CommandName == "ShowOrderDetails")
+            {
+                List<BLOrderDetail> orderDetails = BLOrderDetail.GetOrderDetailsByOrderId(orderId);
+                Update(orderDetails);
+                shoppingCartPanel.Visible = true;
+            }
         }
-
+        public void Update(List<BLOrderDetail> products)
+        {
+            ProductsCart.DataSource = products;
+            ProductsCart.DataBind();
+            UpdateSumCart(products);
+            if (products == null || products.Count == 0)
+            {
+                MSG.Text = "there is no products"; //error msg
+                NumOfProducts.Text = "";
+                TotalPrice.Text = "";
+                return;
+            }
+            MSG.Text = "";
+        }
+        public void UpdateSumCart(List<BLOrderDetail> productsCart)
+        {
+            int numOfProducts = BLOrderDetail.TotalAmount(productsCart);
+            NumOfProducts.Text = "Num Of Products-" + numOfProducts;
+            double totalPrice = BLOrderDetail.TotalPrice(productsCart);
+            TotalPrice.Text = "Total Price-" + totalPrice;
+        }
         //public  void GetBestWayLists(Deliver deliver)
         //{
         //    List<BlOrder> orders = deliver.GetOrdersListByTime();

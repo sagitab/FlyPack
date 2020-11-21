@@ -93,6 +93,7 @@ namespace UIFlyPack
                             Session["productsCart"] = productsCart;
                             Session["productAmount"] = productAmounts;
                             addToCartMsg.Text = "product amount updated!!";
+                            Response.Redirect("Store.aspx");
                         }
                         else
                         {
@@ -111,6 +112,7 @@ namespace UIFlyPack
                             Session["productAmount"] = productAmounts;
                             Session["productsCart"] = productsCart;
                             addToCartMsg.Text = "product added to cart!!";
+                            Response.Redirect("Store.aspx");
                         }
                     }
 
@@ -119,10 +121,11 @@ namespace UIFlyPack
                 }
                 catch
                 {
-                    Session["productsCart"] = new List<BLProduct>() { product };
-                    int[] amountArr = new int[maxOfProductPerOrder - 1];
-                    amountArr[0] = 1;
-                    Session["productAmount"] = amountArr;
+                    //Session["productsCart"] = new List<BLProduct>() { product };
+                    //int[] amountArr = new int[maxOfProductPerOrder - 1];
+                    //amountArr[0] = 1;
+                    //Session["productAmount"] = amountArr;
+                    MSG.Text = "error!!! :("; //error msg
                 }
             }
         }

@@ -5,6 +5,11 @@
         .ErrorMSG {
             margin-left: 2%;
         }
+        .shoppingCart {
+            position: absolute;
+            left: 35vh;
+        }
+       
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -35,16 +40,45 @@
        </li>
 
         <li style="">
-
+            <div  id="OrderTableDiv"style="position: relative;">
             <asp:GridView ID="OrderTable" runat="server" AutoGenerateColumns="false" CssClass="content-table" OnRowDeleting="OrderTable_RowDeleting" OnRowCommand="OrderTable_RowCommand"   >
             </asp:GridView>
+            </div>
         </li>
         <li>
             <asp:Label ID="ErMSG" runat="server" Text="" CssClass="BigErrorMSG"></asp:Label>
         </li>
     </ul>
 
-
+    <asp:Panel runat="server" CssClass="shoppingCart" ID="shoppingCartPanel" Visible="False">
+     <asp:Label runat="server" ID="ProductError" CssClass="BigErrorMSG"></asp:Label>
+    <div class="ProductDiv">
+        <asp:DataList ID="ProductsCart" CellPadding="20" CellSpacing="30" RepeatDirection="Horizontal" RepeatLayout="Table" RepeatColumns="1" runat="server"   >
+            <ItemTemplate>
+                <div class="Product">
+                    <asp:Image id="ProductPic" AlternateText="Product picture" 
+                               ImageUrl='<%# "../ProductsImg/"+Eval("Product.ImageUrl") %>'
+                               runat="server" CssClass="ProductPics"/>
+                    <div class="ProductInfo">
+                        <ul style="margin-top: 6vh;">
+                            <li style=" margin-left: 7vh;"> <asp:Label runat="server"  ID="productName" Text='<%#  Eval("Product.Description")  %>'></asp:Label></li>
+                            <li style=" margin-left: 11vh; display: contents;">
+                                 <asp:Label runat="server" ID="productPrice" Text='<%#Eval( "Product.Price","${0}") %>'></asp:Label>
+                                <br/>
+                                <asp:Label runat="server" ID="amount" Text='<%#Eval( "Amount") %>' CssClass="Header" ></asp:Label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </ItemTemplate>
+        </asp:DataList>
+    </div>
+        <div class="SumOrder" style="">
+            <asp:Label runat="server" Text="" CssClass="Header" ID="NumOfProducts"></asp:Label>
+            <asp:Label runat="server" Text="" CssClass="Header" ID="TotalPrice"></asp:Label>
+        </div>
+    </asp:Panel>
 
 
 

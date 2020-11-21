@@ -8,20 +8,20 @@
         <li>
             <span class="Header" >Place your order</span>
         </li>
-        <li>
+<%--        <li>
              <span  > Shop </span>
         </li>
          <li>           
           <asp:DropDownList ID="ShopDropDownList" runat="server" CssClass="Select" >
              </asp:DropDownList>
-       <%-- <li>
+        <li>
              <span  >Shop order id</span>
         </li>
         <li>           
             <asp:TextBox ID="ShopOrderID" runat="server" CssClass="TextBox"></asp:TextBox>
                <asp:RangeValidator ID="RangeShopOrderID" runat="server" ErrorMessage="no" Type="Integer" MaximumValue="10" MinimumValue="1" ControlToValidate="ShopOrderID"></asp:RangeValidator>
-        </li>--%>
-       <%--  <li>
+        </li>
+         <li>
              <span  class="Header" >Arirval time</span>
         </li>
         <li>           
@@ -46,10 +46,8 @@
          <li>
              <asp:Button runat="server" ID="OrderB" OnClick="OrderB_Click" CssClass="LargeButton" Text="Order" />
         </li>
-        <li>          
-            
+        <li>
             <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG"></asp:Label>
-            
         </li>
         </ul>
         </div>

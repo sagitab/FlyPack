@@ -18,18 +18,15 @@ namespace UIFlyPack
                 //DateTime time = new DateTime(2020, 9, 9, 1, 30, 0);
                 //times.Items[0].Value = time.ToString() ;
                 //set data source
-                ShopDropDownList.DataSource = BLFlyPack.BlShop.GetShops();
-                ShopDropDownList.DataTextField = "ShopName";
-                ShopDropDownList.DataValueField = "ID";
-                // Bind the data to the control.
-                ShopDropDownList.DataBind();
-
-                // Set the default selected item, if desired.
-                ShopDropDownList.SelectedIndex = 0;
+                //ShopDropDownList.DataSource = BLFlyPack.BlShop.GetShops();
+                //ShopDropDownList.DataTextField = "ShopName";
+                //ShopDropDownList.DataValueField = "ID";
+                //// Bind the data to the control.
+                //ShopDropDownList.DataBind();
+                //// Set the default selected item, if desired.
+                //ShopDropDownList.SelectedIndex = 0;
             }
-
             Validate();
-
         }
         public static double GetLat(string LatLng)
         {
@@ -59,7 +56,7 @@ namespace UIFlyPack
             /* int shopOrderId = int.Parse(ShopOrderID.Text);*/ //ShopDropDownList
             string address = Adress.Text;
             //string arriveTime = times.Items[times.SelectedIndex].Value.ToString();
-            int shopId = int.Parse(ShopDropDownList.SelectedValue);
+            int shopId = int.Parse(Request.QueryString.Get("shopId"));
             //DateTime arriveDateTime = DateTime.Parse(arriveTime);
             int numOfFloor = 0;
             try
@@ -87,7 +84,15 @@ namespace UIFlyPack
                 try
                 {
                     BlOrder order = new BlOrder(user.UserId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor);//add order
-                    MSG.Text = order.OrderId != -1 ? "order successes!!" : "order failed :(";//fail/success massage
+                    //update order details
+                    bool success = order.OrderId != -1;
+                    List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
+                    int[] productAmounts = (int[])Session["productAmount"];
+                    if (success)
+                    {
+                        success= BLOrderDetails.UpdateOrderDetails(productsCart, order.OrderId, productAmounts);
+                    }
+                    MSG.Text = success ? "order successes!!" : "order failed :(";//fail/success massage
                     BlOrderUser customer=new BlOrderUser(order.CustomerId);
                     bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
                         $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
@@ -112,8 +117,6 @@ namespace UIFlyPack
             {
                 NumOfFloor.CssClass = NumOfFloorValidator.IsValid ? "TextBox" : "TextBoxUnValidValue";//convert the the bob style by the validator
             }
-            
-
         }
     }
 }

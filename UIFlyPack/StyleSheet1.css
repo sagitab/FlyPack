@@ -16,6 +16,129 @@ body {
 a:hover {
     text-decoration: underline;
 }
+#NumOfProducts, #TotalPrice, #ContentPlaceHolder1_TotalPrice, #ContentPlaceHolder1_NumOfProducts {
+    display: contents;
+}
+.Xbutton {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    height: 3vh;
+    width: 3vh;
+    margin: 2vh;
+}
+.shoppingCart .ProductB {
+    margin: 4vh 45.5%;
+    margin-left: 10vh;
+    padding-bottom: 8vh;
+    position: absolute;
+    left: 72%;
+    top: -2%;
+    background-color: black;
+}
+      
+        .shoppingCart .Product {
+            padding-left: 5vh;
+            width: 160%;
+            position: relative;
+            display: inline-flex;
+            float: left;
+            transform: translate(-46vh, 18px);
+        }
+        .shoppingCart .ProductPics {
+            padding: 3vh 3vh;
+        }
+        .shoppingCart .Header {
+            margin: 3vh;
+            position: absolute;
+            left: 70%;
+            top: 20%;
+        }
+        .shoppingCart .LargeButton {
+            margin: 4vh 45.85%;
+        }
+        .SumOrder {
+            float: left;
+            transform: translate(34vh, 0vh);
+        }
+        .SumOrder .Header {
+            padding: 3vh;
+            margin-bottom: 2vh;
+        }
+        .SumOrder span {
+            padding: 3vh;
+            left: auto;
+            margin: auto;
+            transform: translate(-20vh, -1vh);
+            position: inherit;
+        }
+.shoppingCart.ProductB {
+    margin: 4vh 45.5%;
+    margin-left: 10vh;
+    padding-bottom: 8vh;
+    position: absolute;
+    left: 72%;
+    top: -2%;
+    background-color: black;
+}
+
+.shoppingCart.Product {
+    padding-left: 5vh;
+    width: 160%;
+    position: relative;
+    display: inline-flex;
+    float: left;
+    transform: translate(-46vh, 18px);
+}
+
+.shoppingCart.ProductPics {
+    padding: 3vh 3vh;
+}
+
+.shoppingCart.Header {
+    margin: 3vh;
+    position: absolute;
+    left: 70%;
+    top: 20%;
+}
+
+.shoppingCart.LargeButton {
+    margin: 4vh 45.85%;
+}
+
+.SumOrder {
+    float: left;
+    transform: translate(34vh, 0vh);
+}
+
+.SumOrder.Header {
+    padding: 3vh;
+    margin-bottom: 2vh;
+}
+
+.SumOrder span {
+    padding: 3vh;
+    left: auto;
+    margin: auto;
+    transform: translate(-20vh, -1vh);
+    position: inherit;
+}
+.shoppingCart .BigErrorMSG {
+    text-decoration: underline;
+    margin: 23vh auto;
+}
+.shoppingCart {
+    float: left;
+    background-color: white;
+    height: 40vh;
+    width: 120vh;
+    opacity: 0.88;
+    height: 50vh;
+    margin-top: 2vh;
+    margin-left: 0.8vh;
+    position: relative;
+    z-index: 1000;
+}
 .garbageImg {
     height: 10vh;
 }
@@ -36,7 +159,7 @@ a:hover {
 }
 .Product {
     background-color: black;
-    width: 90%
+    width: 90%;
 }
 .ProductPics {
     padding: 3vh 12vh;
