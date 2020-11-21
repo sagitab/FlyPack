@@ -13,6 +13,23 @@ namespace UIFlyPack
         public string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                string SisAddedNew = Request.QueryString.Get("errorMSG");
+                if (SisAddedNew!=null)
+                {
+                    bool isAddedNew = bool.Parse(SisAddedNew);
+                    MSG.Text = isAddedNew ? "product added to cart!!" : "product amount updated!!";
+                    Request.QueryString.Clear();
+                    return;
+                }
+              
+            }
+            catch 
+            {
+                //do nothing
+            }
+       
             if (!Page.IsPostBack)
             {
                 //set data source

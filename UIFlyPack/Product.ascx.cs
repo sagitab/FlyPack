@@ -92,8 +92,7 @@ namespace UIFlyPack
                             productAmounts[indexOfProduct]++;
                             Session["productsCart"] = productsCart;
                             Session["productAmount"] = productAmounts;
-                            addToCartMsg.Text = "product amount updated!!";
-                            Response.Redirect("Store.aspx");
+                            Response.Redirect("Store.aspx?errorMSG=false");
                         }
                         else
                         {
@@ -111,8 +110,7 @@ namespace UIFlyPack
                             }
                             Session["productAmount"] = productAmounts;
                             Session["productsCart"] = productsCart;
-                            addToCartMsg.Text = "product added to cart!!";
-                            Response.Redirect("Store.aspx");
+                            Response.Redirect($"Store.aspx?errorMSG=true");
                         }
                     }
 

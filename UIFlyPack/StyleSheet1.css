@@ -127,10 +127,13 @@ a:hover {
     text-decoration: underline;
     margin: 23vh auto;
 }
+#shoppingCartPanel {
+    height: auto;
+}
 .shoppingCart {
     float: left;
     background-color: white;
-    height: 40vh;
+    height: auto;
     width: 120vh;
     opacity: 0.88;
     height: 50vh;
