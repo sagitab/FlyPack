@@ -56,5 +56,15 @@ namespace BLFlyPack
             return OrderDetails.All(OrderDetail => OrderDetail?.Id != -1);
         }
 
+        public override string ToString()
+        {
+            return $"{BLProduct.GetProductNameById(productId)}, price-{price},amount-{amount}";
+        }
+
+        public static string GetProductString(List<BLOrderDetails> orderDetails)
+        {
+            return orderDetails.Aggregate("", (current, detail) => current + ("<br/>" + detail.ToString()));
+        }
+
     }
 }

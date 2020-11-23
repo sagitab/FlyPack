@@ -16,8 +16,11 @@ body {
 a:hover {
     text-decoration: underline;
 }
-#NumOfProducts, #TotalPrice, #ContentPlaceHolder1_TotalPrice, #ContentPlaceHolder1_NumOfProducts {
+#NumOfProducts, #TotalPrice, #ContentPlaceHolder1_TotalPrice, #ContentPlaceHolder1_NumOfProducts  {
     display: contents;
+}
+#ContentPlaceHolder1_shoppingCartPanel {
+    height: auto;
 }
 .Xbutton {
     position: absolute;

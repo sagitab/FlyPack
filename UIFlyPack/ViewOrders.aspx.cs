@@ -230,9 +230,14 @@ namespace UIFlyPack
                 return;
             }
 
-            if (!success) return;
+            if (!success)
+            {
+                MSG.Text = "to late to cancel this order please try another order";
+                return;
+            }
             MSG.Text = "order cancel successfully";//success massage
-            Response.Redirect("ViewOrders.aspx");
+            UpOrders((BlUser)Session["user"], "");
+
             //Page_Load(sender, e);
         }
 
@@ -254,8 +259,8 @@ namespace UIFlyPack
                     break;
                 case "OrderStutus":
                     {
-                        Dictionary<int, string> stautus = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
-                        condition = $"AND (Orders.OrderStutus={stautus.FirstOrDefault(x => x.Value == value).Key})";
+                        Dictionary<int, string> status = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
+                        condition = $"AND (Orders.OrderStutus={status.FirstOrDefault(x => x.Value == value).Key})";
                         break;
                     }
                 case "FirstName" when user.Type != 3:
@@ -340,8 +345,10 @@ namespace UIFlyPack
                     myButton.CommandName = "Ready";
                     UpOrders((BlUser)Session["user"], "");//update table
                     BlUser userToSendMailTo = BlUser.UserById(order.DeliveryId);
+                    List<BLOrderDetails> Details = BLOrderDetails.DetailsListOfOrder(orderId);
+                    string productsString = BLOrderDetails.GetProductString(Details);
                     bool isEmailSent = Register.sendEmail(userToSendMailTo.Email, " Fly pack you have a new order to deliver",
-                        $"Hi,{userToSendMailTo} please accept your order .Have a nice day,The Fly Pack Team");
+                        $"Hi,{userToSendMailTo} please accept your order as soon as you can.Here a summery of the order's products <br/> {productsString} <br/> Have a nice day,The Fly Pack Team");
                     if (!isEmailSent)
                     {
                         //take care if email dont send
@@ -385,12 +392,12 @@ namespace UIFlyPack
             UpdateSumCart(products);
             if (products == null || products.Count == 0)
             {
-                MSG.Text = "there is no products"; //error msg
+                ProductError.Text = "there is no products"; //error msg
                 NumOfProducts.Text = "";
                 TotalPrice.Text = "";
                 return;
             }
-            MSG.Text = "";
+            ProductError.Text = "";
         }
         public void UpdateSumCart(List<BLOrderDetail> productsCart)
         {
@@ -451,5 +458,9 @@ namespace UIFlyPack
         //    //}
 
         //}
+        protected void XButton_OnClick(object sender, ImageClickEventArgs e)
+        {
+            shoppingCartPanel.Visible = false;
+        }
     }
 }

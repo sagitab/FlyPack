@@ -18,6 +18,17 @@ namespace BLFlyPack
         public int ShopProductCode { get; set; }
         public string ImageUrl { get; set; } /*name in DB Image*/
 
+        public static string GetProductNameById(int productId)
+        {
+            try
+            {
+                return GetProductNameById(productId);
+            }
+            catch
+            {
+                return "";
+            }
+        }
         public BLProduct(int id, double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
         {
             Id = id;//update DB?
@@ -28,7 +39,33 @@ namespace BLFlyPack
             ShopProductCode = shopProductCode;
             ImageUrl = imageUrl;
         }
+        //add product to DB
+        public BLProduct(double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
+        {
+            Id = ProductDal.AddProduct(price, description, shopId, orderId, shopProductCode, imageUrl);
+            Price = price;
+            Description = description;
+            ShopID = shopId;
+            OrderID = orderId;
+            ShopProductCode = shopProductCode;
+            ImageUrl = imageUrl;
+        }
+        public static BLProduct AddProductByDataRow(DataRow row,int shopId)
+        {
+            double Price = double.Parse(row["Price"].ToString());
+            string Description = row["Description"].ToString();
+            int OrderID = int.Parse(row["OrderID"].ToString());
+            int ShopProductCode = int.Parse(row["ShopProductCode"].ToString());
+            string ImageUrl = row["Image"].ToString();
+            int Id = ProductDal.AddProduct(Price, Description, shopId, OrderID, ShopProductCode, ImageUrl);
+            return new BLProduct(Id, Price, Description, shopId, OrderID, ShopProductCode, ImageUrl);
+        }
 
+        public static bool UpdateProduct(DataTable products,int shopId)
+        {
+            List<BLProduct> productsList= (from DataRow row in products.Rows select AddProductByDataRow(row,shopId)).ToList();
+            return productsList.All(product => product?.Id != 1);
+        }
         public BLProduct(DataRow row)
         {
             Id = int.Parse(row["ID"].ToString());
@@ -45,10 +82,10 @@ namespace BLFlyPack
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
 
-        public static List<BLProduct> GetAllProductsByShopId(int shopId,string condition)
+        public static List<BLProduct> GetAllProductsByShopId(int shopId, string condition)
         {
             DataTable products = null;
-            products = ProductDal.GetAllProductsOfShop(shopId,condition);
+            products = ProductDal.GetAllProductsOfShop(shopId, condition);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
         public static List<BLProduct> GetAllProductsByPrice(bool isUp, string condition)
@@ -116,7 +153,7 @@ namespace BLFlyPack
         }
         public static int SumArr(int[] arr)
         {
-            if (arr==null)
+            if (arr == null)
             {
                 return 0;
             }
@@ -128,15 +165,15 @@ namespace BLFlyPack
             return sum;
         }
 
-        public static void Delete(int[] amounts,int index)
+        public static void Delete(int[] amounts, int index)
         {
             //int temp;
-            for (int i = index; i < amounts.Length-1; i++)
+            for (int i = index; i < amounts.Length - 1; i++)
             {
                 amounts[i] = amounts[i + 1];
             }
         }
-        public static int IndexOfProduct(List<BLProduct> products,BLProduct product)
+        public static int IndexOfProduct(List<BLProduct> products, BLProduct product)
         {
             for (var index = 0; index < products.Count; index++)
             {
@@ -150,12 +187,12 @@ namespace BLFlyPack
         }
         public static int GetShopIdByProductId(int productId)
         {
-            return int.Parse(ProductDal.GetShopIdByProductId(productId).Rows[0]["ShopID"].ToString()) ;
+            return int.Parse(ProductDal.GetShopIdByProductId(productId).Rows[0]["ShopID"].ToString());
         }
 
         public static double TotalPrice(List<BLProduct> products, int[] amounts)
         {
-            if (products!=null)
+            if (products != null)
             {
                 return products.Select((product, i) => product.Price * amounts[i]).Sum();
             }
@@ -163,12 +200,22 @@ namespace BLFlyPack
             {
                 return 0;
             }
-           
+
         }
 
+        public static string GetProductString(List<BLProduct> products, int[] amounts)
+        {
+            string ProductString = "";
+            for (int i = 0; i < products.Count; i++)
+            {
+                BLProduct product = products[i];
+                ProductString += "<br/>" + product.ToString() + " amount-" + amounts[i];
+            }
+            return ProductString;
+        }
         public override string ToString()
         {
-            return this.Description + "<br/> $" + this.Price;
+            return this.Description + " $" + this.Price;
         }
     }
 }

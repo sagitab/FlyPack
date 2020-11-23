@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Product.ascx.cs" Inherits="UIFlyPack.Product" %>
 <asp:Label runat="server" ID="MSG" CssClass="BigErrorMSG"></asp:Label>
-<div class="ProductDiv">
+<div class="ProductDiv" id="storeDiv">
     <asp:DataList ID="ProductsList"
                   CellPadding="20"
                   CellSpacing="30"

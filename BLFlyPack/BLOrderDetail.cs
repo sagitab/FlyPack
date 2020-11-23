@@ -12,7 +12,6 @@ namespace BLFlyPack
     {
         public BLProduct Product { get; set; }
         public  int Amount { get; set; }
-        public string ImageUrl => Product.ImageUrl;
 
         public BLOrderDetail(BLProduct product, int amount)
         {
@@ -44,7 +43,7 @@ namespace BLFlyPack
 
         public override string ToString()
         {
-            return this.Product.ToString();
+            return this.Product.ToString()+ "Amount-" + Amount;
         }
     }
 }

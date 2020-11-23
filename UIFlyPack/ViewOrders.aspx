@@ -47,12 +47,14 @@
         </li>
         <li>
             <asp:Label ID="ErMSG" runat="server" Text="" CssClass="BigErrorMSG"></asp:Label>
+            
         </li>
     </ul>
 
     <asp:Panel runat="server" CssClass="shoppingCart" ID="shoppingCartPanel" Visible="False">
      <asp:Label runat="server" ID="ProductError" CssClass="BigErrorMSG"></asp:Label>
     <div class="ProductDiv">
+        <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="XButton_OnClick" ID="XButton"/>
         <asp:DataList ID="ProductsCart" CellPadding="20" CellSpacing="30" RepeatDirection="Horizontal" RepeatLayout="Table" RepeatColumns="1" runat="server"   >
             <ItemTemplate>
                 <div class="Product">

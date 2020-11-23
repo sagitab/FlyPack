@@ -8,6 +8,14 @@
          bottom: 71%;
          font-size: 1em;
      }
+     #serchedValue {
+         margin-left: 1vh;
+     }
+     #storeDiv {
+         position: absolute;
+         top: 35%;
+         left: -2%;
+     }
  </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -24,8 +32,8 @@
            
         </li>
         <li>
-            <div class="RowDiv" style="margin-left: 31%;margin-top: 5.75%;">
-                <span class="UnderLineHeader"style="margin-bottom: 1%; margin-right: 1%; margin-top: 0%" >Search Products</span>
+            <div class="RowDiv" style="margin-left: 31%;margin-top: 5.75%; position: absolute;">
+                <span class="UnderLineHeader" >Search Products</span>
                 <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
     
                 <select id="SearchBy" name="D1" style="" runat="server" class="Select">

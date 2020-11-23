@@ -94,15 +94,17 @@ namespace UIFlyPack
                     }
                     MSG.Text = success ? "order successes!!" : "order failed :(";//fail/success massage
                     BlOrderUser customer=new BlOrderUser(order.CustomerId);
-                    bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
-                        $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
+                    string prodactsString = BLProduct.GetProductString(productsCart, productAmounts);
+                    
+                    bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack order summery ",
+                        $"Hi,{customer} your order received and we take care your order.here a summery of your  order- <br/>{prodactsString}<br/>Have a nice day,The Fly Pack Team");
                     if (!isEmailSent)
                     {
                         //take care if email dont send
                     }
                     BlOrderUser shopManager = new BlOrderUser(order.CustomerId);
-                    bool isEmailSentToM = Register.sendEmail(shopManager.Email, " Fly pack please update when your products will be ready to be delivered",
-                        $"Hi,{shopManager} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
+                    bool isEmailSentToM = Register.sendEmail(shopManager.Email, " Fly pack a customer order from your shop!!",
+                        $"Hi,{shopManager} please update when your products will be ready to be delivered.here a summery of your  order- <br/>{prodactsString}<br/ Have a nice day,The Fly Pack Team");
                     if (!isEmailSentToM)
                     {
                         //take care if email dont send
