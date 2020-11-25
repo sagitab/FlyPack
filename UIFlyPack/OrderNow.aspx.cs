@@ -15,16 +15,6 @@ namespace UIFlyPack
             if (!Page.IsPostBack)
             {
                 Session["user"] = new BlUser("hoohoo12");
-                //DateTime time = new DateTime(2020, 9, 9, 1, 30, 0);
-                //times.Items[0].Value = time.ToString() ;
-                //set data source
-                //ShopDropDownList.DataSource = BLFlyPack.BlShop.GetShops();
-                //ShopDropDownList.DataTextField = "ShopName";
-                //ShopDropDownList.DataValueField = "ID";
-                //// Bind the data to the control.
-                //ShopDropDownList.DataBind();
-                //// Set the default selected item, if desired.
-                //ShopDropDownList.SelectedIndex = 0;
             }
             Validate();
         }
@@ -53,11 +43,8 @@ namespace UIFlyPack
         {
             //get input values
 
-            /* int shopOrderId = int.Parse(ShopOrderID.Text);*/ //ShopDropDownList
             string address = Adress.Text;
-            //string arriveTime = times.Items[times.SelectedIndex].Value.ToString();
             int shopId = int.Parse(Request.QueryString.Get("shopId"));
-            //DateTime arriveDateTime = DateTime.Parse(arriveTime);
             int numOfFloor = 0;
             try
             {
@@ -66,6 +53,7 @@ namespace UIFlyPack
             catch
             {
                 MSG.Text = "Please enter num Of Floor";//massage
+                return;
             }
             string latLng = this.LatLng.Value.ToString();
             double lat = GetLat(latLng);
@@ -90,10 +78,11 @@ namespace UIFlyPack
                     int[] productAmounts = (int[])Session["productAmount"];
                     if (success)
                     {
-                        success= BLOrderDetails.UpdateOrderDetails(productsCart, order.OrderId, productAmounts);
+                        success= BLOrderDetailsDB.UpdateOrderDetails(productsCart, order.OrderId, productAmounts);
                     }
                     MSG.Text = success ? "order successes!!" : "order failed :(";//fail/success massage
                     BlOrderUser customer=new BlOrderUser(order.CustomerId);
+                    //get  description of the product list to send in email
                     string prodactsString = BLProduct.GetProductString(productsCart, productAmounts);
                     
                     bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack order summery ",

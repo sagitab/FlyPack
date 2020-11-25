@@ -345,8 +345,8 @@ namespace UIFlyPack
                     myButton.CommandName = "Ready";
                     UpOrders((BlUser)Session["user"], "");//update table
                     BlUser userToSendMailTo = BlUser.UserById(order.DeliveryId);
-                    List<BLOrderDetails> Details = BLOrderDetails.DetailsListOfOrder(orderId);
-                    string productsString = BLOrderDetails.GetProductString(Details);
+                    List<BLOrderDetailsDB> Details = BLOrderDetailsDB.DetailsListOfOrder(orderId);
+                    string productsString = BLOrderDetailsDB.GetProductString(Details);
                     bool isEmailSent = Register.sendEmail(userToSendMailTo.Email, " Fly pack you have a new order to deliver",
                         $"Hi,{userToSendMailTo} please accept your order as soon as you can.Here a summery of the order's products <br/> {productsString} <br/> Have a nice day,The Fly Pack Team");
                     if (!isEmailSent)
@@ -382,7 +382,7 @@ namespace UIFlyPack
             {
                 List<BLOrderDetail> orderDetails = BLOrderDetail.GetOrderDetailsByOrderId(orderId);
                 Update(orderDetails);
-                shoppingCartPanel.Visible = true;
+                OrderDetailsPanel.Visible = true;
             }
         }
         public void Update(List<BLOrderDetail> products)
@@ -399,6 +399,10 @@ namespace UIFlyPack
             }
             ProductError.Text = "";
         }
+        /// <summary>
+        /// update text of numOfProducts and totalPrice labels by productsCart list
+        /// </summary>
+        /// <param name="productsCart"></param>
         public void UpdateSumCart(List<BLOrderDetail> productsCart)
         {
             int numOfProducts = BLOrderDetail.TotalAmount(productsCart);
@@ -460,7 +464,7 @@ namespace UIFlyPack
         //}
         protected void XButton_OnClick(object sender, ImageClickEventArgs e)
         {
-            shoppingCartPanel.Visible = false;
+            OrderDetailsPanel.Visible = false;//to 'close' the window of the order details panel
         }
     }
 }

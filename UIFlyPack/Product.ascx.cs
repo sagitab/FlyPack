@@ -26,24 +26,27 @@ namespace UIFlyPack
             {
                 if (!Page.IsPostBack)
                 {
-                    if (!UpdateData(BLProduct.GetAllProducts("")))
+                    if (!UpdateData(BLProduct.GetAllProducts("")))//Update Data to all products
                     {
                         MSG.Text = "there is no products"; //error msg
                     }
                 }
                 else
                 {
-                    UpdateData((List<BLProduct>)Session["products"]);
+                    UpdateData((List<BLProduct>)Session["products"]);//Update Data to the product in session
                 }
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception);
-                throw;
+                MSG.Text = exception.Message;//error msg
             }
           
         }
-
+        /// <summary>
+        /// update the ProductsList data
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
         public bool UpdateData(List<BLProduct> products)
         {
             if (products == null || products.Count == 0)
@@ -64,13 +67,14 @@ namespace UIFlyPack
         {
             if (e.CommandName == "AddToCart")
             {
-                const int maxOfProductPerOrder = 6;
+                const int maxOfProductPerOrder = 6;//num of max products to deliver
                 BLProduct product = ((List<BLProduct>)Session["products"])[e.Item.ItemIndex];
                 try
                 {
-                    //(List<BLProduct>)
+                    //get data from session
                     List <BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
                     int[] productAmounts = (int[])Session["productAmount"];
+                    //check if session nul and create new object
                     if (productsCart==null)
                     {
                         productsCart=new List<BLProduct>();
@@ -79,16 +83,17 @@ namespace UIFlyPack
                     {
                         productAmounts = new int[6];
                     }
+                    //check if order is full
                     if (productsCart.Count == maxOfProductPerOrder || BLProduct.SumArr(productAmounts) == maxOfProductPerOrder)
                     {
                         addToCartMsg.Text = "You can order up to 6 product";
                     }
                     else
                     {
-                        
+                        //get product index
                         int indexOfProduct = BLProduct.IndexOfProduct(productsCart, product);
                         if (indexOfProduct != -1)
-                        {
+                        {//if product already in the productsCart update amount
                             productAmounts[indexOfProduct]++;
                             Session["productsCart"] = productsCart;
                             Session["productAmount"] = productAmounts;
@@ -96,6 +101,7 @@ namespace UIFlyPack
                         }
                         else
                         {
+                            //if product not in the productsCart added him to there
                             productsCart.Add(product);
                             if (Session["numOfProducts"] == null)
                             {
@@ -108,8 +114,10 @@ namespace UIFlyPack
                                 productAmounts[numOfProducts] = 1;
                                 Session["numOfProducts"] = numOfProducts + 1;
                             }
+                            //update sessions
                             Session["productAmount"] = productAmounts;
                             Session["productsCart"] = productsCart;
+                            //Redirect to the same page to activate master page page loud to update the data in the data list
                             Response.Redirect($"Store.aspx?errorMSG=true");
                         }
                     }

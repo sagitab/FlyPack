@@ -13,7 +13,7 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-            if (!Page.IsPostBack)
+            if (!Page.IsPostBack) 
             {
                 Update(productsCart);
             }

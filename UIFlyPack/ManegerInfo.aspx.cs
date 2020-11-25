@@ -25,8 +25,8 @@ namespace UIFlyPack
                 Response.Redirect("HomePage.aspx");
                 return;
             }
-           
-         
+
+            //take care of all the options of user BlOrderUser/BlShopManager/null
             if (user is BlOrderUser User)
             {
                 orderUser  = User;

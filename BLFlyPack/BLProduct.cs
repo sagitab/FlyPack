@@ -29,6 +29,16 @@ namespace BLFlyPack
                 return "";
             }
         }
+        /// <summary>
+        /// constructor that not update DB
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="price"></param>
+        /// <param name="description"></param>
+        /// <param name="shopId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="shopProductCode"></param>
+        /// <param name="imageUrl"></param>
         public BLProduct(int id, double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
         {
             Id = id;//update DB?
@@ -39,7 +49,16 @@ namespace BLFlyPack
             ShopProductCode = shopProductCode;
             ImageUrl = imageUrl;
         }
-        //add product to DB
+        //
+        /// <summary>
+        /// constructor that add product to DB
+        /// </summary>
+        /// <param name="price"></param>
+        /// <param name="description"></param>
+        /// <param name="shopId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="shopProductCode"></param>
+        /// <param name="imageUrl"></param>
         public BLProduct(double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
         {
             Id = ProductDal.AddProduct(price, description, shopId, orderId, shopProductCode, imageUrl);
@@ -50,6 +69,12 @@ namespace BLFlyPack
             ShopProductCode = shopProductCode;
             ImageUrl = imageUrl;
         }
+        /// <summary>
+        /// add product by row and shop id
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
         public static BLProduct AddProductByDataRow(DataRow row,int shopId)
         {
             double Price = double.Parse(row["Price"].ToString());
@@ -60,12 +85,21 @@ namespace BLFlyPack
             int Id = ProductDal.AddProduct(Price, Description, shopId, OrderID, ShopProductCode, ImageUrl);
             return new BLProduct(Id, Price, Description, shopId, OrderID, ShopProductCode, ImageUrl);
         }
-
+        /// <summary>
+        /// update the product from shop DB to my DB
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
         public static bool UpdateProduct(DataTable products,int shopId)
         {
             List<BLProduct> productsList= (from DataRow row in products.Rows select AddProductByDataRow(row,shopId)).ToList();
             return productsList.All(product => product?.Id != 1);
         }
+        /// <summary>
+        /// constructor by data row
+        /// </summary>
+        /// <param name="row"></param>
         public BLProduct(DataRow row)
         {
             Id = int.Parse(row["ID"].ToString());
@@ -76,41 +110,46 @@ namespace BLFlyPack
             ShopProductCode = int.Parse(row["ShopProductCode"].ToString());
             ImageUrl = row["Image"].ToString();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns>List of all BLProduct in DB</returns>
         public static List<BLProduct> GetAllProducts(string condition)
         {
             DataTable products = ProductDal.GetAllProducts(condition);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="condition"></param>
+        /// <returns>List of all BLProduct with a specific shop id in DB</returns>
         public static List<BLProduct> GetAllProductsByShopId(int shopId, string condition)
         {
             DataTable products = null;
             products = ProductDal.GetAllProductsOfShop(shopId, condition);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
-        public static List<BLProduct> GetAllProductsByPrice(bool isUp, string condition)
-        {
-            DataTable products = null;
-            products = ProductDal.GetAllProductsOrderByPrice(isUp ? "DESC" : "ASC");
-            return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
-        }
-        public static List<BLProduct> GetAllProductsByName(bool isUp, string condition)
-        {
-            DataTable products = null;
-            products = ProductDal.GetAllProductsOrderByName(isUp ? "DESC" : "ASC");
-            return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
-        }
-        public static List<BLProduct> ProductsSearch(bool IsByPrice, string searchVal, string condition)
-        {
-            DataTable products = null;
-            products = IsByPrice ? ProductDal.SearchProductsByPrice(double.Parse(searchVal)) : ProductDal.SearchProductsByName(searchVal);
-            return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
-        }
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="orderBy"></param>
+       /// <returns>the match string to order by int</returns>
         public static string setOrderBy(int orderBy)
         {
             string[] OrderByArr = { "Price DESC", "Price ASC", "Description DESC", "Description ASC", "ID" };
             return " ORDER BY " + OrderByArr[orderBy];
         }
+        /// <summary>
+        /// search product
+        /// </summary>
+        /// <param name="SearchVal"></param>
+        /// <param name="shopId"></param>
+        /// <param name="isSearchName"></param>
+        /// <param name="orderBy"></param>
+        /// <returns>a list of BLProduct that match the searched value</returns>
         public static List<BLProduct> Search(string SearchVal, int shopId, bool isSearchName, int orderBy)
         {
 
@@ -151,6 +190,11 @@ namespace BLFlyPack
 
             return products;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns>sum of the values in arr</returns>
         public static int SumArr(int[] arr)
         {
             if (arr == null)
@@ -164,7 +208,11 @@ namespace BLFlyPack
             }
             return sum;
         }
-
+        /// <summary>
+        /// delete val at index from amounts
+        /// </summary>
+        /// <param name="amounts"></param>
+        /// <param name="index"></param>
         public static void Delete(int[] amounts, int index)
         {
             //int temp;
@@ -173,6 +221,12 @@ namespace BLFlyPack
                 amounts[i] = amounts[i + 1];
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="product"></param>
+        /// <returns>the Index Of Product</returns>
         public static int IndexOfProduct(List<BLProduct> products, BLProduct product)
         {
             for (var index = 0; index < products.Count; index++)
@@ -185,11 +239,21 @@ namespace BLFlyPack
             }
             return -1;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns>ShopId By Product Id</returns>
         public static int GetShopIdByProductId(int productId)
         {
             return int.Parse(ProductDal.GetShopIdByProductId(productId).Rows[0]["ShopID"].ToString());
         }
-
+        /// <summary>
+        /// calculate total price
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="amounts"></param>
+        /// <returns> total price</returns>
         public static double TotalPrice(List<BLProduct> products, int[] amounts)
         {
             if (products != null)
@@ -202,7 +266,12 @@ namespace BLFlyPack
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="amounts"></param>
+        /// <returns> string that describe the list</returns>
         public static string GetProductString(List<BLProduct> products, int[] amounts)
         {
             string ProductString = "";
@@ -217,5 +286,24 @@ namespace BLFlyPack
         {
             return this.Description + " $" + this.Price;
         }
+        //public static List<BLProduct> GetAllProductsByPrice(bool isUp)
+        //{
+        //    DataTable products = null;
+        //    products = ProductDal.GetAllProductsOrderByPrice(isUp ? "DESC" : "ASC");
+        //    return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
+        //}
+        //public static List<BLProduct> GetAllProductsByName(bool isUp)
+        //{
+        //    DataTable products = null;
+        //    products = ProductDal.GetAllProductsOrderByName(isUp ? "DESC" : "ASC");
+        //    return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
+        //}
+        //public static List<BLProduct> ProductsSearch(bool IsByPrice, string searchVal, string condition)
+        //{
+        //    DataTable products = null;
+        //    products = IsByPrice ? ProductDal.SearchProductsByPrice(double.Parse(searchVal)) : ProductDal.SearchProductsByName(searchVal);
+        //    return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
+        //}
+
     }
 }

@@ -12,30 +12,50 @@ namespace BLFlyPack
     {
         public BLProduct Product { get; set; }
         public  int Amount { get; set; }
-
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="amount"></param>
         public BLOrderDetail(BLProduct product, int amount)
         {
             Product = product;
             Amount = amount;
         }
-
+        /// <summary>
+        /// constructor by data row
+        /// </summary>
+        /// <param name="row"></param>
         public BLOrderDetail(DataRow row)
         {
             Amount = int.Parse(row["Amount"].ToString());
             Product = new BLProduct(row) {Price = (double.Parse(row["DetailPrice"].ToString()))/Amount};
           
         }
-
+        /// <summary>
+        /// Get Order Details list By OrderId
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns>List of BLOrderDetail</returns>
         public static List<BLOrderDetail> GetOrderDetailsByOrderId(int orderId)
         {
             DataTable orderDetailsTable = OrderDetails.GetProductListByOrderId(orderId);
             return (from DataRow row in orderDetailsTable.Rows select new BLOrderDetail(row)).ToList();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderDetails"></param>
+        /// <returns>Total Amount at list</returns>
         public static int TotalAmount(List<BLOrderDetail> orderDetails)
         {
             return orderDetails.Sum(detail => detail.Amount);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderDetails"></param>
+        /// <returns>Total Price at list</returns>
         public static double TotalPrice(List<BLOrderDetail> orderDetails)
         {
             return orderDetails.Sum(detail => detail.Amount*detail.Product.Price);

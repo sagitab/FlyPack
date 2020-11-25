@@ -26,7 +26,7 @@
         <li>
             <div class="RowDiv">
                 <span class="Header" style="text-decoration: underline; font-size: 3em; position: absolute; left: 45%; bottom: 69%;">choose shop-</span>
-                <asp:DropDownList ID="Shops" CssClass="Select" runat="server" OnSelectedIndexChanged="Shops_OnSelectedIndexChanged" AutoPostBack="true" >
+                <asp:DropDownList ID="Shops" CssClass="Select" runat="server" OnSelectedIndexChanged="Shops_OnSelectedIndexChanged" AutoPostBack="True"   onchange="return confirm('Are you sure you want to switch shop? all your products in shopping cart will deleted')" >
                 </asp:DropDownList>
             </div>
            

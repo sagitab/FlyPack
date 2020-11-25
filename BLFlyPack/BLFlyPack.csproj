@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="BLCustomersAddress.cs" />
     <Compile Include="BLOrder.cs" />
-    <Compile Include="BLOrderDetails.cs" />
+    <Compile Include="BLOrderDetailsDB.cs" />
     <Compile Include="BLOrderUser.cs" />
     <Compile Include="BLProduct.cs" />
     <Compile Include="Deliver.cs" />

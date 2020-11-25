@@ -95,51 +95,52 @@ namespace UIFlyPack
 
         protected void ProductsCart_OnItemCommand(object source, DataListCommandEventArgs e)
         {
-            if (e.CommandName == "Remove")
+            if (e.CommandName == "Remove")//removing an product
             {
+                //get productsCart list
                 List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-                int DeleteIndex = e.Item.ItemIndex;
-                productsCart.RemoveAt(DeleteIndex);
-                int[] amounts = (int[])Session["productAmount"];
+                int DeleteIndex = e.Item.ItemIndex;//get delete index
+                productsCart.RemoveAt(DeleteIndex);//remove at the list
+                int[] amounts = (int[])Session["productAmount"];  //get amounts array
                 //update num of products
                 int numOfProducts = (int)Session["numOfProducts"];
                 Session["numOfProducts"] = numOfProducts - 1;
                 //update amounts arr
                 BLProduct.Delete(amounts, DeleteIndex);
                 Session["productAmount"] = amounts;
-                Update(productsCart);
+                Update(productsCart);//update data list
                 OrderNow.Visible = productsCart?.Count > 0;
             }
         }
 
         protected void ProductsCart_OnItemDataBound(object sender, DataListItemEventArgs e)
         {
-            int[] productAmounts = (int[])Session["productAmount"];
-            var amount = productAmounts == null ? 1 : productAmounts[e.Item.ItemIndex];
+            int[] productAmounts = (int[])Session["productAmount"]; //get amounts array
+            var amount = productAmounts?[e.Item.ItemIndex] ?? 1;//get amount from array
             if (amount == 0)
             {
-                amount = 1;
+                amount = 1;//minimum amount value is 1
             }
-            Label l = (Label)e.Item.FindControl("amount");//ContentPlaceHolder1_ProductsCart_amount_0
-            l.Text = "" + amount;
+            Label l = (Label)e.Item.FindControl("amount");//get amount label
+            l.Text = "" + amount;//update label text
         }
 
         protected void OrderNow_OnClick(object sender, EventArgs e)
         {
             List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
             BLProduct product = productsCart[0];
-            int shopId = BLProduct.GetShopIdByProductId(product.Id);
-            Response.Redirect("OrderNow.aspx?shopId=" + shopId);
+            int shopId = BLProduct.GetShopIdByProductId(product.Id);//get shop id
+            Response.Redirect("OrderNow.aspx?shopId=" + shopId);//pass shop id in qwaery string
         }
 
         protected void XButton_OnClick(object sender, ImageClickEventArgs e)
         {
-            shoppingCartPanel.Visible = false;
+            shoppingCartPanel.Visible = false;//to 'remove' shoppingCartPanel
         }
 
         protected void shoppingCartB_OnClick(object sender, ImageClickEventArgs e)
         {
-            shoppingCartPanel.Visible = true;
+            shoppingCartPanel.Visible = true;//to 'show' shoppingCartPanel
         }
     }
 }

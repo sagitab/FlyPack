@@ -51,7 +51,7 @@
         </li>
     </ul>
 
-    <asp:Panel runat="server" CssClass="shoppingCart" ID="shoppingCartPanel" Visible="False">
+    <asp:Panel runat="server" CssClass="shoppingCart" ID="OrderDetailsPanel" Visible="False">
      <asp:Label runat="server" ID="ProductError" CssClass="BigErrorMSG"></asp:Label>
     <div class="ProductDiv">
         <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="XButton_OnClick" ID="XButton"/>

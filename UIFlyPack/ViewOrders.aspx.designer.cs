@@ -78,13 +78,13 @@ namespace UIFlyPack
         protected global::System.Web.UI.WebControls.Label ErMSG;
 
         /// <summary>
-        /// shoppingCartPanel control.
+        /// OrderDetailsPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel shoppingCartPanel;
+        protected global::System.Web.UI.WebControls.Panel OrderDetailsPanel;
 
         /// <summary>
         /// ProductError control.
