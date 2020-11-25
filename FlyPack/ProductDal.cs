@@ -44,6 +44,10 @@ namespace FlyPack
         {
             return DalHelper.Select("SELECT Description FROM Products WHERE ID=" + productId).Rows[0]["Description"].ToString();
         }
+        public static DataRow GetProductById(int productId)
+        {
+            return DalHelper.Select("SELECT * FROM Products WHERE ID=" + productId).Rows[0];
+        }
 
         public static int AddProduct(double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
         {

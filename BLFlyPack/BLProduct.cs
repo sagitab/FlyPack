@@ -49,6 +49,12 @@ namespace BLFlyPack
             ShopProductCode = shopProductCode;
             ImageUrl = imageUrl;
         }
+
+        public static BLProduct GetProductById(int productId)
+        {
+            DataRow row = ProductDal.GetProductById(productId);
+            return new BLProduct(row);
+        }
         //
         /// <summary>
         /// constructor that add product to DB

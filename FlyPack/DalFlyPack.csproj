@@ -48,6 +48,7 @@
     <Compile Include="DalOrder.cs" />
     <Compile Include="DalOrderUsers.cs" />
     <Compile Include="DalShop.cs" />
+    <Compile Include="DalShopDB.cs" />
     <Compile Include="DalUser.cs" />
     <Compile Include="DBHelper.cs" />
     <Compile Include="OrderDetails.cs" />

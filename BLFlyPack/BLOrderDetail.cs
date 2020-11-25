@@ -23,6 +23,15 @@ namespace BLFlyPack
             Amount = amount;
         }
         /// <summary>
+        /// constructor by BLOrderDetail
+        /// </summary>
+        /// <param name="orderDetailsDb"></param>
+        public BLOrderDetail(BLOrderDetailsDB orderDetailsDb)
+        {
+            Product = BLProduct.GetProductById(orderDetailsDb.productId);
+            Amount = orderDetailsDb.amount;
+        }
+        /// <summary>
         /// constructor by data row
         /// </summary>
         /// <param name="row"></param>
@@ -64,6 +73,11 @@ namespace BLFlyPack
         public override string ToString()
         {
             return this.Product.ToString()+ "Amount-" + Amount;
+        }
+
+        public static List<BLOrderDetail> GetOrderDetails(List<BLOrderDetailsDB> orderDetails)
+        {
+            return (from blOrderDetailsDb in orderDetails select new BLOrderDetail(blOrderDetailsDb)).ToList();
         }
     }
 }

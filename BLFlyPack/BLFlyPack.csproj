@@ -46,6 +46,7 @@
     <Compile Include="BLOrderDetailsDB.cs" />
     <Compile Include="BLOrderUser.cs" />
     <Compile Include="BLProduct.cs" />
+    <Compile Include="BLshopDB.cs" />
     <Compile Include="Deliver.cs" />
     <Compile Include="General.cs" />
     <Compile Include="BLOrderDetail.cs" />
