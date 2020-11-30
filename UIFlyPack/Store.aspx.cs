@@ -11,6 +11,8 @@ namespace UIFlyPack
     public partial class Store : System.Web.UI.Page
     {
         public string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -49,10 +51,10 @@ namespace UIFlyPack
                 Shops.DataValueField = "ID";
                 // Bind the data to the control.
                 Shops.DataBind();
-                //foreach (var Item in Shops.Items)
-                //{
-                //    Item.
-                //}
+                foreach (ListItemCollection Item in Shops.Items)
+                {
+                    Item[0].Attributes["OnClientClick"]= "ShopDropDownListB_OnClick";
+                }
                 // Set the default selected item, if desired.
                 Shops.SelectedIndex = 0;
                 List<BLProduct> products = BLProduct.GetAllProducts("");
@@ -60,6 +62,10 @@ namespace UIFlyPack
                 //Products.ProductsCollections = products;
 
             }
+        }
+
+        protected void ShopDropDownListB_OnClick(object sender, EventArgs e)
+        {
         }
 
         protected void SearchProductB_OnClick(object sender, EventArgs e)

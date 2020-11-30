@@ -41,7 +41,7 @@
                     <option value="Price">Product price</option>
                 </select>
        
-                <asp:Button ID="SearchProductB" runat="server" Text="Search product" OnClick="SearchProductB_OnClick" CssClass="BSearch"  />
+                <asp:Button ID="SearchProductB" runat="server"  Text="Search product" OnClick="SearchProductB_OnClick" CssClass="BSearch"  />
                 <asp:DropDownList ID="productOrder" CssClass="Select" runat="server" OnSelectedIndexChanged="productOrder_OnSelectedIndexChanged" AutoPostBack="true" >
                 </asp:DropDownList>
                 <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG" ></asp:Label>
