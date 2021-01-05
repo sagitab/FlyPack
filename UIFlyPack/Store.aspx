@@ -26,7 +26,7 @@
         <li>
             <div class="RowDiv">
                 <span class="Header" style="text-decoration: underline; font-size: 3em; position: absolute; left: 45%; bottom: 69%;">choose shop-</span>
-                <asp:DropDownList ID="Shops" CssClass="Select" runat="server" OnSelectedIndexChanged="Shops_OnSelectedIndexChanged" AutoPostBack="True"   onchange="return confirm('Are you sure you want to switch shop? all your products in shopping cart will deleted')" >
+                <asp:DropDownList ID="Shops" CssClass="Select" runat="server" OnSelectedIndexChanged="Shops_OnSelectedIndexChanged" AutoPostBack="True"  >
                 </asp:DropDownList>
             </div>
            
@@ -51,4 +51,15 @@
             <FlyPackControls:Products ID="Products" runat="server"></FlyPackControls:Products>
         </li>
     </ul>
+    <asp:HiddenField runat="server" ID="isConfirm"/>
+    <script type="text/javascript">
+        function Confirm() {
+            console.log();
+            var toDelete = confirm('Are you sure you want to switch shop? all your products in shopping cart will deleted');
+            var isConfirm = document.getElementById("ContentPlaceHolder1_isConfirm");
+            if (toDelete==true) {
+                isConfirm.value = "1";
+            }
+        }
+    </script>
 </asp:Content>

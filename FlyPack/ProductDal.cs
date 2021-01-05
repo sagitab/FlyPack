@@ -49,9 +49,9 @@ namespace FlyPack
             return DalHelper.Select("SELECT * FROM Products WHERE ID=" + productId).Rows[0];
         }
 
-        public static int AddProduct(double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
+        public static int AddProduct(double price, string description, int shopId,int shopProductCode, string imageUrl)
         {
-            return DalHelper.Insert($"INSERT INTO Product(ShopID,OrderID,Description,ShopProductCode,Price,Image) VALUES({shopId},{orderId},'{description}',{shopProductCode},{price},'{imageUrl}')");
+            return DalHelper.Insert($"INSERT INTO Product(ShopID,Description,ShopProductCode,Price,Image) VALUES({shopId},'{description}',{shopProductCode},{price},'{imageUrl}')");
         }
     }
 }

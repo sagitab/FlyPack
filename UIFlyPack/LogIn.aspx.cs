@@ -58,7 +58,7 @@ namespace UIFlyPack
                 bool isExist = Page.IsValid && user.Type != 0;//check if all validators are valid and user is exist
                 if (isExist)
                 {
-                    user = user.Type == 1 ? (BlOrderUser)new BlShopManager(pass) : new BlOrderUser(pass);//choose the right constructor by type
+                    user = user.Type == 1 ? (BlOrderUser)new BlShopManager(pass) : user.Type == 4 ?   new Deliver(pass) : new BlOrderUser(pass);//choose the right constructor by type
                     Session["user"] = user;
                     //set animation
                     WhichAnimation.Value = "2";

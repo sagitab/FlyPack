@@ -97,7 +97,7 @@ namespace UIFlyPack
                             productAmounts[indexOfProduct]++;
                             Session["productsCart"] = productsCart;
                             Session["productAmount"] = productAmounts;
-                            Response.Redirect("Store.aspx?errorMSG=false");
+                            Response.Redirect("Store.aspx?productAmount=" + productAmounts[indexOfProduct] + product.Description);
                         }
                         else
                         {
@@ -118,15 +118,17 @@ namespace UIFlyPack
                             Session["productAmount"] = productAmounts;
                             Session["productsCart"] = productsCart;
                             //Redirect to the same page to activate master page page loud to update the data in the data list
-                            Response.Redirect($"Store.aspx?errorMSG=true");
+                            addToCartMsg.Text = product.Description;
+                            //Response.Redirect($"Store.aspx?productName=" + );
                         }
                     }
 
                   
 
                 }
-                catch
+                catch(Exception exception)
                 {
+                    Console.WriteLine(exception.Message);
                     //Session["productsCart"] = new List<BLProduct>() { product };
                     //int[] amountArr = new int[maxOfProductPerOrder - 1];
                     //amountArr[0] = 1;

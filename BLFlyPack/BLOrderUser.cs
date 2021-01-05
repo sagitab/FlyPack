@@ -100,11 +100,23 @@ namespace BLFlyPack
             }
             return t;
         }
-        public virtual string GetNumOfActiveCustomers()
+        //public virtual string GetNumOfActiveCustomers()
+        //{
+        //    try
+        //    {
+        //        return DalOrder.NumOfActiveCustomers("");
+        //    }
+        //    catch
+        //    {
+        //        return "";
+        //    }
+
+        //}
+        public virtual string GetNumOfCustomers()
         {
             try
             {
-                return DalOrder.NumOfActiveCustomers("");
+                return DalOrder.NumOfCustomers(4,"");
             }
             catch
             {

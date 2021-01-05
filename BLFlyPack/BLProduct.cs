@@ -14,7 +14,6 @@ namespace BLFlyPack
         public double Price { get; set; }
         public string Description { get; set; }
         public int ShopID { get; set; }
-        public int OrderID { get; set; }
         public int ShopProductCode { get; set; }
         public string ImageUrl { get; set; } /*name in DB Image*/
 
@@ -39,13 +38,12 @@ namespace BLFlyPack
         /// <param name="orderId"></param>
         /// <param name="shopProductCode"></param>
         /// <param name="imageUrl"></param>
-        public BLProduct(int id, double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
+        public BLProduct(int id, double price, string description, int shopId, int shopProductCode, string imageUrl)
         {
             Id = id;//update DB?
             Price = price;
             Description = description;
             ShopID = shopId;
-            OrderID = orderId;
             ShopProductCode = shopProductCode;
             ImageUrl = imageUrl;
         }
@@ -65,13 +63,12 @@ namespace BLFlyPack
         /// <param name="orderId"></param>
         /// <param name="shopProductCode"></param>
         /// <param name="imageUrl"></param>
-        public BLProduct(double price, string description, int shopId, int orderId, int shopProductCode, string imageUrl)
+        public BLProduct(double price, string description, int shopId, int shopProductCode, string imageUrl)
         {
-            Id = ProductDal.AddProduct(price, description, shopId, orderId, shopProductCode, imageUrl);
+            Id = ProductDal.AddProduct(price, description, shopId,shopProductCode, imageUrl);
             Price = price;
             Description = description;
             ShopID = shopId;
-            OrderID = orderId;
             ShopProductCode = shopProductCode;
             ImageUrl = imageUrl;
         }
@@ -85,11 +82,10 @@ namespace BLFlyPack
         {
             double Price = double.Parse(row["Price"].ToString());
             string Description = row["Description"].ToString();
-            int OrderID = int.Parse(row["OrderID"].ToString());
             int ShopProductCode = int.Parse(row["ShopProductCode"].ToString());
             string ImageUrl = row["Image"].ToString();
-            int Id = ProductDal.AddProduct(Price, Description, shopId, OrderID, ShopProductCode, ImageUrl);
-            return new BLProduct(Id, Price, Description, shopId, OrderID, ShopProductCode, ImageUrl);
+            int Id = ProductDal.AddProduct(Price, Description, shopId,ShopProductCode, ImageUrl);
+            return new BLProduct(Id, Price, Description, shopId, ShopProductCode, ImageUrl);
         }
         /// <summary>
         /// update the product from shop DB to my DB
@@ -112,7 +108,6 @@ namespace BLFlyPack
             Price = double.Parse(row["Price"].ToString());
             Description = row["Description"].ToString();
             ShopID = int.Parse(row["ShopID"].ToString());
-            OrderID = int.Parse(row["OrderID"].ToString());
             ShopProductCode = int.Parse(row["ShopProductCode"].ToString());
             ImageUrl = row["Image"].ToString();
         }

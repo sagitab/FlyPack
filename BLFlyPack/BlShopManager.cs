@@ -41,11 +41,11 @@ namespace BLFlyPack
         /// Get Num Of Active Customers
         /// </summary>
         /// <returns></returns>
-        public override string GetNumOfActiveCustomers()
+        public override string GetNumOfCustomers()
         {
             try
             {
-                return DalOrder.NumOfActiveCustomers($"WHERE([Orders].[ShopID] = {GetShopId()})");
+                return DalOrder.NumOfCustomers(4,$"AND ([Orders].[ShopID] = {GetShopId()})");
             }
             catch
             {

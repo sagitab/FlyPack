@@ -13,9 +13,9 @@ namespace UIFlyPack
         {
             //to del########################@@@@@@@@########%%%%%%%%%>>>>>>>>>>>>
             /* Session["user"] = new BlShopManager("12345678");*/ // BLShopMenager
-            /* Session["user"] = new BlOrderUser("shlakot1");*/ //deliver
+            /*  Session["user"] = new Deliver("shlakot1");*/ //deliver
             Session["user"] = new BlOrderUser("hoohoo12");//customer
-            /*   Session["user"] = new BlOrderUser("lucky123");*///system Maneger
+            /*       Session["user"] = new BlOrderUser("lucky123");*///system Manager
             if (Page.IsPostBack) return;//if page already do page loud the headers is already changed
 
             //set all headers Visible to false

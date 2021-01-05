@@ -122,42 +122,46 @@ namespace UIFlyPack
 
             int userType = user.Type;//get user type 
             UpOrders(user, "");
+            UpdateButtonsText(userType);
+        }
+
+        public void UpdateButtonsText(int userType)
+        {
             int length = OrderTable.Rows.Count;
             switch (userType)//convert button values by status and user type
             {
 
                 case 3:
+                {
+                    for (int i = 0; i < length; i++)
                     {
-                        for (int i = 0; i < length; i++)
-                        {
-                            GridViewRow row = OrderTable.Rows[i];
-                            TableCell cell = row.Cells[1];
-                            if (cell.Text != "delivery take care your order") continue;
-                            Button myButton = null;
-                            myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
-                            myButton.Text = "Order Finished";
-                            myButton.CommandName = "finish";
-                        }
-
-                        break;
+                        GridViewRow row = OrderTable.Rows[i];
+                        TableCell cell = row.Cells[1];
+                        if (cell.Text != "delivery take care your order") continue;
+                        Button myButton = null;
+                        myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                        myButton.Text = "Order Finished";
+                        myButton.CommandName = "finish";
                     }
+
+                    break;
+                }
                 case 1:
+                {
+
+                    for (int i = 0; i < length; i++)
                     {
-
-                        for (int i = 0; i < length; i++)
-                        {
-                            GridViewRow row = OrderTable.Rows[i];
-                            TableCell cell = row.Cells[1];
-                            if (cell.Text != "shipping time selected") continue;
-                            var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
-                            myButton.Text = "Ready time selected";
-                            myButton.CommandName = "";
-                        }
-
-                        break;
+                        GridViewRow row = OrderTable.Rows[i];
+                        TableCell cell = row.Cells[1];
+                        if (cell.Text != "shipping time selected") continue;
+                        var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                        myButton.Text = "Ready time selected";
+                        myButton.CommandName = "";
                     }
-            }
 
+                    break;
+                }
+            }
         }
         public void UpOrders(BlUser user, string condition)
         {
@@ -194,7 +198,42 @@ namespace UIFlyPack
                     }
                     break;
             }
+            //int userType = user.Type;//get user type 
+            //int length = OrderTable.Rows.Count;
+            //switch (userType)//convert button values by status and user type
+            //{
 
+            //    case 3:
+            //    {
+            //        for (int i = 0; i < length; i++)
+            //        {
+            //            GridViewRow row = OrderTable.Rows[i];
+            //            TableCell cell = row.Cells[1];
+            //            if (cell.Text != "delivery take care your order") continue;
+            //            Button myButton = null;
+            //            myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+            //            myButton.Text = "Order Finished";
+            //            myButton.CommandName = "finish";
+            //        }
+
+            //        break;
+            //    }
+            //    case 1:
+            //    {
+
+            //        for (int i = 0; i < length; i++)
+            //        {
+            //            GridViewRow row = OrderTable.Rows[i];
+            //            TableCell cell = row.Cells[1];
+            //            if (cell.Text != "shipping time selected") continue;
+            //            var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+            //            myButton.Text = "Ready time selected";
+            //            myButton.CommandName = "";
+            //        }
+
+            //        break;
+            //    }
+            //}
             if (orders != null && orders.Rows.Count > 0)//if there is orders
             {
                 //show table
@@ -293,7 +332,7 @@ namespace UIFlyPack
                     Response.Redirect("HomePage.aspx");
                     return;
                 }
-                Response.Redirect("DeliveryMap.aspx?text='order started seccesfuly'");// go to DeliveryMap.aspx to calculate the best way
+                /*  Response.Redirect("DeliveryMap.aspx?text='order started in proccess'");*/// go to DeliveryMap.aspx to calculate the best way
                 DateTime exitTime = DateTime.Now;
                 //get global vars
                 double distanceToCustomerHome = GlobalVariable.Distance;
@@ -305,7 +344,8 @@ namespace UIFlyPack
                 if (!success)
                 {
                     Response.Redirect("ViewOrders.aspx");//go back to  page when there is a error
-                    ErMSG.Text = "fail to start order ";//massage error
+                    MSG.Visible = true;
+                    MSG.Text = "fail to start order ";//massage error
                 }
                 else
                 {
@@ -314,9 +354,10 @@ namespace UIFlyPack
                     //myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
                     //myButton.Text = "Order started";
                     //myButton.CommandName = "started";
-                    ErMSG.Text = "fail to start order ";//massage error
+                    MSG.Visible = true;
+                    MSG.Text = "success to start order!!!";//massage error
                     UpOrders((BlUser)Session["user"], "");//update table
-
+                    UpdateButtonsText(3);//3=delivery
                 }
             }
             else if (e.CommandName == "updateReadyTime" /*&& status == 2*/)
@@ -361,14 +402,18 @@ namespace UIFlyPack
                 {
                     BlUser customer = BlUser.UserById(order.CustomerId);
                     NewOrOld.SelectedIndex = 1;//to see that the orders turn to old one
-                    UpOrders(customer, "");//update table
+                    BlUser CurrentUser= (BlUser)Session["user"];
+                    NewOrOld.SelectedIndex =0;
+                    UpOrders(CurrentUser, "");//update table
+                    UpdateButtonsText(CurrentUser.Type);
                     //send email to customer
                     bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
                         $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
                     if (!isEmailSent)
                     {
-                        //take care if email dont send
+                        //take care if email don't send
                     }
+                    MSG.Text= "success to update status";
                 }
                 else
                 {

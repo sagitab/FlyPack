@@ -186,7 +186,7 @@ namespace BLFlyPack
         }
         //<<<<<<<<<<<<<<<<<<<customer>>>>>>>>>>>>>>>>>>>
         /// <summary>
-        /// get Customers Table
+        /// get Customers Table by condition
         /// </summary>
         /// <returns>Customers Table</returns>
         public virtual DataTable CustomersTable()
@@ -213,6 +213,24 @@ namespace BLFlyPack
             try
             {
                 t = DalUser.CustomersSearch(condition);
+            }
+            catch
+            {
+                return null;
+            }
+            return t;
+        }
+        /// <summary>
+        /// get customer data table by search value
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns>customer data table</returns>
+        public virtual DataTable DeliversSearch(string condition)
+        {
+            DataTable t = null;
+            try
+            {
+                t = DalUser.DeliversSearch(condition);
             }
             catch
             {

@@ -11,22 +11,24 @@ namespace UIFlyPack
     public partial class Store : System.Web.UI.Page
     {
         public string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
-
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                string productName = null, productAmount = null;
                 //to update the massage label if added a new product update amount
-                string stringIsAddedNew = Request.QueryString.Get("errorMSG");
-                if (stringIsAddedNew != null)
+
+                productName = Request.QueryString.Get("productName");
+                if (productName == null)
                 {
-                    bool isAddedNew = bool.Parse(stringIsAddedNew);//get bool
-                    //update label Text
-                    MSG.Text = isAddedNew ? "product added to cart!!" : "product amount updated!!";
-                    Request.QueryString.Clear();//delete QueryString info
-                    return;
+                    productAmount = Request.QueryString.Get("productAmount");
                 }
+                bool isAddedNew = productName != null;//get bool
+                                                      //update label Text
+                MSG.Text = isAddedNew ? productName + " added to your cart!!" : "you have " + productAmount + " in your cart";
+                Request.QueryString.Clear();//delete QueryString info
+
+                return;
 
             }
             catch
@@ -51,16 +53,21 @@ namespace UIFlyPack
                 Shops.DataValueField = "ID";
                 // Bind the data to the control.
                 Shops.DataBind();
-                foreach (ListItemCollection Item in Shops.Items)
+                foreach (System.Web.UI.WebControls.ListItem Item in Shops.Items)
                 {
-                    Item[0].Attributes["OnClientClick"]= "ShopDropDownListB_OnClick";
+                    Item.Attributes["OnClientClick"] = "ShopDropDownListB_OnClick";
                 }
                 // Set the default selected item, if desired.
                 Shops.SelectedIndex = 0;
                 List<BLProduct> products = BLProduct.GetAllProducts("");
                 Session["products"] = products;
                 //Products.ProductsCollections = products;
-
+                List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
+                if (productsCart == null || productsCart.Count == 0)
+                {
+                    MSG.Text = "";
+                    return;
+                }
             }
         }
 
@@ -160,10 +167,20 @@ namespace UIFlyPack
         protected void Shops_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-            if (!(productsCart?.Count > 0))
+            bool toChangeShop = true;
+            if (productsCart != null && productsCart.Count > 0)
             {
                 //massage to delete all products in cart
-              
+                /* bool ToDelete= */
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "Confirm()", true);
+                string isConfirmString = isConfirm.Value;
+                
+                if (isConfirmString == "1")
+                {
+                    Session["productsCart"] = null;
+                    toChangeShop = false;
+                }
+                isConfirm.Value = "0";
                 //DialogResult dialogResult = MessageBox.Show("Sure", "Some Title", MessageBoxButtons.YesNo);
                 //if (dialogResult == DialogResult.Yes)
                 //{
@@ -173,23 +190,23 @@ namespace UIFlyPack
                 //{
                 //    //do something else
                 //}
-                Session["productsCart"] = null;
             }
 
-            int shopId = int.Parse(Shops.SelectedValue);//get shop id
-            //set data source                                         
-            List<BLProduct> products = BLProduct.GetAllProductsByShopId(shopId, "");
-            if (products != null && products.Count > 0)
+            if (toChangeShop)
             {
-                Products.ProductsCollections = products;
+                int shopId = int.Parse(Shops.SelectedValue);//get shop id
+                //set data source                                         
+                List<BLProduct> products = BLProduct.GetAllProductsByShopId(shopId, "");
+                if (products != null && products.Count > 0)
+                {
+                    Products.ProductsCollections = products;
+                }
+                else
+                {
+                    Products.ProductsCollections = null;
+                }
             }
-            else
-            {
-                Products.ProductsCollections = null;
-            }
-
-
-
+          
         }
     }
 }

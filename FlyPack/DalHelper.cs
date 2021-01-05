@@ -66,7 +66,7 @@ namespace FlyPack
             DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
 
             if (!helper.OpenConnection()) throw new ConnectionException();
-            string sql = $"SELECT * FROM {table} WHERE ID = {id}";
+            string sql = $"SELECT * FROM {table} WHERE ID ='{id}'";
 
             DataTable tb = helper.GetDataTable(sql);
             helper.CloseConnection();

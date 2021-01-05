@@ -135,14 +135,14 @@
                             <li style=" margin-left: 11vh; display: contents;">
                                  <asp:Label runat="server" ID="productPrice" Text='<%#Eval( "Price","${0}") %>'></asp:Label>
                                 <br/>
-                                <asp:Label runat="server" ID="amount" Text="" CssClass="Header" ></asp:Label>
+                               <%-- <asp:Label runat="server" ID="amount" Text="" CssClass="Header" ></asp:Label>--%>
                                 <div class="ProductBDiv">
                                     <asp:LinkButton runat="server"  CommandName="Remove"   CssClass="ProductB"><img src="Img/delete.png" class="garbageImg" /></asp:LinkButton>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    
+                    <asp:TextBox runat="server" TextMode="Number" MaxLength="1" ID="numOfProduct" CssClass="numRange" min="1" max="6" ></asp:TextBox>
                 </div>
             </ItemTemplate>
         </asp:DataList>

@@ -88,19 +88,23 @@ namespace FlyPack
         //Customer
         public static DataTable CustomersTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE(Users.UserType = 4) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber; ");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4)  ");
         }
         public static DataTable CustomersTableByShop(int shopId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})) ");
         }
         public static DataTable CustomersSearch(string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE((Users.UserType = 4) AND{condition}) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{condition}) ");
+        }
+        public static DataTable DeliversSearch(string condition)
+        {
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND{condition}) ");
         }
         public static DataTable CustomersSearchByShop(int shopId, string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})AND{condition}) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})AND{condition}) ");
         }
         public static string GetName(string customerId)
         {
@@ -109,7 +113,7 @@ namespace FlyPack
         //delivery
         public static DataTable DeliveriesTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) ");
         }
         public static DataTable DeliveriesList()
         {
@@ -117,7 +121,7 @@ namespace FlyPack
         }
         public static DataTable DeliveriesTableByShop(int shopId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber, Count(*) AS [Num of orders] FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {shopId}) AND (Users.ID<>'111111111')) GROUP BY Users.FirstName, Users.Email, Users.PhoneNumber;");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {shopId}) AND (Users.ID<>'111111111')) ");
         }
         public  static DataTable GetDeliverersLocations()
         {

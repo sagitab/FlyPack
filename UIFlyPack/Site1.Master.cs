@@ -115,32 +115,79 @@ namespace UIFlyPack
 
         protected void ProductsCart_OnItemDataBound(object sender, DataListItemEventArgs e)
         {
-            int[] productAmounts = (int[])Session["productAmount"]; //get amounts array
-            var amount = productAmounts?[e.Item.ItemIndex] ?? 1;//get amount from array
-            if (amount == 0)
+            if (IsGoodAmount())
             {
-                amount = 1;//minimum amount value is 1
+                int[] productAmounts = (int[])Session["productAmount"]; //get amounts array
+                var amount = productAmounts?[e.Item.ItemIndex] ?? 1;//get amount from array
+                if (amount == 0)
+                {
+                    amount = 1;//minimum amount value is 1
+                }
+                TextBox t = (TextBox)e.Item.FindControl("numOfProduct");//get amount
+                t.Text = "" + amount;//update  text
             }
-            Label l = (Label)e.Item.FindControl("amount");//get amount label
-            l.Text = "" + amount;//update label text
+            else
+            {
+                //msg!!!!!!!!!!!!!!!!!!!!
+            }
+          
+            //Label l = (Label)e.Item.FindControl("amount");//get amount label
+            //l.Text = "" + amount;//update label text
         }
 
         protected void OrderNow_OnClick(object sender, EventArgs e)
         {
-            List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-            BLProduct product = productsCart[0];
-            int shopId = BLProduct.GetShopIdByProductId(product.Id);//get shop id
-            Response.Redirect("OrderNow.aspx?shopId=" + shopId);//pass shop id in qwaery string
+            if (IsGoodAmount())
+            {
+                List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
+                BLProduct product = productsCart[0];
+                int shopId = BLProduct.GetShopIdByProductId(product.Id);//get shop id
+                Response.Redirect("OrderNow.aspx?shopId=" + shopId);//pass shop id in qwaery string
+            }
+            else
+            {
+                //msg!!!!!!!!!!!!!!!!!!!!
+            }
+
         }
 
         protected void XButton_OnClick(object sender, ImageClickEventArgs e)
         {
-            shoppingCartPanel.Visible = false;//to 'remove' shoppingCartPanel
+            if (IsGoodAmount())
+            {
+                shoppingCartPanel.Visible = false;//to 'remove' shoppingCartPanel
+            }
+            else
+            {
+                //msg!!!!!!!!!!!!!!!!!!!!
+            }
+        
+          
+           
         }
 
         protected void shoppingCartB_OnClick(object sender, ImageClickEventArgs e)
         {
             shoppingCartPanel.Visible = true;//to 'show' shoppingCartPanel
+        }
+
+        public bool IsGoodAmount()
+        {
+            int[] productAmounts = new int[6];
+            int sumAmount = 0;
+            foreach (DataListItem item in ProductsCart.Items)
+            {
+                TextBox t = (TextBox)item.FindControl("numOfProduct");
+                int amount = int.Parse(t.Text);
+                sumAmount += amount;
+                productAmounts[item.ItemIndex] = amount;
+            }
+            if (sumAmount > 6)
+            {
+                return false;
+            }
+            Session["productAmount"] = productAmounts;
+            return true;
         }
     }
 }

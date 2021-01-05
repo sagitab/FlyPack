@@ -15,6 +15,42 @@ namespace UIFlyPack
     {
 
         /// <summary>
+        /// DeliverSearchVal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox DeliverSearchVal;
+
+        /// <summary>
+        /// DeliverSearchBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect DeliverSearchBy;
+
+        /// <summary>
+        /// deliverSearchB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button deliverSearchB;
+
+        /// <summary>
+        /// DeliverMSG control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DeliverMSG;
+
+        /// <summary>
         /// DeliveriesTable control.
         /// </summary>
         /// <remarks>

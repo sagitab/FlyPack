@@ -3,12 +3,31 @@
     <style>
         .ErrorMSG {
             margin-left: 2%;
+            color: darkred;
         }
-         
+         #deliverSearchDiv {
+             padding-top: 2%;
+         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul>
+        <li> <span class="UnderLineHeader" style=" margin-left: 15%; margin-right: 1%; padding-bottom: 1%;">Search deliver</span> </li>
+        
+        <li>
+            <div class="RowDiv" id="deliverSearchDiv"><asp:TextBox ID="DeliverSearchVal" runat="server" CssClass="TextBox" s></asp:TextBox>
+      
+                <select  id="DeliverSearchBy" name="D1" style="height: 2.5em;"  runat="server" class="Select" >
+                    <option value="ID" >ID</option>
+                    <option value="LastName" >Last name</option>
+                    <option value="FirstName" >First name</option>
+                </select>
+        
+                <asp:Button ID="deliverSearchB" runat="server" Text="search" OnClick="deliverSearchB_OnClick" CssClass="BSearch"  />
+                <asp:Label ID="DeliverMSG" runat="server" Text="" CssClass="ErrorMSG"></asp:Label>
+            </div>
+        </li>
+
          <li>
  <asp:GridView ID="DeliveriesTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" >
         <Columns>
@@ -16,7 +35,7 @@
             <asp:BoundField DataField="FirstName" HeaderText="Delivery name" />
             <asp:BoundField DataField="PhoneNumber" HeaderText="Phone number" />
             <asp:BoundField DataField="Email" HeaderText="Email" />
-            <asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />
+            <%--<asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />--%>
           
         </Columns>
     </asp:GridView>
@@ -45,7 +64,7 @@
             <asp:BoundField DataField="FirstName" HeaderText="Customer name" />
             <asp:BoundField DataField="PhoneNumber" HeaderText="Phone number" />
             <asp:BoundField DataField="Email" HeaderText="Email" />
-            <asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />
+          <%--  <asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />--%>
         </Columns>
     </asp:GridView>
         

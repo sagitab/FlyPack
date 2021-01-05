@@ -336,6 +336,12 @@ a:hover {
 .BSearch-bg::after {
     background-color: dodgerblue;
 }*/
+.numRange {
+    color: dodgerblue;
+    font-size: 3vh;
+    width: 4vh;
+    background-color: black;
+}
 .addList {
     display: inline-grid;
     margin: 5vh 35%

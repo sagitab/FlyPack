@@ -51,7 +51,7 @@ namespace UIFlyPack
             ErCustomer.Text = !BindTable(customers, CustomersTable) ? "fail show customers table" : "";//error massage
             //set the labels information
             NumOfOrders.Text ="Number of orders- "+ orderUser.GetNumOfOrders();
-            NumOfCustomers.Text="Number of customers that order - " + orderUser.GetNumOfActiveCustomers();
+            NumOfCustomers.Text="Number of customers- " + orderUser.GetNumOfCustomers();
         }
 
         protected void SearchCustomerB_Click(object sender, EventArgs e)
@@ -72,6 +72,18 @@ namespace UIFlyPack
             gridView.DataSource = table;
             gridView.DataBind();
             return true;
+        }
+
+        protected void deliverSearchB_OnClick(object sender, EventArgs e)
+        {
+            BlUser user = (BlUser)Session["user"];
+            //get input values
+            string searchBys = DeliverSearchBy.Items[DeliverSearchBy.SelectedIndex].Value;
+            string value = DeliverSearchVal.Text;
+            //get data
+            DataTable customers = user.DeliversSearch($"(Users.{searchBys}='{value}')");
+            bool isExist = BindTable(customers, DeliveriesTable);
+            DeliverMSG.Text = !isExist ? "Not valid search value" : "";//error massage
         }
     }
 }
