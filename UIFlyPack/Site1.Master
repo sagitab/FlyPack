@@ -9,7 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-
+    <style>
+       #EmptyCart {
+           width: 10%;
+           height: 6%;
+           position: relative;
+           border-radius: 5vh;
+           background-color: #730505;
+       }
+    </style>
 </head>
 <body>
      <form id="form1" runat="server">
@@ -142,7 +150,7 @@
                             </li>
                         </ul>
                     </div>
-                    <asp:TextBox runat="server" TextMode="Number" MaxLength="1" ID="numOfProduct" CssClass="numRange" min="1" max="6" ></asp:TextBox>
+                    <asp:TextBox runat="server" TextMode="Number" MaxLength="1" ID="numOfProduct" CssClass="numRange" min="1" max="6" OnTextChanged="numOfProduct_OnTextChanged" ></asp:TextBox>
                 </div>
             </ItemTemplate>
         </asp:DataList>
@@ -153,6 +161,7 @@
         </div>
        
     <asp:Button runat="server" ID="OrderNow" Visible="False" CssClass="LargeButton" Text="Order now!!!" OnClick="OrderNow_OnClick"/>
+        <asp:ImageButton runat="server" ID="EmptyCart" CssClass="ProductB" ImageUrl="Img/delete.png" OnClick="EmptyCart_OnClick" Visible="True"  />
     </asp:Panel>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

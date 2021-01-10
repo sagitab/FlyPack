@@ -19,20 +19,20 @@ namespace BLFlyPack
         public int Status { get; set; }
         public Point Location { get; set; }
         public int NumOfFloor { get; set; }
-       
-        /// <summary>
-        /// add a new order to database
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <param name="deliveryId"></param>
-        /// <param name="shopId"></param>
-        /// <param name="arriveTime"></param>
-        /// <param name="readyTime"></param>
-        /// <param name="status"></param>
-        /// <param name="lat"></param>
-        /// <param name="lng"></param>
-        /// <param name="numOfFloor"></param>
-        public BlOrder( string customerId, string deliveryId, int shopId, DateTime arriveTime, DateTime readyTime, int status, double lat, double lng, int numOfFloor)
+        public List<BLOrderDetailsDB> OrderDetails { get; set; }
+    /// <summary>
+    /// add a new order to database
+    /// </summary>
+    /// <param name="customerId"></param>
+    /// <param name="deliveryId"></param>
+    /// <param name="shopId"></param>
+    /// <param name="arriveTime"></param>
+    /// <param name="readyTime"></param>
+    /// <param name="status"></param>
+    /// <param name="lat"></param>
+    /// <param name="lng"></param>
+    /// <param name="numOfFloor"></param>
+    public BlOrder( string customerId, string deliveryId, int shopId, DateTime arriveTime, DateTime readyTime, int status, double lat, double lng, int numOfFloor,List<BLOrderDetailsDB> orderDetails)
         {
             int id;
             try
@@ -43,8 +43,8 @@ namespace BLFlyPack
             {
                 throw new Exception("fail");
             }
-
-            if (id == -1) return;
+            bool isUpdateDetails = BLOrderDetailsDB.UpdateOrderDetails(orderDetails);
+            if (id == -1&& isUpdateDetails) return;
             OrderId = id;
             CustomerId = customerId;
             DeliveryId = deliveryId;
@@ -55,7 +55,7 @@ namespace BLFlyPack
             Status = status;
             Location = new Point(lat, lng);
             NumOfFloor = numOfFloor;
-
+            this.OrderDetails = orderDetails;
         }
         /// <summary>
         /// 
@@ -74,6 +74,11 @@ namespace BLFlyPack
             Location = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
             this.NumOfFloor = int.Parse(row["NumOfFloor"].ToString());
             this.ReadyTime = DateTime.Parse(row["ReadyTime"].ToString());
+        }
+
+        public BlOrder()
+        {
+            OrderDetails=new List<BLOrderDetailsDB>();
         }
         /// <summary>
         /// get order by id

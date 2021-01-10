@@ -13,31 +13,10 @@ namespace UIFlyPack
         public string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                string productName = null, productAmount = null;
-                //to update the massage label if added a new product update amount
-
-                productName = Request.QueryString.Get("productName");
-                if (productName == null)
-                {
-                    productAmount = Request.QueryString.Get("productAmount");
-                }
-                bool isAddedNew = productName != null;//get bool
-                                                      //update label Text
-                MSG.Text = isAddedNew ? productName + " added to your cart!!" : "you have " + productAmount + " in your cart";
-                Request.QueryString.Clear();//delete QueryString info
-
-                return;
-
-            }
-            catch
-            {
-                //do nothing
-            }
-
             if (!Page.IsPostBack)
             {
+                Products.Visible = false;
+                searchPanel.Visible = false;
                 //set data source
 
                 productOrder.DataSource = OrderByArr;
@@ -48,9 +27,12 @@ namespace UIFlyPack
                 productOrder.SelectedIndex = 0;
 
                 //set data source
-                Shops.DataSource = BLFlyPack.BlShop.GetShops();
+                List<BlShop> shops= BLFlyPack.BlShop.GetShops();
+                shops.Add(new BlShop("-1","all products"));
+                Shops.DataSource = shops;
                 Shops.DataTextField = "ShopName";
                 Shops.DataValueField = "ID";
+                
                 // Bind the data to the control.
                 Shops.DataBind();
                 foreach (System.Web.UI.WebControls.ListItem Item in Shops.Items)
@@ -58,9 +40,8 @@ namespace UIFlyPack
                     Item.Attributes["OnClientClick"] = "ShopDropDownListB_OnClick";
                 }
                 // Set the default selected item, if desired.
-                Shops.SelectedIndex = 0;
-                List<BLProduct> products = BLProduct.GetAllProducts("");
-                Session["products"] = products;
+                Shops.SelectedIndex = shops.Count-1;
+                Session["products"] = null;
                 //Products.ProductsCollections = products;
                 List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
                 if (productsCart == null || productsCart.Count == 0)
@@ -69,10 +50,6 @@ namespace UIFlyPack
                     return;
                 }
             }
-        }
-
-        protected void ShopDropDownListB_OnClick(object sender, EventArgs e)
-        {
         }
 
         protected void SearchProductB_OnClick(object sender, EventArgs e)
@@ -166,6 +143,9 @@ namespace UIFlyPack
 
         protected void Shops_OnSelectedIndexChanged(object sender, EventArgs e)
         {
+            searchPanel.Visible = true;
+            Products.Visible = true;
+            shopSelectDiv.Visible = false;
             List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
             bool toChangeShop = true;
             if (productsCart != null && productsCart.Count > 0)
@@ -195,18 +175,32 @@ namespace UIFlyPack
             if (toChangeShop)
             {
                 int shopId = int.Parse(Shops.SelectedValue);//get shop id
-                //set data source                                         
-                List<BLProduct> products = BLProduct.GetAllProductsByShopId(shopId, "");
-                if (products != null && products.Count > 0)
+                if (shopId == -1)
                 {
-                    Products.ProductsCollections = products;
+                    Products.ProductsCollections = BLProduct.GetAllProducts("");
                 }
                 else
                 {
-                    Products.ProductsCollections = null;
+                    //set data source                                         
+                    List<BLProduct> products = BLProduct.GetAllProductsByShopId(shopId, "");
+                    if (products != null && products.Count > 0)
+                    {
+                        Products.ProductsCollections = products;
+                    }
+                    else
+                    {
+                        Products.ProductsCollections = null;
+                    }
                 }
+                
             }
-          
+        }
+
+        protected void ChangeShop_OnClick(object sender, EventArgs e)
+        {
+            searchPanel.Visible = false;
+            Products.Visible = false;
+            shopSelectDiv.Visible = true;
         }
     }
 }

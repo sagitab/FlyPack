@@ -24,14 +24,19 @@
             <span class="Header" style="text-decoration: underline; font-size: 3em; position: absolute; left: 50%; bottom:76%;">Store</span>
         </li>
         <li>
-            <div class="RowDiv">
-                <span class="Header" style="text-decoration: underline; font-size: 3em; position: absolute; left: 45%; bottom: 69%;">choose shop-</span>
-                <asp:DropDownList ID="Shops" CssClass="Select" runat="server" OnSelectedIndexChanged="Shops_OnSelectedIndexChanged" AutoPostBack="True"  >
-                </asp:DropDownList>
-            </div>
-           
+            <asp:Button runat="server" ID="ChangeShop" OnClick="ChangeShop_OnClick" Text="Change shop" CssClass="LargeButton" OnClientClick="Confirm()"/>
         </li>
         <li>
+            <asp:Panel runat="server" ID="shopSelectDiv">
+            <div class="RowDiv">
+                <span class="Header" style="text-decoration: underline; font-size: 3em; position: absolute; left: 45%; bottom: 69%;">choose shop-</span>
+                <asp:DropDownList ID="Shops" CssClass="Select" runat="server" OnSelectedIndexChanged="Shops_OnSelectedIndexChanged"  AutoPostBack="True"  >
+                </asp:DropDownList>
+            </div>
+            </asp:Panel>
+        </li>
+        <li>
+            <asp:Panel ID="searchPanel" runat="server">
             <div class="RowDiv" style="margin-left: 31%;margin-top: 5.75%; position: absolute;">
                 <span class="UnderLineHeader" >Search Products</span>
                 <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
@@ -46,20 +51,17 @@
                 </asp:DropDownList>
                 <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG" ></asp:Label>
             </div>
+            </asp:Panel>
         </li>
-        <li>
-            <FlyPackControls:Products ID="Products" runat="server"></FlyPackControls:Products>
+        <li style="top: 50%; position: absolute;"> 
+            <FlyPackControls:Products ID="Products" runat="server" ></FlyPackControls:Products>
+           
         </li>
     </ul>
     <asp:HiddenField runat="server" ID="isConfirm"/>
     <script type="text/javascript">
         function Confirm() {
-            console.log();
-            var toDelete = confirm('Are you sure you want to switch shop? all your products in shopping cart will deleted');
-            var isConfirm = document.getElementById("ContentPlaceHolder1_isConfirm");
-            if (toDelete==true) {
-                isConfirm.value = "1";
-            }
+            return confirm('Are you sure you want to switch shop? all your products in shopping cart will deleted');
         }
     </script>
 </asp:Content>

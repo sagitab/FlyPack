@@ -48,6 +48,7 @@ namespace BLFlyPack
             ImageUrl = imageUrl;
         }
 
+
         public static BLProduct GetProductById(int productId)
         {
             DataRow row = ProductDal.GetProductById(productId);

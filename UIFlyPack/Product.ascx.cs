@@ -24,23 +24,13 @@ namespace UIFlyPack
         {
             try
             {
-                if (!Page.IsPostBack)
-                {
-                    if (!UpdateData(BLProduct.GetAllProducts("")))//Update Data to all products
-                    {
-                        MSG.Text = "there is no products"; //error msg
-                    }
-                }
-                else
-                {
-                    UpdateData((List<BLProduct>)Session["products"]);//Update Data to the product in session
-                }
+                UpdateData((List<BLProduct>)Session["products"]);//Update Data to the product in session
             }
             catch (Exception exception)
             {
                 MSG.Text = exception.Message;//error msg
             }
-          
+
         }
         /// <summary>
         /// update the ProductsList data
@@ -67,73 +57,49 @@ namespace UIFlyPack
         {
             if (e.CommandName == "AddToCart")
             {
-                const int maxOfProductPerOrder = 6;//num of max products to deliver
+                int maxOfProductPerOrder = GlobalVariable.MaxOrderForDeliver;//num of max products to deliver
                 BLProduct product = ((List<BLProduct>)Session["products"])[e.Item.ItemIndex];
                 try
                 {
                     //get data from session
-                    List <BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-                    int[] productAmounts = (int[])Session["productAmount"];
-                    //check if session nul and create new object
-                    if (productsCart==null)
+                    List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>)Session["orderDetails"];
+                    if (orderDetails == null)
                     {
-                        productsCart=new List<BLProduct>();
-                    }
-                    if (productAmounts == null)
-                    {
-                        productAmounts = new int[6];
+                        orderDetails = new List<BLOrderDetailsDB>();
                     }
                     //check if order is full
-                    if (productsCart.Count == maxOfProductPerOrder || BLProduct.SumArr(productAmounts) == maxOfProductPerOrder)
+                    if (orderDetails.Count == maxOfProductPerOrder || BLOrderDetailsDB.IsFull(orderDetails))
                     {
                         addToCartMsg.Text = "You can order up to 6 product";
                     }
                     else
                     {
                         //get product index
-                        int indexOfProduct = BLProduct.IndexOfProduct(productsCart, product);
+                        int indexOfProduct = BLOrderDetailsDB.IndexOfProduct(orderDetails, product.Id);
                         if (indexOfProduct != -1)
-                        {//if product already in the productsCart update amount
-                            productAmounts[indexOfProduct]++;
-                            Session["productsCart"] = productsCart;
-                            Session["productAmount"] = productAmounts;
-                            Response.Redirect("Store.aspx?productAmount=" + productAmounts[indexOfProduct] + product.Description);
+                        {
+                            //if product already in the productsCart update amount
+                            orderDetails[indexOfProduct].amount++;
+                            //update session
+                            Session["orderDetails"] = orderDetails;
+                            addToCartMsg.Text = "you have " + orderDetails[indexOfProduct].amount + " " + product.Description + " in your cart";
                         }
                         else
                         {
                             //if product not in the productsCart added him to there
-                            productsCart.Add(product);
-                            if (Session["numOfProducts"] == null)
-                            {
-                                productAmounts[0] = 1;
-                                Session["numOfProducts"] = 1;
-                            }
-                            else
-                            {
-                                int numOfProducts = (int)Session["numOfProducts"];
-                                productAmounts[numOfProducts] = 1;
-                                Session["numOfProducts"] = numOfProducts + 1;
-                            }
+                            orderDetails.Add(new BLOrderDetailsDB(product.Id, 1, product.Price));
                             //update sessions
-                            Session["productAmount"] = productAmounts;
-                            Session["productsCart"] = productsCart;
+                            Session["orderDetails"] = orderDetails;
                             //Redirect to the same page to activate master page page loud to update the data in the data list
-                            addToCartMsg.Text = product.Description;
+                            addToCartMsg.Text = product.Description + " added to your cart";
                             //Response.Redirect($"Store.aspx?productName=" + );
                         }
                     }
-
-                  
-
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
                     Console.WriteLine(exception.Message);
-                    //Session["productsCart"] = new List<BLProduct>() { product };
-                    //int[] amountArr = new int[maxOfProductPerOrder - 1];
-                    //amountArr[0] = 1;
-                    //Session["productAmount"] = amountArr;
-                    MSG.Text = "error!!! :("; //error msg
+                    MSG.Text = "fail to add product to your cart :(" + exception.Message; //error msg
                 }
             }
         }

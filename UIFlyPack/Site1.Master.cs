@@ -44,9 +44,9 @@ namespace UIFlyPack
                     //customer
                     Customer.Visible = true;
                     UserString.Text = des;
-                    List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-                    Update(productsCart);
-                    OrderNow.Visible = productsCart?.Count > 0;
+                    List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>)Session["orderDetails"];
+                    Update(orderDetails);
+                    OrderNow.Visible = orderDetails?.Count > 0;
                     break;
             }
             UnConected.Visible = false;
@@ -69,25 +69,32 @@ namespace UIFlyPack
         }
 
         //sdfdddddd!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        public void UpdateSumCart(List<BLProduct> productsCart)
+        public void UpdateSumCart(List<BLOrderDetailsDB> orderDetails)
         {
-            int[] productAmounts = (int[])Session["productAmount"];
-            int numOfProducts = BLProduct.SumArr(productAmounts);
+            if (orderDetails == null) return;
+            int numOfProducts = BLOrderDetailsDB.numOfProducts(orderDetails);
             NumOfProducts.Text = "Num Of Products-" + numOfProducts;
-            double totalPrice = BLProduct.TotalPrice(productsCart, productAmounts);
+            double totalPrice = BLOrderDetailsDB.TotalPrice(orderDetails);
             TotalPrice.Text = "Total Price-" + totalPrice;
         }
-        public void Update(List<BLProduct> products)
+        public void Update(List<BLOrderDetailsDB> orderDetails)
         {
+            List<BLProduct> products = new List<BLProduct>();
+            if (orderDetails!=null)
+            {
+                products.AddRange(orderDetails.Select(detail => BLProduct.GetProductById(detail.productId)));
+                EmptyCart.Visible = true;
+            }
             ProductsCart.DataSource = products;
-            Session["productsCart"] = products;
+            Session["orderDetails"] = orderDetails;
             ProductsCart.DataBind();
-            UpdateSumCart(products);
-            if (products == null || products.Count == 0)
+            UpdateSumCart(orderDetails);
+            if (orderDetails == null || orderDetails.Count == 0)
             {
                 MSG.Text = "there is no products"; //error msg
                 NumOfProducts.Text = "";
                 TotalPrice.Text = "";
+                OrderNow.Visible = false;
                 return;
             }
             MSG.Text = "";
@@ -97,19 +104,12 @@ namespace UIFlyPack
         {
             if (e.CommandName == "Remove")//removing an product
             {
-                //get productsCart list
-                List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
+                //get orderDetails list 
+                List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>)Session["orderDetails"];
                 int DeleteIndex = e.Item.ItemIndex;//get delete index
-                productsCart.RemoveAt(DeleteIndex);//remove at the list
-                int[] amounts = (int[])Session["productAmount"];  //get amounts array
-                //update num of products
-                int numOfProducts = (int)Session["numOfProducts"];
-                Session["numOfProducts"] = numOfProducts - 1;
-                //update amounts arr
-                BLProduct.Delete(amounts, DeleteIndex);
-                Session["productAmount"] = amounts;
-                Update(productsCart);//update data list
-                OrderNow.Visible = productsCart?.Count > 0;
+                orderDetails.RemoveAt(DeleteIndex);//remove at the list
+                Update(orderDetails);//update data list
+                OrderNow.Visible = orderDetails?.Count > 0;
             }
         }
 
@@ -117,8 +117,13 @@ namespace UIFlyPack
         {
             if (IsGoodAmount())
             {
-                int[] productAmounts = (int[])Session["productAmount"]; //get amounts array
-                var amount = productAmounts?[e.Item.ItemIndex] ?? 1;//get amount from array
+                List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>) Session["orderDetails"];
+                int amount = 0;
+                if (orderDetails.Count>0)
+                {
+                    amount = orderDetails?[e.Item.ItemIndex].amount ?? 1;//get amount from array
+                }
+              
                 if (amount == 0)
                 {
                     amount = 1;//minimum amount value is 1
@@ -139,8 +144,8 @@ namespace UIFlyPack
         {
             if (IsGoodAmount())
             {
-                List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-                BLProduct product = productsCart[0];
+                List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>)Session["orderDetails"];
+                BLProduct product = BLProduct.GetProductById(orderDetails[0].productId); 
                 int shopId = BLProduct.GetShopIdByProductId(product.Id);//get shop id
                 Response.Redirect("OrderNow.aspx?shopId=" + shopId);//pass shop id in qwaery string
             }
@@ -173,21 +178,37 @@ namespace UIFlyPack
 
         public bool IsGoodAmount()
         {
-            int[] productAmounts = new int[6];
-            int sumAmount = 0;
+            List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>)Session["orderDetails"];
+           int sumAmount = 0;
             foreach (DataListItem item in ProductsCart.Items)
             {
                 TextBox t = (TextBox)item.FindControl("numOfProduct");
                 int amount = int.Parse(t.Text);
                 sumAmount += amount;
-                productAmounts[item.ItemIndex] = amount;
+                orderDetails[item.ItemIndex].amount = amount;
             }
             if (sumAmount > 6)
             {
                 return false;
             }
-            Session["productAmount"] = productAmounts;
+            Session["orderDetails"] = orderDetails;
             return true;
+        }
+
+        protected void EmptyCart_OnClick(object sender, ImageClickEventArgs e)
+        {
+            Update(null);
+            EmptyCart.Visible = false;
+        }
+
+        protected void numOfProduct_OnTextChanged(object sender, EventArgs e)
+        {
+            if (!IsGoodAmount())
+            {
+               //msg!!!!!!!!!!! 
+            }
+
+           
         }
     }
 }

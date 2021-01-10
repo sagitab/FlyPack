@@ -15,6 +15,24 @@ namespace UIFlyPack
     {
 
         /// <summary>
+        /// ChangeShop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ChangeShop;
+
+        /// <summary>
+        /// shopSelectDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel shopSelectDiv;
+
+        /// <summary>
         /// Shops control.
         /// </summary>
         /// <remarks>
@@ -22,6 +40,15 @@ namespace UIFlyPack
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList Shops;
+
+        /// <summary>
+        /// searchPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel searchPanel;
 
         /// <summary>
         /// serchedValue control.

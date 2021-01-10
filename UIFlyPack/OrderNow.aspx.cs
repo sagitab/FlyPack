@@ -71,15 +71,16 @@ namespace UIFlyPack
             {
                 try
                 {
-                    BlOrder order = new BlOrder(user.UserId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor);//add order
+                    //need to get order from session
+                    BlOrder order = new BlOrder(user.UserId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor,(List<BLOrderDetailsDB>)Session["OrderDetails"]);//add order
                     //update order details
                     bool success = order.OrderId != -1;
                     List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
                     int[] productAmounts = (int[])Session["productAmount"];
-                    if (success)
-                    {
-                        success= BLOrderDetailsDB.UpdateOrderDetails(productsCart, order.OrderId, productAmounts);
-                    }
+                    //if (success)
+                    //{
+                    //    success= BLOrderDetailsDB.UpdateOrderDetails(productsCart, order.OrderId, productAmounts);
+                    //}
                     MSG.Text = success ? "order successes!!" : "order failed :(";//fail/success massage
                     BlOrderUser customer=new BlOrderUser(order.CustomerId);
                     //get  description of the product list to send in email
