@@ -36,6 +36,8 @@
             </asp:Panel>
         </li>
         <li>
+            <asp:Label runat="server" ID="shopName" CssClass="Header" Text=""></asp:Label>
+        <li>
             <asp:Panel ID="searchPanel" runat="server">
             <div class="RowDiv" style="margin-left: 31%;margin-top: 5.75%; position: absolute;">
                 <span class="UnderLineHeader" >Search Products</span>

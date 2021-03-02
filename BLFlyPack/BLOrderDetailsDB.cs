@@ -111,7 +111,7 @@ namespace BLFlyPack
         /// <returns>description of the product</returns>
         public override string ToString()
         {
-            return $"{BLProduct.GetProductNameById(productId)}, price-{price},amount-{amount}";
+            return $"{productId}, price-{price},amount-{amount}";
         }
 
         /// <summary>

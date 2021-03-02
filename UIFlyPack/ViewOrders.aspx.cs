@@ -122,7 +122,6 @@ namespace UIFlyPack
 
             int userType = user.Type;//get user type 
             UpOrders(user, "");
-            UpdateButtonsText(userType);
         }
 
         public void UpdateButtonsText(int userType)
@@ -248,7 +247,7 @@ namespace UIFlyPack
                 OrderTable.Visible = false;
                 ErMSG.Text = "there is no orders";
             }
-
+            UpdateButtonsText(user.Type);
         }
         protected void OrderTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

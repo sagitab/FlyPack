@@ -181,6 +181,7 @@ namespace UIFlyPack
                 }
                 else
                 {
+                    shopName.Text = BlShop.GetShopById(shopId).ShopName;
                     //set data source                                         
                     List<BLProduct> products = BLProduct.GetAllProductsByShopId(shopId, "");
                     if (products != null && products.Count > 0)
@@ -201,6 +202,7 @@ namespace UIFlyPack
             searchPanel.Visible = false;
             Products.Visible = false;
             shopSelectDiv.Visible = true;
+            shopName.Text = "";
         }
     }
 }

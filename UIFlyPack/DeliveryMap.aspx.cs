@@ -35,7 +35,7 @@ namespace UIFlyPack
                 }
 
             }
-            //Session["user"] = new Deliver("shlakot1");
+            Session["user"] = new Deliver("shlakot1");
             //BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
             //GlobalVariable.UnVerifyEmail.Add(user.UserId, "111111");
             BlOrderUser user = /*(BlOrderUser)Session["user"];*/ (BlOrderUser)Session["user"];
@@ -135,22 +135,10 @@ namespace UIFlyPack
             Point locationNow = deliver.Location;
             for (int i = 0; i < shops.Count; i++)
             {
-                //minIndex = locationNow.MinimumDistanceShops(copyShops, 0);
-                IndexsOrderByDistance = isAllSameShop ? locationNow.MinimumDistanceCustomerList(copyShops, copyCustomersAddresses, 0) : locationNow.MinimumDistanceList(copyShops, copyCustomersAddresses, 0);
                 //set a list of the index of the shop order by distance ( the first is the closest)
-                //to add shop and customer
-                //OrderShops[i] = CopyShops[minIndex];
-                //OrderCustomersAddresses[i] = CopyCustomersAddresses[minIndex];
-                ////calculate Times
-                //DateTime ArriveTimeCustomer = DateTime.Now.AddMinutes(Point.ArriveTimeCustomer(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
-                //DateTime ArriveTimeShop = DateTime.Now.AddMinutes(Point.ArriveTimeShop(LocationNow, CopyCustomersAddresses, CopyShops, minIndex));
-                //DateTime ArriveTime = CopyOrders[minIndex].AriveTime;
-                //DateTime ReadyTime = CopyOrders[minIndex].ReadyTime;
-                //if (IsLate(ArriveTimeCustomer, ArriveTime, ReadyTime, ArriveTimeShop, ReadyTimes, ArriveTimes))
-                //
-
+                IndexsOrderByDistance = isAllSameShop ? locationNow.MinimumDistanceCustomerList(copyShops, copyCustomersAddresses, 0) : locationNow.MinimumDistanceList(copyShops, copyCustomersAddresses, 0);
+                
                 // for orderShopIndex to select the shortest distance shop that the deliver deliver the pack on time
-
                 foreach (var index in IndexsOrderByDistance)
                 {
                     //to add shop and customer
@@ -190,8 +178,12 @@ namespace UIFlyPack
                 List<BlCustomersAddress> cCustomersAddresses = new List<BlCustomersAddress>(customersAddresses);
                 for (int i = 0; i < shops.Count; i++)
                 {
-                    IndexsOrderByDistance = locationNow.MinimumDistanceList(cShops, cCustomersAddresses, 0);
-                    int bestIndex = GetBestShopIndex(readyTimes, arriveTimes, IndexsOrderByDistance);//get the best index by all the parameters
+                    int bestIndex=0;
+                    if (i!=shops.Count-1)
+                    {
+                        IndexsOrderByDistance = locationNow.MinimumDistanceList(cShops, cCustomersAddresses, 0);
+                         bestIndex = GetBestShopIndex(readyTimes, arriveTimes, IndexsOrderByDistance);//get the best index by all the parameters
+                    }
                     bestWayShops.Add(cShops[bestIndex]);
                     bestWayCustomers.Add(cCustomersAddresses[bestIndex]);
                     cShops.RemoveAt(bestIndex);
@@ -235,17 +227,24 @@ namespace UIFlyPack
             int lenght = orderByDistance.Count;
             List<int> orderReadyTimes = new List<int>(TimesOrderByBestTime(readyTimes, false));
             List<int> orderArriveTimes = new List<int>(TimesOrderByBestTime(arriveTimes, true));
-
-            int[] shopScore = new int[lenght];
-            for (int j = 0; j < lenght; j++)
+            if (lenght == orderReadyTimes.Count&&lenght==orderArriveTimes.Count) 
             {
-                shopScore[orderReadyTimes[j]] += lenght - j;
-                shopScore[orderArriveTimes[j]] += ((lenght + 2) - j) * 10;
-                shopScore[orderByDistance[j]] += (lenght - j) * 10;
+                int[] shopScore = new int[lenght];
+                for (int j = 0; j < lenght; j++)
+                {
+                    shopScore[orderReadyTimes[j]] += lenght - j;
+                    shopScore[orderArriveTimes[j]] += ((lenght + 2) - j) * 10;
+                    shopScore[orderByDistance[j]] += (lenght - j) * 10;
+                }
+                List<int> copyArr = new List<int>(shopScore);
+                return BestTimeIndex(copyArr, false);
             }
-            List<int> copyArr = new List<int>(shopScore);
+            else
+            {
+                return -1;
+            }
 
-            return BestTimeIndex(copyArr, false);
+          
         }
 
 

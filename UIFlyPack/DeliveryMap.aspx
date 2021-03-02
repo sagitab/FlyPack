@@ -53,7 +53,7 @@
             debugger;
             var shops =  <%=Shops%>;
             var customersAddresses = <%=Customers%>;
-          <%--  var mapOptions = {
+           var mapOptions = {
                 zoom: 8,
                 center: new google.maps.LatLng(0, 0)
             }
@@ -91,10 +91,10 @@
                 fillColor: "#0000FF",
                 fillOpacity: 0.4
             });
-            map.setCenter(startPoint);--%>
+            map.setCenter(startPoint);
         }
 
-        <%-- function initMap() {
+   <%--  function initMap() {
             var mapOptions = {
                 zoom: 8,
                 center: new google.maps.LatLng(0, 0)
@@ -119,10 +119,10 @@
                 map: map
             });
             map.setCenter(CenterPoint());
-        }
-        document.body.onload = function () {
-            initMap();
         }--%>
+        //document.body.onload = function () {
+        //    initMap();
+        //}
         //document.body.onload = function () {
         //    debugger;
         //    var hiddenField = document.getElementById('ContentPlaceHolder1_shopJson');

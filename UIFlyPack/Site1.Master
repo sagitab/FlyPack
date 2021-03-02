@@ -129,7 +129,7 @@
    
     <asp:Panel runat="server" CssClass="shoppingCart" ID="shoppingCartPanel" Visible="False">
         <asp:Label runat="server" ID="MSG" CssClass="BigErrorMSG"></asp:Label>
-        <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="XButton_OnClick" ID="XButton"/>
+        <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="XButton_OnClick" ID="XButton" />
     <div class="ProductDiv">
         <asp:DataList ID="ProductsCart" CellPadding="20" CellSpacing="30" RepeatDirection="Horizontal" RepeatLayout="Table" RepeatColumns="1" runat="server"  OnItemCommand="ProductsCart_OnItemCommand" OnItemDataBound="ProductsCart_OnItemDataBound" >
             <ItemTemplate>
@@ -150,7 +150,10 @@
                             </li>
                         </ul>
                     </div>
-                    <asp:TextBox runat="server" TextMode="Number" MaxLength="1" ID="numOfProduct" CssClass="numRange" min="1" max="6" OnTextChanged="numOfProduct_OnTextChanged" ></asp:TextBox>
+              <%--      <asp:DropDownList runat="server" ID="productAmount"  CommandName="update"   CssClass="Select"/>--%>
+                    <asp:TextBox runat="server"  MaxLength="1"  ID="numOfProduct" CssClass="numRange" ></asp:TextBox>
+                    <asp:LinkButton runat="server" CommandName="plus" Text="+" CssClass="BSearch" ID="Plus" ></asp:LinkButton>
+                    <asp:LinkButton runat="server" CommandName="minus" Text="-" CssClass="BSearch" ID="Minus"></asp:LinkButton>
                 </div>
             </ItemTemplate>
         </asp:DataList>
@@ -160,8 +163,9 @@
             <asp:Label runat="server" Text="" CssClass="Header" ID="TotalPrice"></asp:Label>
         </div>
        
-    <asp:Button runat="server" ID="OrderNow" Visible="False" CssClass="LargeButton" Text="Order now!!!" OnClick="OrderNow_OnClick"/>
+    <asp:Button runat="server" ID="OrderNow" Visible="False" CssClass="LargeButton" Text="Order now!!!" OnClick="OrderNow_OnClick" />
         <asp:ImageButton runat="server" ID="EmptyCart" CssClass="ProductB" ImageUrl="Img/delete.png" OnClick="EmptyCart_OnClick" Visible="True"  />
+        <asp:Label runat="server" ID="erMSG" Text="" CssClass="ErrorMSG" ></asp:Label>
     </asp:Panel>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
