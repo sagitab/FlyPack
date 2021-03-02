@@ -262,5 +262,9 @@ namespace BLFlyPack
 
         //    return orderShops;
         //}
+        public bool IsSame(Point point)
+        {
+            return this.Lat == point.Lat && this.Lng == point.Lng;
+        }
     }
 }
