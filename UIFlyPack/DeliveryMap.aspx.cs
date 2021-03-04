@@ -320,21 +320,22 @@ namespace UIFlyPack
         {
             IsUpdated.Value = "0";//update the hidden field value
         }
-        public static void Isdable(List<BlShop> bestWayShops, List<BlCustomersAddress> bestWayCustomers)
+        public static void UpdateWayString(List<BlShop> bestWayShops, List<BlCustomersAddress> bestWayCustomers)
         {
-            if(bestWayCustomers.Count>1 && bestWayShops.Count > 1)
+            
+            if (bestWayCustomers.Count > 1 && bestWayShops.Count > 1)
             {
+                string way = "";
                 BlCustomersAddress blCustomersAddress = bestWayCustomers[0];
-                for (int i = 1; i < bestWayCustomers.Count; i++)
+                for (int i = 0; i < bestWayCustomers.Count; i++)
                 {
                     BlCustomersAddress blCustomer = bestWayCustomers[i];
-                    if (blCustomer.Location.IsSame(blCustomersAddress.Location))
-                    {
-                        bestWayCustomers.RemoveAt(i);
-                    }
+                    BlShop blShop = bestWayShops[i];
+                    way += blShop.ShopName + " >> "+blCustomersAddress.CustomerName;
                 }
+
             }
-         
+
         }
     }
 }
