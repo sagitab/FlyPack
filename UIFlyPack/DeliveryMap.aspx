@@ -14,6 +14,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <span class="Header" style="position: absolute; left: 40%;bottom: 78%;font-size: 4em;" >Deliveries Map</span>
     <span class="Header" id="OrderStartedSucces" runat="server"></span>
+    <asp:Label runat="server" ID="WayString" CssClass="Header" Text=""></asp:Label>
     <div id="map"></div>
     <br/>
    <%-- <input type="button" onclick="showMap" value="Show map" id="showMapB"/>--%>

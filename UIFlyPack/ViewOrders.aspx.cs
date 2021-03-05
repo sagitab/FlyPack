@@ -131,35 +131,42 @@ namespace UIFlyPack
             {
 
                 case 3:
-                {
-                    for (int i = 0; i < length; i++)
                     {
-                        GridViewRow row = OrderTable.Rows[i];
-                        TableCell cell = row.Cells[1];
-                        if (cell.Text != "delivery take care your order") continue;
-                        Button myButton = null;
-                        myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
-                        myButton.Text = "Order Finished";
-                        myButton.CommandName = "finish";
-                    }
+                        for (int i = 0; i < length; i++)
+                        {
+                            GridViewRow row = OrderTable.Rows[i];
+                            TableCell cell = row.Cells[1];
+                            string status = cell.Text;
+                            if (status== "order sent")
+                            {
+                                Button button = null;
+                                button = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                                row.Cells[row.Cells.Count - 1].Controls.Remove(button);
+                            }
+                            if (status != "delivery take care your order") continue;
+                            Button myButton = null;
+                            myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                            myButton.Text = "Order Finished";
+                            myButton.CommandName = "finish";
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case 1:
-                {
-
-                    for (int i = 0; i < length; i++)
                     {
-                        GridViewRow row = OrderTable.Rows[i];
-                        TableCell cell = row.Cells[1];
-                        if (cell.Text != "shipping time selected") continue;
-                        var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
-                        myButton.Text = "Ready time selected";
-                        myButton.CommandName = "";
-                    }
 
-                    break;
-                }
+                        for (int i = 0; i < length; i++)
+                        {
+                            GridViewRow row = OrderTable.Rows[i];
+                            TableCell cell = row.Cells[1];
+                            if (cell.Text != "shipping time selected") continue;
+                            var myButton = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
+                            myButton.Text = "Ready time selected";
+                            myButton.CommandName = "";
+                        }
+
+                        break;
+                    }
             }
         }
         public void UpOrders(BlUser user, string condition)
@@ -331,13 +338,23 @@ namespace UIFlyPack
                     Response.Redirect("HomePage.aspx");
                     return;
                 }
-                /*  Response.Redirect("DeliveryMap.aspx?text='order started in proccess'");*/// go to DeliveryMap.aspx to calculate the best way
-                DateTime exitTime = DateTime.Now;
-                //get global vars
-                double distanceToCustomerHome = GlobalVariable.Distance;
-                int speed = GlobalVariable.Speed;
+                // calculate the best way time
+                Deliver deliver = (Deliver)Session["user"];
+                //get the new orders of the deliver
+                List<BlOrder> Orders = deliver.GetOrdersListByTime();
+                //set the road lists
+                List<BlShop> shops = new List<BlShop>();
+                List<BlCustomersAddress> customersAddresses = new List<BlCustomersAddress>();
+                //full road lists
+                foreach (BlOrder Order in Orders)
+                {
+                    shops.Add(BlShop.GetShopById(Order.ShopId));
+                    Point customerAddress = Order.Location != null ? new Point(Order.Location) : new Point(BlUser.UserById(Order.CustomerId).Location);
+                    customersAddresses.Add(new BlCustomersAddress(customerAddress, Order.NumOfFloor, ""));
+                }
                 //calculate minutes
-                double minutes = distanceToCustomerHome / speed;
+                double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
+                DateTime exitTime = DateTime.Now;
                 DateTime arrivalTime = exitTime.AddMinutes(5 + minutes);//add 5 minute of insure 
                 bool success = order.UpdateArrivalTime(arrivalTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrive time and order status 
                 if (!success)
@@ -401,8 +418,8 @@ namespace UIFlyPack
                 {
                     BlUser customer = BlUser.UserById(order.CustomerId);
                     NewOrOld.SelectedIndex = 1;//to see that the orders turn to old one
-                    BlUser CurrentUser= (BlUser)Session["user"];
-                    NewOrOld.SelectedIndex =0;
+                    BlUser CurrentUser = (BlUser)Session["user"];
+                    NewOrOld.SelectedIndex = 0;
                     UpOrders(CurrentUser, "");//update table
                     UpdateButtonsText(CurrentUser.Type);
                     //send email to customer
@@ -412,7 +429,7 @@ namespace UIFlyPack
                     {
                         //take care if email don't send
                     }
-                    MSG.Text= "success to update status";
+                    MSG.Text = "success to update status";
                 }
                 else
                 {
@@ -454,58 +471,6 @@ namespace UIFlyPack
             double totalPrice = BLOrderDetail.TotalPrice(productsCart);
             TotalPrice.Text = "Total Price-" + totalPrice;
         }
-        //public  void GetBestWayLists(Deliver deliver)
-        //{
-        //    List<BlOrder> orders = deliver.GetOrdersListByTime();
-        //    //set the road lists
-        //    List<BlShop> shops = new List<BlShop>();
-        //    List<BlCustomersAddress> customersAddresses = new List<BlCustomersAddress>();
-        //    //full road lists
-        //    foreach (BlOrder order in orders)
-        //    {
-        //        shops.Add(BlShop.GetShopById(order.ShopId));
-        //        Point customerAddress = order.Location != null ? new Point(order.Location) : new Point(BlUser.UserById(order.CustomerId).Location);
-        //        customersAddresses.Add(new BlCustomersAddress(customerAddress, order.NumOfFloor, deliver.GetName()));
-        //    }
-
-        //    if (orders.Count == 0) { ErMSG.Text = "there is no orders"; return; }
-        //    else
-        //    {
-        //        ErMSG.Text = "";
-        //    }
-        //    if (orders.Count > 1)//to change to orders.Count>1!!!!!!!!!!!!!####$$$$$$$$########@@@@@@@*********#########&&&&&&&&&&$$$$$$$$$$^^^^^^^^^^%%%%%%%%%**********
-        //    {
-        //        //List<BlShop> sameShops = BlShop.isHaveSameShop(shops);
-        //        //bool isHaveSameShop = sameShops.Count > 0;
-        //        //if (isHaveSameShop)
-        //        //{
-
-        //        //}
-        //        bool isAllSameShop = BlShop.isAllSameShop(shops);
-        //        //calculate shorter way to deliver 
-        //       DeliveryMap.GetBestWayLists(isAllSameShop, shops, customersAddresses, orders, deliver.Location);
-        //    }
-        //    else
-        //    {
-        //        //update the global vars
-        //        Shops = Json.Encode(shops);
-        //        Customers = Json.Encode(customersAddresses);
-        //    }
-
-
-        //}
-        //protected void OrderTable_RowDataBound(object sender, GridViewRowEventArgs e)
-        //{
-        //    //GridViewRow row = e.Row;
-        //    //LinkButton myButton = row.FindControl("#ContentPlaceHolder1_OrderTable > tbody > tr:nth-child(2) > td:nth-child(5) > input[type=button]") as LinkButton;
-
-        //    //if (myButton != null)
-        //    //{
-        //    //    myButton.Text = "Order started";
-        //    //    myButton.CommandName = "started";
-        //    //}
-
-        //}
         protected void XButton_OnClick(object sender, ImageClickEventArgs e)
         {
             OrderDetailsPanel.Visible = false;//to 'close' the window of the order details panel

@@ -98,6 +98,7 @@ namespace UIFlyPack
                 //update the Page vars
                 Shops = Json.Encode(shops);
                 Customers = Json.Encode(customersAddresses);
+                UpdateWayString(shops, customersAddresses);
                 //update the global vars
                 Deliver deliver = (Deliver)user;
                 double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
@@ -192,6 +193,7 @@ namespace UIFlyPack
                 //update the Page vars
                 Shops = Json.Encode(bestWayShops);
                 Customers = Json.Encode(bestWayCustomers);
+                UpdateWayString(bestWayShops, bestWayCustomers);
                 //update the global vars
                 double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
                 GlobalVariable.Distance = minutes;
@@ -202,6 +204,7 @@ namespace UIFlyPack
                 //update the Page vars
                 Shops = Json.Encode(orderShops);
                 Customers = Json.Encode(orderCustomersAddresses);
+                UpdateWayString(orderShops, orderCustomersAddresses);
                 //update the global vars
                 double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
                 GlobalVariable.Distance = minutes;
@@ -320,22 +323,21 @@ namespace UIFlyPack
         {
             IsUpdated.Value = "0";//update the hidden field value
         }
-        public static void UpdateWayString(List<BlShop> bestWayShops, List<BlCustomersAddress> bestWayCustomers)
+        public  void UpdateWayString(List<BlShop> bestWayShops, List<BlCustomersAddress> bestWayCustomers)
         {
-            
-            if (bestWayCustomers.Count > 1 && bestWayShops.Count > 1)
-            {
-                string way = "";
+            string way = "start point >> ";
                 BlCustomersAddress blCustomersAddress = bestWayCustomers[0];
                 for (int i = 0; i < bestWayCustomers.Count; i++)
                 {
                     BlCustomersAddress blCustomer = bestWayCustomers[i];
                     BlShop blShop = bestWayShops[i];
-                    way += blShop.ShopName + " >> "+blCustomersAddress.CustomerName;
+                    way += blShop.ShopName + " >> "+ blCustomer.CustomerName;
+                    if (i+1!=bestWayCustomers.Count)
+                    {
+                        way += " >> ";
+                    }
                 }
-
-            }
-
+                WayString.Text = way;
         }
     }
 }
