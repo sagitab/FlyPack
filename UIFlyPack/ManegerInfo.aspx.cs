@@ -51,7 +51,7 @@ namespace UIFlyPack
             ErCustomer.Text = !BindTable(customers, CustomersTable) ? "fail show customers table" : "";//error massage
             //set the labels information
             NumOfOrders.Text ="Number of orders- "+ orderUser.GetNumOfOrders();
-            NumOfCustomers.Text="Number of customers- " + orderUser.GetNumOfCustomers();
+            NumOfCustomers.Text="Number of customers- " + customers.Rows.Count; 
         }
 
         protected void SearchCustomerB_Click(object sender, EventArgs e)

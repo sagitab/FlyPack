@@ -26,5 +26,10 @@ namespace FlyPack
         {
             return DalHelper.Select("SELECT Products.*, OrderDetails.Amount, OrderDetails.Price AS DetailPrice FROM Products INNER JOIN OrderDetails ON Products.ID = OrderDetails.ProductID WHERE [OrderDetails].[OrderID]=" + orderId);
         }
+
+        public static bool DeleteOrderDetails(int orderId)
+        {
+            return DalHelper.DeleteRowById(orderId, "OrderDetails", "OrderID");
+        }
     }
 }

@@ -98,11 +98,16 @@ namespace BLFlyPack
         /// <param name="orderId"></param>
         /// <param name="amounts"></param>
         /// <returns>success or failure</returns>
-        public static bool UpdateOrderDetails(List<BLOrderDetailsDB> orderDetails)
+        public static bool UpdateOrderDetails(List<BLOrderDetailsDB> orderDetails,int orderId)
         {
             List<BLOrderDetailsDB> OrderDetails = (from detial in orderDetails
-                select new BLOrderDetailsDB(detial.orderId, detial.productId, detial.amount, detial.price)).ToList();
-            return OrderDetails.All(OrderDetail => OrderDetail?.Id != -1);
+                select new BLOrderDetailsDB(orderId, detial.productId, detial.amount, detial.price)).ToList();
+            foreach (var orderDetail in OrderDetails)
+            {
+                if (orderDetail?.Id == -1) return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -173,6 +178,18 @@ namespace BLFlyPack
             }
 
             return numOfProduct;
+        }
+
+        public static bool DeleteOrderDetails(int orderId)
+        {
+            try
+            {
+               return OrderDetails.DeleteOrderDetails(orderId);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

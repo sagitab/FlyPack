@@ -66,7 +66,7 @@ namespace BLFlyPack
         /// <param name="imageUrl"></param>
         public BLProduct(double price, string description, int shopId, int shopProductCode, string imageUrl)
         {
-            Id = ProductDal.AddProduct(price, description, shopId,shopProductCode, imageUrl);
+            Id = ProductDal.AddProduct(price, description, shopId, shopProductCode, imageUrl);
             Price = price;
             Description = description;
             ShopID = shopId;
@@ -79,13 +79,13 @@ namespace BLFlyPack
         /// <param name="row"></param>
         /// <param name="shopId"></param>
         /// <returns></returns>
-        public static BLProduct AddProductByDataRow(DataRow row,int shopId)
+        public static BLProduct AddProductByDataRow(DataRow row, int shopId)
         {
             double Price = double.Parse(row["Price"].ToString());
             string Description = row["Description"].ToString();
             int ShopProductCode = int.Parse(row["ShopProductCode"].ToString());
             string ImageUrl = row["Image"].ToString();
-            int Id = ProductDal.AddProduct(Price, Description, shopId,ShopProductCode, ImageUrl);
+            int Id = ProductDal.AddProduct(Price, Description, shopId, ShopProductCode, ImageUrl);
             return new BLProduct(Id, Price, Description, shopId, ShopProductCode, ImageUrl);
         }
         /// <summary>
@@ -94,9 +94,9 @@ namespace BLFlyPack
         /// <param name="products"></param>
         /// <param name="shopId"></param>
         /// <returns></returns>
-        public static bool UpdateProduct(DataTable products,int shopId)
+        public static bool UpdateProduct(DataTable products, int shopId)
         {
-            List<BLProduct> productsList= (from DataRow row in products.Rows select AddProductByDataRow(row,shopId)).ToList();
+            List<BLProduct> productsList = (from DataRow row in products.Rows select AddProductByDataRow(row, shopId)).ToList();
             return productsList.All(product => product?.Id != 1);
         }
         /// <summary>
@@ -134,11 +134,11 @@ namespace BLFlyPack
             products = ProductDal.GetAllProductsOfShop(shopId, condition);
             return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         }
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="orderBy"></param>
-       /// <returns>the match string to order by int</returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderBy"></param>
+        /// <returns>the match string to order by int</returns>
         public static string setOrderBy(int orderBy)
         {
             string[] OrderByArr = { "Price DESC", "Price ASC", "Description DESC", "Description ASC", "ID" };
@@ -274,13 +274,14 @@ namespace BLFlyPack
         /// <param name="products"></param>
         /// <param name="amounts"></param>
         /// <returns> string that describe the list</returns>
-        public static string GetProductString(List<BLProduct> products, int[] amounts)
+        public static string GetProductString(List<BLOrderDetailsDB> orderDetails)
         {
             string ProductString = "";
-            for (int i = 0; i < products.Count; i++)
+            for (int i = 0; i < orderDetails.Count; i++)
             {
-                BLProduct product = products[i];
-                ProductString += "<br/>" + product.ToString() + " amount-" + amounts[i];
+                BLOrderDetailsDB orderDetail = orderDetails[i];
+                BLProduct product = BLProduct.GetProductById(orderDetail.productId);
+                ProductString += "<br/>" + product.ToString() + " amount-" + orderDetail.amount;
             }
             return ProductString;
         }

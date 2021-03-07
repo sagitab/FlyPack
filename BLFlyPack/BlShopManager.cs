@@ -45,11 +45,11 @@ namespace BLFlyPack
         {
             try
             {
-                return DalOrder.NumOfCustomers(4,$"AND ([Orders].[ShopID] = {GetShopId()})");
+                return DalOrder.NumOfCustomers($" INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {GetShopId()})) ");
             }
-            catch
+            catch(Exception e)
             {
-                return "";
+                return e.Message;
             }
            
         }

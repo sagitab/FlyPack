@@ -154,7 +154,7 @@ namespace BLFlyPack
             string lastName = row["LastName"].ToString();
             string password = row["Password"].ToString();
             Point position = new Point(double.Parse(row["Lng"].ToString()), double.Parse(row["Lng"].ToString()));
-            return  new BlUser(userId, type, email, phone, firstName, lastName, password, position.Lat, position.Lng);
+            return  new BlUser(password);
         }
         /// <summary>
         /// check if password already exist

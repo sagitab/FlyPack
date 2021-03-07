@@ -75,16 +75,16 @@ namespace UIFlyPack
                     BlOrder order = new BlOrder(user.UserId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor,(List<BLOrderDetailsDB>)Session["OrderDetails"]);//add order
                     //update order details
                     bool success = order.OrderId != -1;
-                    List<BLProduct> productsCart = (List<BLProduct>)Session["productsCart"];
-                    int[] productAmounts = (int[])Session["productAmount"];
+                    List<BLOrderDetailsDB> orderDetails = (List<BLOrderDetailsDB>)Session["orderDetails"];
+
                     //if (success)
                     //{
-                    //    success= BLOrderDetailsDB.UpdateOrderDetails(productsCart, order.OrderId, productAmounts);
+                    //    success = BLOrderDetailsDB.UpdateOrderDetails(orderDetails);
                     //}
                     MSG.Text = success ? "order successes!!" : "order failed :(";//fail/success massage
                     BlOrderUser customer=new BlOrderUser(order.CustomerId);
                     //get  description of the product list to send in email
-                    string prodactsString = BLProduct.GetProductString(productsCart, productAmounts);
+                    string prodactsString = BLProduct.GetProductString(orderDetails);
                     
                     bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack order summery ",
                         $"Hi,{customer} your order received and we take care your order.here a summery of your  order- <br/>{prodactsString}<br/>Have a nice day,The Fly Pack Team");

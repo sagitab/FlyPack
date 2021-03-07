@@ -43,7 +43,7 @@ namespace BLFlyPack
             {
                 throw new Exception("fail");
             }
-            bool isUpdateDetails = BLOrderDetailsDB.UpdateOrderDetails(orderDetails);
+            bool isUpdateDetails = BLOrderDetailsDB.UpdateOrderDetails(orderDetails,id);
             if (id == -1&& isUpdateDetails) return;
             OrderId = id;
             CustomerId = customerId;
@@ -154,7 +154,7 @@ namespace BLFlyPack
         /// </summary>
         /// <param name="status"></param>
         /// <returns>true if update success</returns>
-        public  bool UpdateStatus(int status)
+        public static  bool UpdateStatus(int status, int OrderId)
         {
             bool success = true;
             try

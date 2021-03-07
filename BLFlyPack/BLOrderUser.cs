@@ -116,7 +116,7 @@ namespace BLFlyPack
         {
             try
             {
-                return DalOrder.NumOfCustomers(4,"");
+                return DalOrder.NumOfCustomers("WHERE(((Users.UserType) = 4)) Group By Users.FirstName,Users.Email,Users.PhoneNumber");
             }
             catch
             {

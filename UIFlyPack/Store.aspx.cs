@@ -15,6 +15,7 @@ namespace UIFlyPack
         {
             if (!Page.IsPostBack)
             {
+                ChangeShop.Visible = false;
                 Products.Visible = false;
                 searchPanel.Visible = false;
                 //set data source
@@ -143,6 +144,7 @@ namespace UIFlyPack
 
         protected void Shops_OnSelectedIndexChanged(object sender, EventArgs e)
         {
+            ChangeShop.Visible = true;
             searchPanel.Visible = true;
             Products.Visible = true;
             shopSelectDiv.Visible = false;
@@ -202,6 +204,7 @@ namespace UIFlyPack
             searchPanel.Visible = false;
             Products.Visible = false;
             shopSelectDiv.Visible = true;
+            ChangeShop.Visible = false;
             shopName.Text = "";
         }
     }

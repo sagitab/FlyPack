@@ -88,23 +88,23 @@ namespace FlyPack
         //Customer
         public static DataTable CustomersTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4)  ");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE(Users.UserType = 4) Group By Users.FirstName,Users.Email,Users.PhoneNumber  ");
         }
         public static DataTable CustomersTableByShop(int shopId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})) ");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})) Group By Users.FirstName,Users.Email,Users.PhoneNumber ");
         }
         public static DataTable CustomersSearch(string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{condition}) ");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 4) AND{condition}) Group By Users.FirstName,Users.Email,Users.PhoneNumber ");
         }
         public static DataTable DeliversSearch(string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND{condition}) ");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND{condition}) Group By Users.FirstName,Users.Email,Users.PhoneNumber ");
         }
         public static DataTable CustomersSearchByShop(int shopId, string condition)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})AND{condition}) ");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.CustomerID) WHERE(((Users.UserType)= 4) AND([Orders].[ShopID]= {shopId})AND{condition}) Group By Users.FirstName,Users.Email,Users.PhoneNumber");
         }
         public static string GetName(string customerId)
         {
@@ -113,7 +113,7 @@ namespace FlyPack
         //delivery
         public static DataTable DeliveriesTable()
         {
-            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) ");
+            return DalHelper.Select($"SELECT Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) Group By Users.FirstName,Users.Email,Users.PhoneNumber");
         }
         public static DataTable DeliveriesList()
         {
@@ -121,7 +121,7 @@ namespace FlyPack
         }
         public static DataTable DeliveriesTableByShop(int shopId)
         {
-            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {shopId}) AND (Users.ID<>'111111111')) ");
+            return DalHelper.Select($"SELECT Users.FirstName, Users.Email, Users.PhoneNumber FROM Users INNER JOIN Orders ON(Users.ID = Orders.DeliverID) WHERE(((Users.UserType)= 3) AND([Orders].[ShopID]= {shopId}) AND (Users.ID<>'111111111')) Group By Users.FirstName,Users.Email,Users.PhoneNumber  ");
         }
         public  static DataTable GetDeliverersLocations()
         {

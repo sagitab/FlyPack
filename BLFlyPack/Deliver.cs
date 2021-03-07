@@ -13,18 +13,6 @@ namespace BLFlyPack
         public Deliver(string pass) : base(pass)
         {
         }
-
-        /// <summary>
-        /// get point list of all deliveries location
-        /// </summary>
-        /// <returns> list of all deliveries location</returns>
-        public static List<Point> GetDeliveriesLocations()
-        {
-            DataTable deliverersLocations = DalUser.GetDeliverersLocations();
-
-            return (from DataRow row in deliverersLocations.Rows
-                    select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
-        }
         /// <summary>
         /// return Deliver from data row
         /// </summary>
@@ -63,55 +51,7 @@ namespace BLFlyPack
             this.LastName = LastName;
         }
 
-        /// <summary>
-        /// get Delivery Id By Point
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns>Delivery Id</returns>
-        public static string GetDeliveryIdByPoint(Point point)
-        {
-            string ret = "";
-            try
-            {
-                ret = DalUser.GetDeliveryIdByPoint(point.Lat, point.Lng);
-            }
-            catch
-            {
-                return ret;
-            }
-
-            return ret;
-        }
-
-        /// <summary>
-        /// return the closest delivery that available
-        /// </summary>
-        /// <param name="points"></param>
-        /// <returns>delivery id</returns>
-        public static string GetMatchDeliveryIdByPoints(List<Point> points)
-        {
-            int index = 0;
-            while (index + 1 <= points.Count && GetDeliverById(GetDeliveryIdByPoint(points[index])).GetNumOfDeliveryOrders() >= GlobalVariable.MaxOrderForDeliver) //continue loop if delivery orders is full
-            {
-                index++;
-            }
-            return index + 1 > points.Count ? "" : GetDeliveryIdByPoint(points[index]);
-        }
-
-        /// <summary>
-        /// return the closest delivery that available by shop point
-        /// </summary>
-        /// <param name="points"></param>
-        /// <returns>delivery id</returns>
-        public string GetMatchesDeliveryId(Point shopPoint)
-        {
-            List<Point> points = GetDeliveriesLocations();
-            List<Point> sortedDeliveryPoints = shopPoint.SelectSort(points);
-
-            //int index = shopPoint.MinimumDistance(points,0);
-            //Point deliveryPoint = points[index];
-            return GetMatchDeliveryIdByPoints(sortedDeliveryPoints);
-        }
+     
 
         public int GetNumOfDeliveryOrders()
         {
@@ -162,5 +102,65 @@ namespace BLFlyPack
 
         //    }
         //}
+        /////////////////////////to find the closest delivery
+        /// <summary>
+        /// return the closest delivery that available by shop point
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns>delivery id</returns>
+        public static string GetMatchesDeliveryId(Point shopPoint)
+        {
+            List<Point> points = GetDeliveriesLocations();
+            List<Point> sortedDeliveryPoints = shopPoint.SelectSort(points);
+
+            //int index = shopPoint.MinimumDistance(points,0);
+            //Point deliveryPoint = points[index];
+            return GetMatchDeliveryIdByPoints(sortedDeliveryPoints);
+        }
+
+        /// <summary>
+        /// return the closest delivery that available
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns>delivery id</returns>
+        public static string GetMatchDeliveryIdByPoints(List<Point> points)
+        {
+            int index = 0;
+            while (index + 1 <= points.Count && GetDeliverById(GetDeliveryIdByPoint(points[index])).GetNumOfDeliveryOrders() >= GlobalVariable.MaxOrderForDeliver) //continue loop if delivery orders is full
+            {
+                index++;
+            }
+            return index + 1 > points.Count ? "" : GetDeliveryIdByPoint(points[index]);
+        }
+        /// <summary>
+        /// get Delivery Id By Point
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns>Delivery Id</returns>
+        public static string GetDeliveryIdByPoint(Point point)
+        {
+            string ret = "";
+            try
+            {
+                ret = DalUser.GetDeliveryIdByPoint(point.Lat, point.Lng);
+            }
+            catch
+            {
+                return ret;
+            }
+
+            return ret;
+        }
+        /// <summary>
+        /// get point list of all deliveries location
+        /// </summary>
+        /// <returns> list of all deliveries location</returns>
+        public static List<Point> GetDeliveriesLocations()
+        {
+            DataTable deliverersLocations = DalUser.GetDeliverersLocations();
+
+            return (from DataRow row in deliverersLocations.Rows
+                    select new Point(double.Parse(row["Lat"].ToString()), double.Parse(row["Lng"].ToString()))).ToList();
+        }
     }
 }

@@ -141,7 +141,7 @@ namespace UIFlyPack
                             {
                                 Button button = null;
                                 button = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
-                                row.Cells[row.Cells.Count - 1].Controls.Remove(button);
+                                button.CommandName = "not ready to start";
                             }
                             if (status != "delivery take care your order") continue;
                             Button myButton = null;
@@ -267,7 +267,7 @@ namespace UIFlyPack
             bool success;
             try
             {
-                success = status != -1 && status < 4 && order.DeleteOrder();//delete and chwck if status is good
+                success = status != -1 && status < 4 && BLOrderDetailsDB.DeleteOrderDetails(orderId) && order.DeleteOrder();//delete and chwck if status is good
             }
             catch (Exception exception)
             {
@@ -380,14 +380,12 @@ namespace UIFlyPack
             {
 
                 DateTime readyTime = DateTime.Now;
-
                 //get the order object 
                 //get the shop object 
                 BlShop shop = BlShop.GetShopById(order.ShopId);
-                //get the Id of the closest and . delivery  
-                Deliver deliver = (Deliver)Session["user"];
-                string matchDeliveryId = deliver.GetMatchesDeliveryId(shop.Location);
-                bool success = order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId)/*&&BLOrder.UpdateStatus(status+1, orderID)*/;//update deliver and ready time in DB
+                //get the Id of the closest  delivery  
+                string matchDeliveryId = Deliver.GetMatchesDeliveryId(shop.Location);
+                bool success = order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId) && BlOrder.UpdateStatus(status + 1,orderId);//update deliver and ready time in DB
                 if (!success)
                 {
                     ErMSG.Text = "fail to update ready time";//massage error
@@ -410,6 +408,8 @@ namespace UIFlyPack
                     {
                         //take care if email dont send
                     }
+
+                    MSG.Text = " update ready time!";
                 }
             }
             else if (e.CommandName == "finish")
@@ -444,6 +444,11 @@ namespace UIFlyPack
                 List<BLOrderDetail> orderDetails = BLOrderDetail.GetOrderDetailsByOrderId(orderId);
                 Update(orderDetails);
                 OrderDetailsPanel.Visible = true;
+            }
+
+            if (e.CommandName== "not ready to start")
+            {
+                MSG.Text = "wait to shop manager to confirm order ";//massage 
             }
         }
         public void Update(List<BLOrderDetail> products)
