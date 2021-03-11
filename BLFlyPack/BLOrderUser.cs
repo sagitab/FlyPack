@@ -39,7 +39,17 @@ namespace BLFlyPack
         public DataTable GetOrders( bool IsNew, string condition)
         {
             DataTable ordersTable = null;
-            ordersTable = IsNew ? DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]<5)" + condition) : DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]=5)" + condition);
+            if (Type!=1)
+            {
+                ordersTable = IsNew ? DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]<5)" + condition) : DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]=5)" + condition);
+
+            }
+            else
+            {
+                BlShopManager shopManager=new BlShopManager(Password);
+                int shopId = shopManager.ShopId;
+                ordersTable = IsNew ? DalOrderUsers.GetOrders(Type, UserId, $" AND [Shops].[ID]={shopId}  AND([Orders].[OrderStutus]<5)" + condition) : DalOrderUsers.GetOrders(Type, UserId, "AND ([Orders].[OrderStutus]=5)" + condition);
+            }
 
             //List<BLOrder> orders = new List<BLOrder>();
             //foreach (DataRow row in t.Rows)

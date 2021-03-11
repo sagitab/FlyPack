@@ -256,7 +256,7 @@ namespace FlyPack
         public static bool UpdateColumnById(int id, string table, string idColumnName,string replaceValue, string replacedColumName)
         {
             DbHelper helper = new DbHelper(Constants.Provider, Constants.Path);
-
+            helper.CloseConnection();
             if (!helper.OpenConnection()) throw new ConnectionException();
             string sql = $"UPDATE {table} SET {replacedColumName}={replaceValue} WHERE {idColumnName}={id}";
             return helper.WriteData(sql) == 1;

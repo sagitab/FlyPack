@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -264,10 +265,12 @@ namespace UIFlyPack
             int orderId = (int)orders.Rows[index]["ID"];
             BlOrder order = new BlOrder(BlOrder.GetOrderById(orderId));
             int status = order.GetOrderStatus();//get order status by id
-            bool success;
+            bool success,orderDetails;
             try
             {
-                success = status != -1 && status < 4 && BLOrderDetailsDB.DeleteOrderDetails(orderId) && order.DeleteOrder();//delete and chwck if status is good
+                orderDetails = BLOrderDetailsDB.DeleteOrderDetails(orderId);
+                Thread.Sleep(2000);
+               success = status != -1 && status < 4 && orderDetails&& order.DeleteOrder();//delete and chwck if status is good
             }
             catch (Exception exception)
             {
@@ -331,7 +334,7 @@ namespace UIFlyPack
             int orderId = int.Parse(orders.Rows[index]["ID"].ToString());
             BlOrder order = new BlOrder(BlOrder.GetOrderById(orderId));
             int status = order.GetOrderStatus();
-            if (e.CommandName == "updateArrivalTime"/*&& status==3*/)
+            if (e.CommandName == "updateArrivalTime" && status == 3)
             {
                 if (!(Session["user"] is Deliver))
                 {
@@ -356,7 +359,7 @@ namespace UIFlyPack
                 double minutes = deliver.GetDistanceToCustomerHome(shops, customersAddresses);
                 DateTime exitTime = DateTime.Now;
                 DateTime arrivalTime = exitTime.AddMinutes(5 + minutes);//add 5 minute of insure 
-                bool success = order.UpdateArrivalTime(arrivalTime) /*&& BLOrder.UpdateStatus(status + 1, orderID)*/;//update arrive time and order status 
+                bool success = order.UpdateArrivalTime(arrivalTime) && BlOrder.UpdateStatus(status + 1, orderId);//update arrive time and order status 
                 if (!success)
                 {
                     Response.Redirect("ViewOrders.aspx");//go back to  page when there is a error
@@ -376,7 +379,7 @@ namespace UIFlyPack
                     UpdateButtonsText(3);//3=delivery
                 }
             }
-            else if (e.CommandName == "updateReadyTime" /*&& status == 2*/)
+            else if (e.CommandName == "updateReadyTime" && status == 1)
             {
 
                 DateTime readyTime = DateTime.Now;
@@ -384,14 +387,20 @@ namespace UIFlyPack
                 //get the shop object 
                 BlShop shop = BlShop.GetShopById(order.ShopId);
                 //get the Id of the closest  delivery  
-                string matchDeliveryId = Deliver.GetMatchesDeliveryId(shop.Location);
-                bool success = order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId) && BlOrder.UpdateStatus(status + 1,orderId);//update deliver and ready time in DB
-                if (!success)
+                string matchDeliveryId = /*Deliver.GetMatchesDeliveryId(shop.Location);*/"";
+                if (matchDeliveryId == "")
                 {
-                    ErMSG.Text = "fail to update ready time";//massage error
-                }
-                else
-                {
+                    List<int> orderWait = null;
+                    if (Application["updateReadyTime"]==null)
+                    {
+                        orderWait = new List<int> {orderId};
+                    }
+                    else
+                    {
+                        orderWait = (List<int>)Application["updateReadyTime"];
+                        orderWait.Add(orderId);
+                    }
+                    Application["updateReadyTime"] = orderWait;
                     //update button
                     Button myButton = null;
                     GridViewRow row = OrderTable.Rows[index];
@@ -399,22 +408,43 @@ namespace UIFlyPack
                     myButton.Text = "Product Ready";
                     myButton.CommandName = "Ready";
                     UpOrders((BlUser)Session["user"], "");//update table
-                    BlUser userToSendMailTo = BlUser.UserById(order.DeliveryId);
-                    List<BLOrderDetailsDB> Details = BLOrderDetailsDB.DetailsListOfOrder(orderId);
-                    string productsString = BLOrderDetailsDB.GetProductString(Details);
-                    bool isEmailSent = Register.sendEmail(userToSendMailTo.Email, " Fly pack you have a new order to deliver",
-                        $"Hi,{userToSendMailTo} please accept your order as soon as you can.Here a summery of the order's products <br/> {productsString} <br/> Have a nice day,The Fly Pack Team");
-                    if (!isEmailSent)
-                    {
-                        //take care if email dont send
-                    }
-
                     MSG.Text = " update ready time!";
                 }
+                else
+                {
+                    bool success = UpdateReadytime(order, readyTime, matchDeliveryId);
+                    if (!success)
+                    {
+                        ErMSG.Text = "fail to update ready time";//massage error
+                    }
+                    else
+                    {
+                        //update button
+                        Button myButton = null;
+                        GridViewRow row = OrderTable.Rows[index];
+                        myButton = (Button)(row.Cells[4].Controls[0]);
+                        myButton.Text = "Product Ready";
+                        myButton.CommandName = "Ready";
+                        UpOrders((BlUser)Session["user"], "");//update table
+                        BlUser userToSendMailTo = BlUser.UserById(order.DeliveryId);
+                        List<BLOrderDetailsDB> Details = BLOrderDetailsDB.DetailsListOfOrder(orderId);
+                        string productsString = BLOrderDetailsDB.GetProductString(Details);
+                        bool isEmailSent = Register.sendEmail(userToSendMailTo.Email, " Fly pack you have a new order to deliver",
+                            $"Hi,{userToSendMailTo} please accept your order as soon as you can.Here a summery of the order's products <br/> {productsString} <br/> Have a nice day,The Fly Pack Team");
+                        if (!isEmailSent)
+                        {
+                            //take care if email dont send
+                        }
+                        MSG.Text = " update ready time!";
+                    }
+                }
+
+               
+
             }
             else if (e.CommandName == "finish")
             {
-                if (status == 4/*&&BlOrder.UpdateStatus(status + 1, orderId)*/)//update order status
+                if (status == 4 && BlOrder.UpdateStatus(status + 1, orderId))//update order status
                 {
                     BlUser customer = BlUser.UserById(order.CustomerId);
                     NewOrOld.SelectedIndex = 1;//to see that the orders turn to old one
@@ -422,6 +452,26 @@ namespace UIFlyPack
                     NewOrOld.SelectedIndex = 0;
                     UpOrders(CurrentUser, "");//update table
                     UpdateButtonsText(CurrentUser.Type);
+                    if (Application["updateReadyTime"]!=null)
+                    {
+                        List<int> orderWait = (List<int>)Application["updateReadyTime"];
+                        int waitOrderId = orderWait[0];
+                        BlOrder waitOrder = new BlOrder(BlOrder.GetOrderById(waitOrderId));
+                        bool success = UpdateReadytime(waitOrder, DateTime.Now, CurrentUser.UserId);
+                        if (success)
+                        {
+                            orderWait.Remove(0);
+                            BlUser userToSendMailTo = BlUser.UserById(order.DeliveryId);
+                            List<BLOrderDetailsDB> Details = BLOrderDetailsDB.DetailsListOfOrder(orderId);
+                            string productsString = BLOrderDetailsDB.GetProductString(Details);
+                            bool isEmailSent1 = Register.sendEmail(userToSendMailTo.Email, " Fly pack you have a new order to deliver",
+                                $"Hi,{userToSendMailTo} please accept your order as soon as you can.Here a summery of the order's products <br/> {productsString} <br/> Have a nice day,The Fly Pack Team");
+                            if (!isEmailSent1)
+                            {
+                                //take care if email dont send
+                            }
+                        }
+                    }
                     //send email to customer
                     bool isEmailSent = Register.sendEmail(customer.Email, " Fly pack your order arrived!!!",
                         $"Hi,{customer} the drone arrive to your home please take your order.Have a nice day,The Fly Pack Team");
@@ -479,6 +529,13 @@ namespace UIFlyPack
         protected void XButton_OnClick(object sender, ImageClickEventArgs e)
         {
             OrderDetailsPanel.Visible = false;//to 'close' the window of the order details panel
+        }
+
+        public bool UpdateReadytime( BlOrder order,DateTime readyTime ,string matchDeliveryId)
+        {
+            int orderId = order.OrderId;
+            int status = order.Status;
+            return  order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId) && BlOrder.UpdateStatus(status + 2, orderId);//update deliver and ready time in DB
         }
     }
 }

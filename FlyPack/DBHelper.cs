@@ -126,7 +126,8 @@ namespace FlyPack
                 OleDbCommand cmd = new OleDbCommand(sql, _conn);
 
                 OleDbDataReader reader = cmd.ExecuteReader();
-                
+                _conn.Close();
+                _connOpen = false;
                 return reader.RecordsAffected;
             }
             catch (Exception e)

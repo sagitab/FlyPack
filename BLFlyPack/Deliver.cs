@@ -55,7 +55,7 @@ namespace BLFlyPack
 
         public int GetNumOfDeliveryOrders()
         {
-            return DalOrder.NumOfOrders($"WHERE Orders.DeliverID ='{UserId}' AND Orders.OrderStutus =4");
+            return DalOrder.NumOfOrders($"WHERE Orders.DeliverID ='{UserId}' AND Orders.OrderStutus<5 ");
         }
 
         /// <summary>

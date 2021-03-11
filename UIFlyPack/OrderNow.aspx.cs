@@ -14,7 +14,6 @@ namespace UIFlyPack
             this.UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
             if (!Page.IsPostBack)
             {
-                Session["user"] = new BlUser("hoohoo12");
             }
             Validate();
         }
