@@ -12,12 +12,12 @@ namespace UIFlyPack
         protected void Page_Load(object sender, EventArgs e)
         {
             ////to del########################@@@@@@@@########%%%%%%%%%>>>>>>>>>>>>
-            //Session["user"] = new BlShopManager("12345678"); // BLShopMenager
-            /*     Session["user"] = new Deliver("shlakot1");*/  //deliver
-            /* Session["user"] = new Deliver("gigi1234");*/  //deliver 2
+            //Session["user"] = new BlShopManager("12345678"); // BLShopMenager hoohoo
+            /*     Session["user"] = new Deliver("shlakot1");*/  //deliver eden
+            /* Session["user"] = new Deliver("gigi1234");*/  //deliver 2 yakov
 
-            /*  Session["user"] = new BlOrderUser("hoohoo12");//customer
-           /* Session["user"] = new BlOrderUser("lucky123");*///system Manager
+            /*  Session["user"] = new BlOrderUser("hoohoo12");//customer amit
+           /* Session["user"] = new BlOrderUser("lucky123");*///system Manager sagi
             if (Page.IsPostBack) return;//if page already do page loud the headers is already changed
 
             //set all headers Visible to false

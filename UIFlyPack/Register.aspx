@@ -79,7 +79,7 @@
     <asp:HiddenField runat="server" ID="LatLng" Value="1,1" />
     </div>
   
- <%--   <script>
+    <script>
         var geocoder;
         var map;
         var googleMarkerPoints = [];
@@ -182,5 +182,5 @@
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfNHGvBm3VSe6XZ9oVKrYfW4YqyJJq9v4&callback=initMap">
-    </script>--%>
+    </script>
 </asp:Content>

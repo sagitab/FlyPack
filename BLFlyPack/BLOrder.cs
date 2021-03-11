@@ -85,7 +85,7 @@ namespace BLFlyPack
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns>order object</returns>
-        public  BlOrder GetBlOrderById()
+        public static  BlOrder GetBlOrderById(int OrderId)
         {
             DataRow orderRow = GetOrderById(OrderId);
             return new  BlOrder(orderRow);
