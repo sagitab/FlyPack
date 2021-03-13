@@ -110,8 +110,6 @@ namespace UIFlyPack
                 //set data source
                 Dictionary<string, string> d = new Dictionary<string, string> { { "New orders", "N" }, { "Old orders", "O" } };
                 NewOrOld.DataSource = d;
-                //NewOrOld.DataTextField = "ShopName";
-                //NewOrOld.DataValueField = ;
                 // Bind the data to the control.
                 NewOrOld.DataTextField = "Key";
                 NewOrOld.DataValueField = "Value";
@@ -119,6 +117,12 @@ namespace UIFlyPack
 
                 // Set the default selected item, if desired.
                 NewOrOld.SelectedIndex = 0;
+                Dictionary<int, string> status = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" },{-1 ,"all status"} };
+                Status.DataSource = status;
+                Status.DataTextField = "Value";
+                Status.DataValueField = "Key";
+                Status.SelectedIndex = 6;
+                Status.DataBind();
             }
 
             int userType = user.Type;//get user type 
@@ -138,7 +142,7 @@ namespace UIFlyPack
                             GridViewRow row = OrderTable.Rows[i];
                             TableCell cell = row.Cells[1];
                             string status = cell.Text;
-                            if (status== "order sent")
+                            if (status == "order sent")
                             {
                                 Button button = null;
                                 button = (Button)row.Cells[row.Cells.Count - 1].Controls[0];
@@ -175,6 +179,19 @@ namespace UIFlyPack
             DataTable orders = null;
             int index = NewOrOld.SelectedIndex;
             BlOrderUser orderUser = new BlOrderUser(user.Password);
+            int status = int.Parse(Status.Items[Status.SelectedIndex].Value);
+            if (status != -1)
+            {
+                condition += $" AND (Orders.OrderStutus={status})";
+            }
+            if (ViewState["minDate"] != null)
+            {
+                condition += ViewState["minDate"].ToString();
+            }
+            if (ViewState["maxDate"] != null)
+            {
+                condition += ViewState["maxDate"].ToString();
+            }
             switch (NewOrOld.Items[index].Value)//get order table by selected option
             {
                 case "N":
@@ -265,12 +282,12 @@ namespace UIFlyPack
             int orderId = (int)orders.Rows[index]["ID"];
             BlOrder order = new BlOrder(BlOrder.GetOrderById(orderId));
             int status = order.GetOrderStatus();//get order status by id
-            bool success,orderDetails;
+            bool success, orderDetails;
             try
             {
                 orderDetails = BLOrderDetailsDB.DeleteOrderDetails(orderId);
                 Thread.Sleep(2000);
-               success = status != -1 && status < 4 && orderDetails&& order.DeleteOrder();//delete and chwck if status is good
+                success = status != -1 && status < 4 && orderDetails && order.DeleteOrder();//delete and chwck if status is good
             }
             catch (Exception exception)
             {
@@ -302,15 +319,15 @@ namespace UIFlyPack
                 case "ArrivalTime":
                     condition = $"AND (Orders.{searchBys}=#{value}#)";
                     break;
-                case "OrderStutus" when int.TryParse(value, out var status):
-                    condition = $"AND (Orders.OrderStutus={status})";
-                    break;
-                case "OrderStutus":
-                    {
-                        Dictionary<int, string> status = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
-                        condition = $"AND (Orders.OrderStutus={status.FirstOrDefault(x => x.Value == value).Key})";
-                        break;
-                    }
+                //case "OrderStutus" when int.TryParse(value, out var status):
+                //    condition = $"AND (Orders.OrderStutus={status})";
+                //    break;
+                //case "OrderStutus":
+                //    {
+                //        Dictionary<int, string> status = new Dictionary<int, string> { { 1, "order sent" }, { 2, "shop take care your order" }, { 3, "shipping time selected" }, { 4, "delivery take care your order" }, { 5, "order shipped" } };
+                //        condition = $"AND (Orders.OrderStutus={status.FirstOrDefault(x => x.Value == value).Key})";
+                //        break;
+                //    }
                 case "FirstName" when user.Type != 3:
                     condition = $"AND (Users_1.{searchBys}='{value}')";
                     break;
@@ -387,13 +404,13 @@ namespace UIFlyPack
                 //get the shop object 
                 BlShop shop = BlShop.GetShopById(order.ShopId);
                 //get the Id of the closest  delivery  
-                string matchDeliveryId = /*Deliver.GetMatchesDeliveryId(shop.Location);*/"";
+                string matchDeliveryId = Deliver.GetMatchesDeliveryId(shop.Location); ;
                 if (matchDeliveryId == "")
                 {
                     List<int> orderWait = null;
-                    if (Application["updateReadyTime"]==null)
+                    if (Application["updateReadyTime"] == null)
                     {
-                        orderWait = new List<int> {orderId};
+                        orderWait = new List<int> { orderId };
                     }
                     else
                     {
@@ -439,7 +456,7 @@ namespace UIFlyPack
                     }
                 }
 
-               
+
 
             }
             else if (e.CommandName == "finish")
@@ -452,7 +469,7 @@ namespace UIFlyPack
                     NewOrOld.SelectedIndex = 0;
                     UpOrders(CurrentUser, "");//update table
                     UpdateButtonsText(CurrentUser.Type);
-                    if (Application["updateReadyTime"]!=null)
+                    if (Application["updateReadyTime"] != null)
                     {
                         List<int> orderWait = (List<int>)Application["updateReadyTime"];
                         int waitOrderId = orderWait[0];
@@ -496,7 +513,7 @@ namespace UIFlyPack
                 OrderDetailsPanel.Visible = true;
             }
 
-            if (e.CommandName== "not ready to start")
+            if (e.CommandName == "not ready to start")
             {
                 MSG.Text = "wait to shop manager to confirm order ";//massage 
             }
@@ -531,11 +548,47 @@ namespace UIFlyPack
             OrderDetailsPanel.Visible = false;//to 'close' the window of the order details panel
         }
 
-        public bool UpdateReadytime( BlOrder order,DateTime readyTime ,string matchDeliveryId)
+        public bool UpdateReadytime(BlOrder order, DateTime readyTime, string matchDeliveryId)
         {
             int orderId = order.OrderId;
             int status = order.Status;
-            return  order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId) && BlOrder.UpdateStatus(status + 2, orderId);//update deliver and ready time in DB
+            return order.UpdateReadyTime(readyTime) && order.UpdateDelivery(matchDeliveryId) && BlOrder.UpdateStatus(status + 2, orderId);//update deliver and ready time in DB
+        }
+
+        protected void Status_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpOrders((BlUser)Session["user"], "");
+        }
+
+        protected void minDate_OnSelectionChanged(object sender, EventArgs e)
+        {
+            DateTime selectDate = minDate.SelectedDate;
+            string selectDateString = selectDate.ToString();
+            string sql = $" AND (Orders.ArrivalTime >=#{selectDateString}#)";
+           
+            ViewState.Add("maxDate", sql);
+            UpOrders((BlUser)Session["user"], "");
+           
+        }
+
+        protected void maxDate_OnSelectionChanged(object sender, EventArgs e)
+        {
+            DateTime selectDate = maxDate.SelectedDate;
+            string selectDateString = selectDate.ToString();
+            string sql = $" AND (Orders.ArrivalTime <=#{selectDateString}#)";
+            ViewState.Add("minDate", sql);
+            UpOrders((BlUser)Session["user"], "");
+            
+        }
+
+        protected void date_OnClick(object sender, EventArgs e)
+        {
+            datePanel.Visible = true;
+        }
+
+        protected void ImageButton1_OnClick(object sender, ImageClickEventArgs e)
+        {
+            datePanel.Visible = false;
         }
     }
 }

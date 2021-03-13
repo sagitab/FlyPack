@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BLFlyPack
 {
-    
+
     public class Point
     {
         public double Lat { get; set; }
@@ -39,7 +40,23 @@ namespace BLFlyPack
         /// <returns>distance</returns>
         public double Distance(Point point)
         {
-            return Math.Sqrt(Math.Pow(this.Lat - point.Lat, 2) + Math.Pow(this.Lng - point.Lng, 2));
+            double distance = 0;
+            double ToRudians = Math.PI / 180;
+            double lat1 = Lat * ToRudians;
+            double lat2 = point.Lat * ToRudians;
+            double long1 = Lng;
+            double long2 = point.Lng;
+            double dLat = (lat1 - lat2) * ToRudians;
+            double dLong = (long2 - long1) * ToRudians;
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2)
+                       + Math.Cos(lat1) * Math.Cos(lat2) * Math.Sin(dLong / 2) * Math.Sin(dLong / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            double radius = 6371e3;
+            distance = radius * c;
+            return distance;
+
+
+            //return Math.Sqrt(Math.Pow(this.Lat - point.Lat, 2) + Math.Pow(this.Lng - point.Lng, 2));
         }
         /// <summary>
         /// return the time takes to the deliver to pass the distance to point
@@ -48,7 +65,7 @@ namespace BLFlyPack
         /// <returns></returns>
         public double Time(Point point)
         {
-            
+
             return Distance(point) / GlobalVariable.Speed;
         }
         /// <summary>
@@ -57,7 +74,7 @@ namespace BLFlyPack
         /// <param name="points"></param>
         /// <param name="startIndex"></param>
         /// <returns>point index</returns>
-        public int MinimumDistance(List<Point> points,int startIndex)
+        public int MinimumDistance(List<Point> points, int startIndex)
         {
             int minIndex = startIndex;
             for (var index = startIndex; index < points.Count; index++)
@@ -77,21 +94,21 @@ namespace BLFlyPack
         /// <param name="Shops"></param>
         /// <param name="startIndex"></param>
         /// <returns>the index of the closest shop</returns>
-        public int MinimumDistance(List<BlShop> Shops,List<BlCustomersAddress> customersAddresses, int startIndex)
+        public int MinimumDistance(List<BlShop> Shops, List<BlCustomersAddress> customersAddresses, int startIndex)
         {
             int minIndex = startIndex;
-            for (var index = startIndex; index < Shops.Count&&  index < customersAddresses.Count; index++)
+            for (var index = startIndex; index < Shops.Count && index < customersAddresses.Count; index++)
             {
                 var Shop = Shops[index].Location;
                 var customerAddress = customersAddresses[index].Location;
-              
+
 
                 var minIndexShop = Shops[minIndex].Location;
                 var minIndexCustomerAddress = Shops[minIndex].Location;
-               
-             
 
-                double distance = this.Distance(Shop) + Shop.Distance(customerAddress),minDistance= Distance(minIndexShop)+ minIndexShop.Distance(minIndexCustomerAddress);
+
+
+                double distance = this.Distance(Shop) + Shop.Distance(customerAddress), minDistance = Distance(minIndexShop) + minIndexShop.Distance(minIndexCustomerAddress);
 
                 if (distance < minDistance)
                 {
@@ -111,11 +128,11 @@ namespace BLFlyPack
         {
             //List<BlShop> shopsCopy= new List<BlShop>(shops); List<BlCustomersAddress> customersAddressesCopy=new List<BlCustomersAddress>(customersAddresses);
             List<int> orderShops = new List<int>();
-            for (var index = startIndex; index < shops.Count&& index < customersAddresses.Count; index++)
+            for (var index = startIndex; index < shops.Count && index < customersAddresses.Count; index++)
             {
                 var minIndex = MinimumDistance(shops, customersAddresses, index);
                 orderShops.Add(minIndex);
-              
+
             }
             return orderShops;
         }
@@ -123,7 +140,7 @@ namespace BLFlyPack
         {
             //List<BlCustomersAddress> customersAddressesCopy = new List<BlCustomersAddress>(customersAddresses);
             List<int> orderRetList = new List<int>();
-            for ( var i=startIndex ; i <customersAddresses.Count; i++)
+            for (var i = startIndex; i < customersAddresses.Count; i++)
             {
                 var minIndex = shops[i].Location.MinimumDistanceCustomer(customersAddresses, i);
                 orderRetList.Add(minIndex);
@@ -189,7 +206,7 @@ namespace BLFlyPack
         /// <param name="customersAddress"></param>
         /// <param name="shop"></param>
         /// <returns></returns>
-        public  double ArriveTime( BlCustomersAddress customersAddress, BlShop shop)
+        public double ArriveTime(BlCustomersAddress customersAddress, BlShop shop)
         {
             return this.Time(shop.Location) + shop.Location.Time(customersAddress.Location);
         }
@@ -200,7 +217,7 @@ namespace BLFlyPack
         /// <param name="customersAddress"></param>
         /// <param name="shop"></param>
         /// <returns></returns>
-        public double ArriveTimeShop( BlCustomersAddress customersAddress, BlShop shop)
+        public double ArriveTimeShop(BlCustomersAddress customersAddress, BlShop shop)
         {
             return this.Time(customersAddress.Location) + customersAddress.Location.Time(shop.Location);
         }
@@ -211,13 +228,13 @@ namespace BLFlyPack
         /// <param name="shops"></param>
         /// <param name="maxIndex"></param>
         /// <returns></returns>
-        public double ArriveTimeCustomer(List<BlCustomersAddress> customersAddresses,List<BlShop> shops,int maxIndex)
+        public double ArriveTimeCustomer(List<BlCustomersAddress> customersAddresses, List<BlShop> shops, int maxIndex)
         {
-            Point startCopy=new Point(this);
-            double arriveTime =0.0;
-            for (int i = 0; i < maxIndex+1; i++)
+            Point startCopy = new Point(this);
+            double arriveTime = 0.0;
+            for (int i = 0; i < maxIndex + 1; i++)
             {
-                arriveTime += startCopy.ArriveTime( customersAddresses[i], shops[i]);
+                arriveTime += startCopy.ArriveTime(customersAddresses[i], shops[i]);
                 startCopy = customersAddresses[i].Location;
             }
             return arriveTime;
@@ -229,23 +246,23 @@ namespace BLFlyPack
         /// <param name="shops"></param>
         /// <param name="maxIndex"></param>
         /// <returns></returns>
-        public double ArriveTimeShop( List<BlCustomersAddress> customersAddresses, List<BlShop> shops, int maxIndex)
+        public double ArriveTimeShop(List<BlCustomersAddress> customersAddresses, List<BlShop> shops, int maxIndex)
         {
             Point locationNow = new Point(this);
             double arriveTime = 0.0;
             for (int i = 0; i < maxIndex + 1; i++)
             {
-                if (i==0)
+                if (i == 0)
                 {
                     arriveTime += this.Time(shops[i].Location);
                     locationNow = shops[i].Location;
                 }
                 else
                 {
-                    arriveTime += locationNow.ArriveTimeShop( customersAddresses[i], shops[i]);
+                    arriveTime += locationNow.ArriveTimeShop(customersAddresses[i], shops[i]);
                     locationNow = shops[i].Location;
                 }
-                
+
             }
             return arriveTime;
         }

@@ -9,7 +9,18 @@
             position: absolute;
             left: 35vh;
         }
-       
+       .datePanel {
+           float: left;
+           background-color: white;
+           height: auto;
+           width: 56vh;
+           opacity: 0.88;
+           height: 154vh;
+           margin-top: 20vh;
+           margin-left: 0.8vh;
+           position: relative;
+           z-index: 1000;
+       }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -26,7 +37,6 @@
                <asp:TextBox ID="serchedValue" runat="server" CssClass="TextBox"></asp:TextBox>
     
                <select id="SearchBy" name="D1" style="" runat="server" class="Select">
-                   <option value="OrderStutus">Status</option>
                    <option value="ArrivalTime">Arrival time</option>
                    <option value="ShopName">Shop name</option>
                    <option value="FirstName">Delivery name</option>
@@ -35,6 +45,14 @@
                <asp:Button ID="SearchOrderB" runat="server" Text="search" OnClick="SearchOrderB_Click" CssClass="BSearch"  />
                <asp:DropDownList ID="NewOrOld" CssClass="Select" runat="server" OnSelectedIndexChanged="NewOrOld_Click" AutoPostBack="true">
                </asp:DropDownList>
+               <asp:DropDownList ID="Status" CssClass="Select" runat="server" OnSelectedIndexChanged="Status_OnSelectedIndexChanged" AutoPostBack="true">
+               </asp:DropDownList>
+               <asp:Button runat="server" CssClass="BSearch" ID="date" Text="range date" OnClick="date_OnClick"/>
+               <asp:Panel runat="server" CssClass="datePanel" ID="datePanel" Visible="False">
+                   <asp:ImageButton runat="server" ImageUrl="Img/x-button.png" CssClass="Xbutton" OnClick="ImageButton1_OnClick" ID="ImageButton1" />
+               <asp:Calendar runat="server" ID="minDate" OnSelectionChanged="minDate_OnSelectionChanged" />
+               <asp:Calendar runat="server" ID="maxDate" OnSelectionChanged="maxDate_OnSelectionChanged" />
+               </asp:Panel>
                <asp:Label ID="MSG" runat="server" Text="" CssClass="ErrorMSG" ></asp:Label>
            </div>
        </li>

@@ -141,5 +141,10 @@ namespace BLFlyPack
             }
           
         }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName} Deer {BlShop.GetShopById(ShopId).ShopName} Manager";
+        }
     }
 }
