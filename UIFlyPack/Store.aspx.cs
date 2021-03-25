@@ -106,7 +106,7 @@ namespace UIFlyPack
 
         }
 
-        public int TurnOrderByToInt(string stringOrderBy)
+        public  int TurnOrderByToInt(string stringOrderBy)
         {
             for (var index = 0; index < OrderByArr.Length; index++)
             {

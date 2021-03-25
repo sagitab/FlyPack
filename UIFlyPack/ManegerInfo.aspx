@@ -58,6 +58,7 @@
         <li style="margin: 0% 30% 2% 0%;">
             <asp:Label ID="ErDelivery" runat="server" Text=""></asp:Label>
         </li>
+
  <asp:GridView ID="CustomersTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" >
         <Columns>
             
@@ -78,6 +79,17 @@
                     <asp:Label ID="NumOfOrders" runat="server" Text="" CssClass="NumInfo"></asp:Label>
                 </div>
             </li>
-      
+       
+        <asp:GridView ID="ShopTable"  runat="server" AutoGenerateColumns="false" CssClass="content-table" Visible="False" >
+            <Columns>
+                <asp:BoundField DataField="ManagerName" HeaderText="Manager name" />
+                <asp:BoundField DataField="ShopName" HeaderText="Shop name" />
+                <%--<asp:BoundField DataField="Num of orders" HeaderText="Num of orders" />--%>
+            </Columns>
+        </asp:GridView>
+       
+        <li style="margin: 0% 30% 2% 0%;">
+            <asp:Label ID="ErShopTable" runat="server" Text="" CssClass="BigErrorMSG"></asp:Label>
+        </li>
     </ul>
 </asp:Content>

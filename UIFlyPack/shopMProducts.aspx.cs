@@ -1,0 +1,160 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BLFlyPack;
+
+namespace UIFlyPack
+{
+
+    public partial class shopMProducts : System.Web.UI.Page
+    {
+        public string[] OrderByArr = { "expansive first", "cheep first", "z-a", "a-z", "ID" };
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //Session["user"] = new BlShopManager("12345678");
+
+            if (!(Session["user"] is BlShopManager))
+            {
+                Response.Redirect("HomePage.aspx");
+            }
+
+            BlShopManager manager = (BlShopManager)Session["user"];
+            if (!Page.IsPostBack)
+            {
+                //set data source
+
+                productOrder.DataSource = OrderByArr;
+                //// Bind the data to the control.
+                productOrder.DataBind();
+
+                // Set the default selected item, if desired.
+                productOrder.SelectedIndex = 0;
+
+                //set data source 
+                List<BLProduct> products = BLProduct.GetAllProductsByShopId(manager.ShopId, "");
+                Session["products"] = null;
+                UpdateData(products);
+            }
+        }
+
+        protected void SearchProductB_OnClick(object sender, EventArgs e)
+        {
+            string searchValue = serchedValue.Text;//get search value
+            if (searchValue != "")
+            {
+                //set values and take care of unexpected value or null error
+                int orderBy, shopId;
+                try
+                {
+                    orderBy = int.Parse(productOrder.SelectedValue);
+                }
+                catch
+                {
+                    orderBy = 4;
+                }
+                try
+                {
+                    shopId = ((BlShopManager)Session["user"]).ShopId;
+                }
+                catch
+                {
+                    shopId = -1;
+                }
+                try
+                {
+                    string ch = SearchBy.Items[SearchBy.SelectedIndex].ToString();//get by what to search
+                    bool IsSearchName = (ch == "Product name");
+                    if (!IsSearchName && !double.TryParse(searchValue, out double result))
+                    {
+                        //if searching by price and search val is not a value error msg
+                        MSG.Text = "please a valid price '" + searchValue + "' is not a number";
+                    }
+                    else
+                    {
+                        //get the list by the parameters
+                        List<BLProduct> products = BLProduct.Search(searchValue, shopId, IsSearchName, orderBy);
+                        UpdateData(products);//set data source
+
+                        MSG.Text = "";//set text to no error
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MSG.Text = "please select by what you want to search " + exception.Message;// error massage
+                }
+
+            }
+            else
+            {
+                MSG.Text = "please type the value you want to search";// error massage
+            }
+        }
+
+        protected void productOrder_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            string stringOrderBy = productOrder.SelectedValue;//get stringOrderBy
+            int orderBy = TurnOrderByToInt(stringOrderBy);//turn to int
+            int shopId = ((BlShopManager)Session["user"]).ShopId;//get shop id
+            string condition = BLProduct.setOrderBy(orderBy);//get condition by order by int
+            List<BLProduct> products = null;
+            if (shopId == -1)
+            {
+                //set data source if no shop selected
+                products = BLProduct.GetAllProducts(condition);
+                UpdateData(products);
+            }
+            else
+            {
+                //set data source
+                products = BLProduct.GetAllProductsByShopId(shopId, condition);
+                UpdateData(products);
+            }
+        }
+        public int TurnOrderByToInt(string stringOrderBy)
+        {
+            for (var index = 0; index < OrderByArr.Length; index++)
+            {
+                var value = OrderByArr[index];
+                if (stringOrderBy == value.ToString())
+                {
+                    return index;
+                }
+            }
+
+            return 4;
+        }
+
+        protected void ProductsList_OnItemCommand(object source, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "Delete")
+            {
+                List<BLProduct> products = (List<BLProduct>) Session["products"];
+                BLProduct product = products[e.Item.ItemIndex];
+                //remove from list
+                products.Remove(product);
+                //remove from DB
+                product.RemoveProduct();
+                UpdateData(products);
+            }
+        }
+        public bool UpdateData(List<BLProduct> products)
+        {
+            if (products == null || products.Count == 0)
+            {
+                ProductsList.DataSource = null;
+                Session["products"] = null;
+                ProductsList.DataBind();
+                MSG.Text = "there is no products"; //error msg
+                return false;
+            }
+            ProductsList.DataSource = products;
+            Session["products"] = products;
+            ProductsList.DataBind();
+            MSG.Text = "";
+            return true;
+        }
+    }
+}

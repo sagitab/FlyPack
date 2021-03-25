@@ -307,6 +307,16 @@ namespace BLFlyPack
         //    products = IsByPrice ? ProductDal.SearchProductsByPrice(double.Parse(searchVal)) : ProductDal.SearchProductsByName(searchVal);
         //    return (from object rowProduct in products.Rows select new BLProduct((DataRow)rowProduct)).ToList();
         //}
-
+        public bool RemoveProduct()
+        {
+            try
+            {
+                return ProductDal.RemoveProduct(this.Id);
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

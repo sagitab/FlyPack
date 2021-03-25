@@ -129,6 +129,20 @@ namespace UIFlyPack
             UpOrders(user, "");
         }
 
+        public void updateUnValidArivelTime()
+        {
+            int length = OrderTable.Rows.Count;
+            for (int i = 0; i < length; i++)
+            {
+                GridViewRow row = OrderTable.Rows[i];
+                TableCell cell = row.Cells[0];
+                if (cell.Text == "01/01/2000 01:01:01")
+                {
+                    cell.Text = "Not updated";
+                }
+               
+            }
+        }
         public void UpdateButtonsText(int userType)
         {
             int length = OrderTable.Rows.Count;
@@ -273,6 +287,7 @@ namespace UIFlyPack
                 ErMSG.Text = "there is no orders";
             }
             UpdateButtonsText(user.Type);
+            updateUnValidArivelTime();
         }
         protected void OrderTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

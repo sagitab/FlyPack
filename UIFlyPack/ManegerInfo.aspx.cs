@@ -38,6 +38,21 @@ namespace UIFlyPack
 
             }
 
+            if (user.Type==2)//system manager
+            {
+                DataTable shopsTable = BLshopDB.ShopAndManagerTable();
+                if (shopsTable!=null&&shopsTable.Rows.Count>0)
+                {
+                    ShopTable.Visible = true;
+                    ShopTable.DataSource = shopsTable;
+                    ShopTable.DataBind();
+                }
+                else
+                {
+                    ErShopTable.Text = "There is no shops"; //msg
+                }
+               
+            }
             if (orderUser==null)
             {
                 Response.Redirect("HomePage.aspx");

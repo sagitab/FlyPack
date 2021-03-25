@@ -56,5 +56,9 @@ namespace BLFlyPack
                 return false;
             }
         }
+        public static DataTable ShopAndManagerTable()
+        {
+            return DalShopDB.ShopAndManagerTable();
+        }
     }
 }

@@ -23,5 +23,9 @@ namespace FlyPack
         {
             return int.Parse(DalHelper.Select($"SELECT {TotalAmountColumn} FROM {TotalAmountTableName} WHERE {idColumnName}={productId}").Rows[0][TotalAmountColumn].ToString());
         }
+        public static DataTable ShopAndManagerTable()
+        {
+            return DalHelper.Select($"SELECT Shops.ShopName, Users.FirstName AS ManagerName FROM (Users INNER JOIN Shops ON Users.ID = Shops.ShopManagerID) GROUP BY Shops.ShopName, Users.FirstName  ;");
+        }
     }
 }

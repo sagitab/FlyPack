@@ -35,30 +35,30 @@ namespace UIFlyPack
                 }
 
             }
-            //Session["user"] = new Deliver("shlakot1");
+            Session["user"] = new Deliver("shlakot1");
             //BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
             //GlobalVariable.UnVerifyEmail.Add(user.UserId, "111111");
             BlOrderUser user = /*(BlOrderUser)Session["user"];*/ (BlOrderUser)Session["user"];
             //to check if user verify email!!!!!!!!!!!!!!!!!!!!!!!!!!
-            try
-            {
-                Dictionary<string, string> VerifyEmail = ((Dictionary<string, string>) Application["UnVerifyEmail"]);
-                if (VerifyEmail!=null)
-                {
-                    string verifyCode = VerifyEmail[user.UserId];
-                    Response.Redirect("VerifyEmail.aspx");
-                    return;
-                }
-                else
-                {
-                    errorMSG.Text = "VerifyEmail null";
-                }
+            //try
+            //{
+            //    Dictionary<string, string> VerifyEmail = ((Dictionary<string, string>) Application["UnVerifyEmail"]);
+            //    if (VerifyEmail!=null)
+            //    {
+            //        string verifyCode = VerifyEmail[user.UserId];
+            //        Response.Redirect("VerifyEmail.aspx");
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        errorMSG.Text = "VerifyEmail null";
+            //    }
             
-            }
-            catch
-            {
+            //}
+            //catch
+            //{
 
-            }
+            //}
 
 
             if (!(user is Deliver)) return;
@@ -142,6 +142,10 @@ namespace UIFlyPack
                 // for orderShopIndex to select the shortest distance shop that the deliver deliver the pack on time
                 foreach (var index in IndexsOrderByDistance)
                 {
+                    if (shops.Count == orderShops.Count)
+                    {
+                        break;
+                    }
                     //to add shop and customer
                     int realIndex = index - lateTimes;
                     orderShops.Add(copyShops[realIndex]);

@@ -74,6 +74,12 @@
              <li>
                   <a href="ManegerInfo.aspx">Information</a>
             </li>
+            <li>
+                <a href="addProduct.aspx">Add product</a>
+            </li>
+            <li>
+                <a href="shopMProducts.aspx">Add product</a>
+            </li>
               <li style="padding: 1vh 1vh">
                 <asp:Label ID="UserString2"  runat="server" Text=""></asp:Label>
             </li>

@@ -83,6 +83,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="addProduct.aspx" />
     <Content Include="AddShop.aspx" />
     <Content Include="DeliveryMap.aspx" />
     <Content Include="Global.asax" />
@@ -112,6 +113,7 @@
     <Content Include="Product.ascx" />
     <Content Include="Register.aspx" />
     <Content Include="ShopingCart.aspx" />
+    <Content Include="shopMProducts.aspx" />
     <Content Include="Store.aspx" />
     <Content Include="StyleSheet1.css" />
     <Content Include="VerifyEmail.aspx" />
@@ -119,6 +121,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addProduct.aspx.cs">
+      <DependentUpon>addProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="addProduct.aspx.designer.cs">
+      <DependentUpon>addProduct.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddShop.aspx.cs">
       <DependentUpon>AddShop.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -185,6 +194,13 @@
     </Compile>
     <Compile Include="ShopingCart.aspx.designer.cs">
       <DependentUpon>ShopingCart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="shopMProducts.aspx.cs">
+      <DependentUpon>shopMProducts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="shopMProducts.aspx.designer.cs">
+      <DependentUpon>shopMProducts.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
