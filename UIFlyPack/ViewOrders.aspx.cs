@@ -595,15 +595,5 @@ namespace UIFlyPack
             UpOrders((BlUser)Session["user"], "");
             
         }
-
-        protected void date_OnClick(object sender, EventArgs e)
-        {
-            datePanel.Visible = true;
-        }
-
-        protected void ImageButton1_OnClick(object sender, ImageClickEventArgs e)
-        {
-            datePanel.Visible = false;
-        }
     }
 }

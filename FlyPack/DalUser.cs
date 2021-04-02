@@ -82,7 +82,7 @@ namespace FlyPack
         /// <returns>data table of shop manager with no shop</returns>
         public static DataTable ShopManagersWithNoShop()
         {
-            return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users INNER JOIN Shops ON Users.ID <> Shops.ShopManagerID WHERE(((Users.UserType) = 1)); ");
+            return DalHelper.Select("SELECT Users.FirstName, Users.ID FROM Users LEFT JOIN Shops  ON Users.ID=[Shops].[ShopManagerID] WHERE [Shops].[ShopManagerID] IS NULL AND (Users.UserType)=1");
         }
      
         //Customer

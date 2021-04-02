@@ -35,7 +35,7 @@ namespace UIFlyPack
                 }
 
             }
-            Session["user"] = new Deliver("shlakot1");
+            //Session["user"] = new Deliver("shlakot1");
             //BlOrderUser user = (BlOrderUser)Session["user"]; /*(BLUser)Session["user"];*/
             //GlobalVariable.UnVerifyEmail.Add(user.UserId, "111111");
             BlOrderUser user = /*(BlOrderUser)Session["user"];*/ (BlOrderUser)Session["user"];

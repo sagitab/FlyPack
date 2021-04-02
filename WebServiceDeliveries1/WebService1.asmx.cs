@@ -59,6 +59,50 @@ namespace WebServiceDeliveries1
             BlOrderUser user = new BlOrderUser(Password);
             return user.GetOrders(false, "");
         }
+        [WebMethod]
+        public DataTable GetShopAndManagerList()
+        {
+            return BLshopDB.ShopAndManagerTable();
+        }
+        [WebMethod]
+        public int GetNumberOfOrders(string Password)
+        {
+            BlOrderUser user = new BlOrderUser(Password);
+            return user.GetNumOfOrders();
+        }
+        [WebMethod]
+        public bool Register(string userId, int type, string email, string phoneNum, string firstName, string lastName, string password, double lat, double lng)
+        {
+            BlUser user = null;
+            try
+            {
+                user = new BlUser(userId, type, email, phoneNum, firstName, lastName, password, lat, lng);//add new user to DB
+                return user.UserId!= "-1";
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        [WebMethod]
+        public int GetNumberOfCustomers(string Password)
+        {
+            BlOrderUser user = new BlOrderUser(Password);
+            string numOfCustomers= user.GetNumOfCustomers();
+            int ret;
+            if (!int.TryParse(numOfCustomers,result:out ret))
+            {
+                ret = 0;
+            }
+            return ret;
+        }
+
+        [WebMethod]
+        public string GetUserNameByPassword(string Password)
+        {
+            BlUser user = new BlUser(Password);
+            return user.UserId != null ? user.FirstName : "";
+        }
         //[WebMethod]
         //public bool IsOrderIDExist(string OrderTableName, string OrderIdName, string Id)
         //{
