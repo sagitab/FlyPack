@@ -31,13 +31,23 @@ namespace UIFlyPack
                 string productName = ProductName.Text;
                 double productPrice = double.Parse(ProductPrice.Text);
                 int shopId = user.ShopId;
-               
 
-                string path = "ProductsImg/" + name;
-                //Save the Image File in Folder.
-                postedFile.SaveAs(Server.MapPath(path));
-                BLFlyPack.BLProduct product = new BLProduct(productPrice, productName, shopId, -1, path);
-                MSG.Text = product.Id != -1 ? "product added !!" : "product added failed";
+
+                try
+                {
+                    string path = name;
+                    //Save the Image File in Folder.
+                    postedFile.SaveAs(Server.MapPath(path));
+                    BLFlyPack.BLProduct product = new BLProduct(productPrice, productName, shopId, -1, path);
+                    MSG.Text = product.Id != -1 ? "product added !!" : "product added failed";
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                    throw;
+                }
+             
+             
             }
             else
             {

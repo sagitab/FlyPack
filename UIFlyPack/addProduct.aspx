@@ -27,7 +27,7 @@
             <asp:FileUpload ID="FileUpload" runat="server"  CssClass="BSearch"  />
         </li>
         <li>
-            <asp:Button ID="AddProduct" runat="server" Text="Add shop" CssClass="LargeButton" OnClick="AddProduct_OnClick" />
+            <asp:Button ID="AddProduct" runat="server" Text="Add product" CssClass="LargeButton" OnClick="AddProduct_OnClick" />
         </li>
        
       

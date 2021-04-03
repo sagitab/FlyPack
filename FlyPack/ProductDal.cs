@@ -51,7 +51,7 @@ namespace FlyPack
 
         public static int AddProduct(double price, string description, int shopId,int shopProductCode, string imageUrl)
         {
-            return DalHelper.Insert($"INSERT INTO Products(ShopID,Description,ShopProductCode,Price,Image) VALUES({shopId},'{description}',{shopProductCode},{price},'{imageUrl}')");
+            return DalHelper.Insert($"INSERT INTO [Products]([ShopID],[Description],[ShopProductCode],[Price],[Image]) VALUES({shopId},'{description}',{shopProductCode},{price},'{imageUrl}')");
         }
 
         public static bool RemoveProduct(int Id)
