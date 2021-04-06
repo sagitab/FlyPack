@@ -117,7 +117,7 @@ namespace FlyPack
         }
         public static DataTable DeliveriesList()
         {
-            return DalHelper.Select($"SELECT Users.ID, Users.FirstName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) ");
+            return DalHelper.Select($"SELECT Users.ID, Users.FirstName,Users.LastName,Users.Email,Users.PhoneNumber FROM Users WHERE((Users.UserType = 3) AND (Users.ID<>'111111111')) ");
         }
         public static DataTable DeliveriesTableByShop(int shopId)
         {

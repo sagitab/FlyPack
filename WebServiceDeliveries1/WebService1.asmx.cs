@@ -20,17 +20,7 @@ namespace WebServiceDeliveries1
     // [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ShopManagerPassword"></param>
-        /// <returns>List<BlUser> that order from your shop</returns>
-        [WebMethod]
-        public List<BlUser> GetUserList(string ShopManagerPassword)
-        {
-            BlShopManager shopManager = new BlShopManager(ShopManagerPassword);
-           return shopManager.CustomersList();
-        }
+       
         /// <summary>
         /// 
         /// </summary>
@@ -54,10 +44,45 @@ namespace WebServiceDeliveries1
             return user.GetOrders(true,"");
         }
         [WebMethod]
-        public DataTable GetUserOldOrderList(string Password)
+        public List<BlOrder> GetUserOldOrderList(string Password)
         {
             BlOrderUser user = new BlOrderUser(Password);
-            return user.GetOrders(false, "");
+            DataTable orders= user.GetOrders(false, "");
+            List<BlOrder> ordersList = new List<BlOrder>();
+            foreach(DataRow row in orders.Rows)
+            {
+                ordersList.Add(new BlOrder(row));
+            }
+            return ordersList;
+        }
+        [WebMethod]
+        public bool Register(string userId, int type, string email, string phoneNum, string firstName, string lastName, string password, double lat, double lng)
+        {
+            BlUser user = null;
+            try
+            {
+                user = new BlUser(userId, type, email, phoneNum, firstName, lastName, password, lat, lng);//add new user to DB
+                return user.UserId != "-1";
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        [WebMethod]
+        public bool Order(int shopId, int numOfFloor, List<BLOrderDetailsDB> orderDetails, string password, double lat, double lng)
+        {
+            BlOrderUser user = new BlOrderUser(password);
+            BlOrder order = null;
+            try
+            {
+                order = new BlOrder(user.UserId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor, orderDetails);//add order
+                return user.UserId != "-1";
+            }
+            catch
+            {
+                return false;
+            }
         }
         [WebMethod]
         public DataTable GetShopAndManagerList()
@@ -70,20 +95,7 @@ namespace WebServiceDeliveries1
             BlOrderUser user = new BlOrderUser(Password);
             return user.GetNumOfOrders();
         }
-        [WebMethod]
-        public bool Register(string userId, int type, string email, string phoneNum, string firstName, string lastName, string password, double lat, double lng)
-        {
-            BlUser user = null;
-            try
-            {
-                user = new BlUser(userId, type, email, phoneNum, firstName, lastName, password, lat, lng);//add new user to DB
-                return user.UserId!= "-1";
-            }
-            catch
-            {
-                return false;
-            }
-        }
+     
         [WebMethod]
         public int GetNumberOfCustomers(string Password)
         {
@@ -102,6 +114,18 @@ namespace WebServiceDeliveries1
         {
             BlUser user = new BlUser(Password);
             return user.UserId != null ? user.FirstName : "";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ShopManagerPassword"></param>
+        /// <returns>List<BlUser> that order from your shop</returns>
+        [WebMethod]
+        public List<BlUser> GetUserList(string ShopManagerPassword)
+        {
+            BlShopManager shopManager = new BlShopManager(ShopManagerPassword);
+            return shopManager.CustomersList();
         }
         //[WebMethod]
         //public bool IsOrderIDExist(string OrderTableName, string OrderIdName, string Id)

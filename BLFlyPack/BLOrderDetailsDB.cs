@@ -15,7 +15,10 @@ namespace BLFlyPack
         public int productId { get; set; }
         public int amount { get; set; }
         public double price { get; set; }
+        public BLOrderDetailsDB()
+        {
 
+        }
         /// <summary>
         /// Add detail to DB
         /// </summary>

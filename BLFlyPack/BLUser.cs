@@ -25,6 +25,10 @@ namespace BLFlyPack
         public string LastName { get; set; }
         public string Password { get; set; }
         public Point Location { get; }
+        public BlUser()
+        {
+
+        }
         //<<<<<<<<<<<<<<user>>>>>>>>>>>>>>>>>>>>>
         /// <summary>
         /// constructor

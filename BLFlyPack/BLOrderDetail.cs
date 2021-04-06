@@ -12,6 +12,10 @@ namespace BLFlyPack
     {
         public BLProduct Product { get; set; }
         public  int Amount { get; set; }
+        public BLOrderDetail()
+        {
+
+        }
         /// <summary>
         /// constructor
         /// </summary>

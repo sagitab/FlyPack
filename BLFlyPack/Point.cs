@@ -17,6 +17,10 @@ namespace BLFlyPack
         /// </summary>
         /// <param name="lat"></param>
         /// <param name="lng"></param>
+        public Point()
+        {
+
+        }
         public Point(double lat, double lng)
         {
             Lat = lat;
