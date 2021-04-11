@@ -14,6 +14,10 @@ namespace BLFlyPack
         public string ShopManagerId { get; set; }
         public string ShopName { get; set; }
         public Point Location { get; }
+        public BlShop()
+        {
+
+        }
         /// <summary>
         /// constructor
         /// </summary>

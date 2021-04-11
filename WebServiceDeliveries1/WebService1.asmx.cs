@@ -20,7 +20,37 @@ namespace WebServiceDeliveries1
     // [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
-       
+        [WebMethod]
+        public List<BlShop> GetAllShops()
+        {
+            List<BlShop> shops= BlShop.GetShops();
+            return shops;
+        }//get all shop in DB
+        [WebMethod]
+        public List<BLProduct> GetAllProductsByShopId(int ShopId)
+        {
+            List<BLProduct> products = BLProduct.GetAllProductsByShopId(ShopId,"");
+            return products;
+        }//get all product of shop 
+        [WebMethod]
+        public bool AddOrder(string customerId,  int shopId,  int status, double lat, double lng,
+            int numOfFloor,List<BLOrderDetailsDB> orderDetails)
+        {
+            int id;
+            BlOrder order = null;
+            try
+            {
+                order=new BlOrder(customerId, "111111111", shopId, new DateTime(2000, 1, 1, 1, 1, 1), new DateTime(2000, 1, 1, 1, 1, 1), 1, lat, lng, numOfFloor, orderDetails);///add order
+                 id = order.OrderId;
+            }
+            catch
+            {
+                return false;
+            }
+            bool isUpdateDetails = BLOrderDetailsDB.UpdateOrderDetails(orderDetails, id);
+            return (id == -1)&& isUpdateDetails;
+        }//add order to BD
+     
         /// <summary>
         /// 
         /// </summary>
@@ -29,14 +59,19 @@ namespace WebServiceDeliveries1
         public int GetNumOfAvailableDeliveries()
         {
             return Deliver.NumOfAvailableDeliveries();
+        }//get number of avilable deliveries
+        [WebMethod]
+        public BlUser GetUserNameById(string Id)
+        {
+            BlUser user = BlUser.UserById(Id);
+            return user;
         }
-        //mast do functions
         [WebMethod]
         public int GetStatus(int orderId)
         {
             BlOrder order = BlOrder.GetBlOrderById(orderId);
             return order.Status;
-        }
+        }//get status of order
         [WebMethod]
         public DataTable GetUserNewOrderList(string Password)
         {

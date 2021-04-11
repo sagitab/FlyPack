@@ -16,7 +16,10 @@ namespace BLFlyPack
         public int ShopID { get; set; }
         public int ShopProductCode { get; set; }
         public string ImageUrl { get; set; } /*name in DB Image*/
+        public BLProduct()
+        {
 
+        }
         public static string GetProductNameById(int productId)
         {
             try
