@@ -41,8 +41,6 @@ namespace UIFlyPack
         protected void OrderB_Click(object sender, EventArgs e)
         {
             //get input values
-
-            string address = Adress.Text;
             int shopId = int.Parse(Request.QueryString.Get("shopId"));
             int numOfFloor = 0;
             try
@@ -58,7 +56,7 @@ namespace UIFlyPack
             double lat = GetLat(latLng);
             double lng = GetLng(latLng);
             BlUser user = (BlUser)Session["user"];
-            bool IsNotNewAddress = lat == 1.0 && lng == 1.0 && address == "";
+            bool IsNotNewAddress = lat == 1.0 && lng == 1.0 /*&& address == ""*/;
             if (IsNotNewAddress)//if IsNotNewAddress the address is the user address from DB
             {
                 Point UserLocation = user.Location;

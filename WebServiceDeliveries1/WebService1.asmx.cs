@@ -61,6 +61,21 @@ namespace WebServiceDeliveries1
             return Deliver.NumOfAvailableDeliveries();
         }//get number of avilable deliveries
         [WebMethod]
+        public double GetLatByUserId(string Id)
+        {
+            return (double)BlUser.UserById(Id).Location.Lat;
+        }//get user lat by id
+        [WebMethod]
+        public double GetLngByUserId(string Id)
+        {
+            return (double)BlUser.UserById(Id).Location.Lng;
+        }//get user lat by id
+        [WebMethod]
+        public string GetShopName(int ShopId)
+        {
+            return BlShop.GetShopById(ShopId).ShopName;
+        }//get SHOP name by shop id
+        [WebMethod]
         public BlUser GetUserNameById(string Id)
         {
             BlUser user = BlUser.UserById(Id);

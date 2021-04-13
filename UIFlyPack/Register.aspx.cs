@@ -168,6 +168,7 @@ namespace UIFlyPack
                     //    Session["user"] = user;
                     //}
                     if (user == null || user.UserId == "-1") return;
+                    MSG.Text = "seccsuss to register!";
                     //create a verify code
                     //string verifyCode = GenerateRandomCode();
                     ////send verify code to email to verify the email
